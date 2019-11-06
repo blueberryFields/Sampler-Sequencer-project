@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'seqarc'
+      MYSQL_USER: 'seqarc'
+      MYSQL_PASSWORD: 'secret'
+      MYSQL_ROOT_PASSWORD: 'secret'
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./database:/var/lib/mysql
+
+
