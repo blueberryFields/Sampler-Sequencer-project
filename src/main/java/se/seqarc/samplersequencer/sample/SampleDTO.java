@@ -24,4 +24,5 @@ public class SampleDTO {
         this.category = sample.getCategory();
         this.subCategory = sample.getSubCategory();
     }
+
 }
