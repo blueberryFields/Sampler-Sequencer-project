@@ -18,7 +18,7 @@ backend/.idea
 backend/*.iws
 backend/*.iml
 backend/*.ipr
-
+frontend/seqarc/.idea
 ### NetBeans ###
 backend/nbproject/private/
 backend/nbbuild/
@@ -27,28 +27,31 @@ backend/nbdist/
 backend/.nb-gradle/
 backend/build/
 
+#Database-related stuff
+backend/database
+
 ### VS Code ###
-.vscode/
+**/.vscode/
 
 # dependencies
-frontend/node_modules
+frontend/seqarc/node_modules
 
 # testing
-frontend/coverage
+frontend/seqarc/coverage
 
 # production
-frontend/build
+frontend/seqarc//build
 
 # misc
-frontend/.DS_Store
-frontend/.env.local
-frontend/.env.development.local
-frontend/.env.test.local
-frontend/.env.production.local
+frontend/seqarc/.DS_Store
+frontend/seqarc/.env.local
+frontend/seqarc/.env.development.local
+frontend/seqarc/.env.test.local
+frontend/seqarc/.env.production.local
 
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log* 
+frontend/seqarc/npm-debug.log*
+frontend/seqarc/yarn-debug.log*
+frontend/seqarc/yarn-error.log* 
 
 # dependencies
 frontend/.pnp
