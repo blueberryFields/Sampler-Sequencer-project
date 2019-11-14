@@ -40,7 +40,7 @@ frontend/seqarc/node_modules
 frontend/seqarc/coverage
 
 # production
-frontend/seqarc//build
+frontend/seqarc/build
 
 # misc
 frontend/seqarc/.DS_Store
@@ -48,11 +48,13 @@ frontend/seqarc/.env.local
 frontend/seqarc/.env.development.local
 frontend/seqarc/.env.test.local
 frontend/seqarc/.env.production.local
+frontend/seqarc/npm.debug
 
 frontend/seqarc/npm-debug.log*
 frontend/seqarc/yarn-debug.log*
 frontend/seqarc/yarn-error.log* 
 
 # dependencies
-frontend/.pnp
-frontend/.pnp.js
+frontend/seqarc/.pnp
+frontend/seqarc/.pnp.js
+npm-debug.log

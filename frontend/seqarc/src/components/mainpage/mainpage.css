@@ -1,0 +1,95 @@
+.sequencer {
+
+}
+
+/*CSS for transport-component*/
+
+.transport-bar {
+    background-color: #282c34;
+    display: flex;
+    height: 4rem;
+}
+
+.transport {
+    margin: auto;
+    height: 100%;
+    display: flex;
+    /*width: 20%;*/
+}
+
+.display {
+    border-radius: 5px;
+    margin: auto;
+    width: 20rem;
+    height: 80%;
+    background: black;
+    color: #d6d6c2;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.display-divider {
+    width: 2px;
+    background: #282c34;
+}
+
+.bpm-display {
+    display: flex;
+    margin: auto;
+}
+
+.bpm-heading {
+    color: dimgrey;
+    margin-right: 1rem;
+}
+
+.bpm {
+    margin: auto;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.swing-display {
+    display: flex;
+    margin: auto;
+}
+
+.swing-heading {
+    color: dimgrey;
+    margin-right: 1rem;
+}
+
+.swing {
+    margin: auto;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    width: 100%;
+}
+
+/*.time {
+    margin: auto;
+}*/
+
+.toggle-play {
+    margin: auto auto auto 5px;
+    color: black;
+    background: #8cb3d9;
+    height: 80%;
+    width: 3.5rem;
+
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.toggle-play:active {
+    background: #538cc6;
+}
