@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlay, faStop} from '@fortawesome/free-solid-svg-icons'
-import './mainpage.css'
+import './Workstation.css'
 
 const Transport = props => {
 

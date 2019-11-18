@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Tone from 'tone'
 import Transport from "./Transport";
 
-const SoundEngine = props => {
+const Workstation = props => {
 
     const [position, setPosition] = useState(Tone.Transport.position)
 
@@ -18,12 +18,10 @@ const SoundEngine = props => {
 
     const updateBpm = (bpm) => {
         Tone.Transport.bpm.value = bpm
-        console.log(Tone.Transport.bpm.value)
     }
 
     const updateSwing = (swing) => {
         Tone.Transport.swing = swing
-        console.log(Tone.Transport.swing)
     }
 
     const toggleTransport = () => {
@@ -46,4 +44,4 @@ const SoundEngine = props => {
     )
 }
 
-export default SoundEngine
+export default Workstation

@@ -52,6 +52,7 @@
     border: none;
     font-size: 1.5rem;
     width: 30%;
+    color: #282c34;
 }
 
 .swing-heading {
@@ -70,7 +71,8 @@
     background: none;
     border: none;
     font-size: 1.5rem;
-    width: 30%;
+    width: 25%;
+    color: #282c34;
 }
 
 .position {
