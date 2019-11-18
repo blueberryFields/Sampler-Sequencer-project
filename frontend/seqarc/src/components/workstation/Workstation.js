@@ -6,36 +6,54 @@ const Workstation = props => {
 
     const [position, setPosition] = useState(Tone.Transport.position)
 
-    const positionUpdater = () => {
-        setInterval(() => {
+    const [playing, setPlaying] = useState(false)
+
+    const [timerId, setTimerId] = useState(null)
+
+    const togglePositionUpdater = () => {
+        if (!playing) {
+            setTimerId(setInterval(() => {
+                setPosition(formatPosition(Tone.Transport.position))
+                console.log('Interval fired')
+            }, 100))
+        } else {
+            // noinspection JSCheckFunctionSignatures
+            clearInterval(timerId)
             setPosition(formatPosition(Tone.Transport.position))
-        }, 100)
+        }
     }
 
     const formatPosition = (position) => {
         return position.split(":")[0] + ':' + position.split(":")[1] + ':' + parseFloat(position.split(":")[2]).toFixed(0)
     }
 
+    const [bpm, setBpm] = useState(Tone.Transport.bpm.value)
+
     const updateBpm = (bpm) => {
         Tone.Transport.bpm.value = bpm
+        setBpm(bpm)
     }
+
+    const [swing, setSwing] = useState(Tone.Transport.swing)
 
     const updateSwing = (swing) => {
         Tone.Transport.swing = swing
+        setSwing(swing)
     }
 
     const toggleTransport = () => {
         Tone.Transport.toggle()
-        positionUpdater()
+        setPlaying(!playing)
+        togglePositionUpdater()
     }
 
     return (
         <div>
             <Transport
-                currentTime={Tone.Transport.seconds.toFixed(2)}
+                playing={playing}
                 toggleTransport={toggleTransport}
                 updateBpm={updateBpm}
-                getBpm={Tone.Transport.bpm.value}
+                getBpm={bpm}
                 updateSwing={updateSwing}
                 getSwing={Tone.Transport.swing}
                 position={position}

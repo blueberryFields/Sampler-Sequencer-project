@@ -16,14 +16,13 @@ const Transport = props => {
     const [playing, setPlaying] = useState(false)
 
     const onPlay = () => {
-        setPlaying(!playing)
         props.toggleTransport()
     }
 
     const [bpm, setBpm] = useState(props.getBpm)
 
     const updateBpm = () => {
-        if (!isNaN(bpm) && bpm > 0 && bpm < 300) {
+        if (!isNaN(bpm) && bpm >= 60 && bpm <= 240) {
             props.updateBpm(bpm)
         } else {
             setBpm(props.getBpm)
@@ -83,7 +82,7 @@ const Transport = props => {
                     </div>
                 </div>
                 <button className="toggle-play" type="button" onClick={() => onPlay()}>
-                    <FontAwesomeIcon icon={playing ? faStop : faPlay}/>
+                    <FontAwesomeIcon icon={props.playing ? faStop : faPlay}/>
                 </button>
             </div>
         </div>

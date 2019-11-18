@@ -34,7 +34,6 @@
 }
 
 .display-part {
-    /*width: 16rem;*/
     display: flex;
     margin: auto;
     width: 33%;
@@ -42,7 +41,6 @@
 
 .bpm-heading {
     color: dimgrey;
-    /*margin-right: 1rem;*/
     margin: auto;
 }
 
@@ -52,12 +50,11 @@
     border: none;
     font-size: 1.5rem;
     width: 30%;
-    color: #282c34;
+    color: #4e5565;
 }
 
 .swing-heading {
     color: dimgrey;
-    /*margin-right: 1rem;*/
     margin: auto;
 }
 
@@ -72,14 +69,13 @@
     border: none;
     font-size: 1.5rem;
     width: 25%;
-    color: #282c34;
+    color: #4e5565;
 }
 
 .position {
-    /*width: 20%;*/
     margin: auto;
-    color: dimgrey;
-    font-size: 2rem;
+    color: #4e5565;
+    font-size: 1.5rem;
 }
 
 .toggle-play {
@@ -101,4 +97,5 @@
 
 .toggle-play:active {
     background: #538cc6;
+    box-shadow: none;
 }
