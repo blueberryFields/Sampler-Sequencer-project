@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlay, faStop} from '@fortawesome/free-solid-svg-icons'
 import './Workstation.css'
@@ -80,7 +80,7 @@ const Transport = props => {
                         </div>
                     </div>
                 </div>
-                <button className="toggle-play" type="button" onClick={() => onPlay()}>
+                <button className={props.playing ? 'toggle-play playing' : 'toggle-play stopped' }  type="button" onClick={() => onPlay()}>
                     <FontAwesomeIcon icon={props.playing ? faStop : faPlay}/>
                 </button>
             </div>

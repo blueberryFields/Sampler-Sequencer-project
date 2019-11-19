@@ -1,13 +1,31 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import './Workstation.css'
 import Step from "./step";
 
 const Instrument = props => {
 
-    const steps = []
+    const [steps, setSteps] = useState([
+        {id: 1, on: false},
+        {id: 2, on: false},
+        {id: 3, on: false},
+        {id: 4, on: false},
+        {id: 5, on: false},
+        {id: 6, on: false},
+        {id: 7, on: false},
+        {id: 8, on: false},
+        {id: 9, on: false},
+        {id: 10, on: false},
+        {id: 11, on: false},
+        {id: 12, on: false},
+        {id: 13, on: false},
+        {id: 14, on: false},
+        {id: 15, on: false},
+        {id: 16, on: false}
+    ])
 
-    for (let i = 0; i < 16; i++) {
-        steps.push({on: true})
+    const setStepOn = (id) => {
+        setSteps(steps.map(step => (step.id === id ? {id: step.id ,on: !step.on} : step))
+        )
     }
 
     const [name, setName] = useState("Instr " + props.number)
@@ -36,8 +54,8 @@ const Instrument = props => {
                 />
             </div>
             <div className="steps">
-                {steps.map((on, index) => {
-                    return <Step on={on} key={index}/>
+                {steps.map((step, index) => {
+                    return <Step on={step.on} key={index} id={step.id} setStepOn={setStepOn} />
                 })}
             </div>
         </div>
