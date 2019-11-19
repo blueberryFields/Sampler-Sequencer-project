@@ -30,6 +30,7 @@
     color: dimgrey;
     /*background-color: #282c34;*/
     border-style: solid;
+    border-width: 3px;
     border-radius: 10px;
     margin: auto auto auto auto;
     height: 4rem;
@@ -66,6 +67,39 @@
     border: none;
     font-size: 1rem;
     color: #4e5565;
+}
+
+.steps {
+    display: flex;
+    width: 100%;
+}
+
+.step {
+    width: 6%;
+    border-style: solid;
+    border-width: 3px;
+    /*background-color: #282c34;*/
+    border-radius: 10px;
+    margin: 5px;
+    display: flex;
+}
+
+.led-on {
+    margin: auto;
+    width: 15px;
+    height: 15px;
+    background-color: #24E0FF;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 -1px 7px 1px, inset #006 0 -1px 9px, #3F8CFF 0 2px 14px;
+}
+
+.led-off {
+    margin: auto;
+    width: 15px;
+    height: 15px;
+    background-color: #008599;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 1) 0 -1px 7px 1px, inset #00161a 0 -1px 9px;
 }
 
 /* CSS for SampleBrowser.js */
