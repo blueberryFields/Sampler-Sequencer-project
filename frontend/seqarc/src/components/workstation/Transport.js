@@ -13,8 +13,6 @@ const Transport = props => {
         return float * 100
     }
 
-    const [playing, setPlaying] = useState(false)
-
     const onPlay = () => {
         props.toggleTransport()
     }
@@ -71,8 +69,9 @@ const Transport = props => {
                                        updateSwing()
                                    }
                                }}
-                               onBlur={() => updateSwing()}/>
-                               <div className="percent-char">%</div>
+                               onBlur={() => updateSwing()}
+                        />
+                        <div className="percent-char">%</div>
                     </div>
                     <div className="display-divider"/>
                     <div className="display-part">

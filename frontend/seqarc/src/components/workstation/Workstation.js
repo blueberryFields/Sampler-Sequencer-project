@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import Tone from 'tone'
 import Transport from "./Transport";
+import Instrument from "./Instrument";
+import SampleBrowser from "./SampleBrowser";
 
 const Workstation = props => {
 
@@ -14,7 +16,6 @@ const Workstation = props => {
         if (!playing) {
             setTimerId(setInterval(() => {
                 setPosition(formatPosition(Tone.Transport.position))
-                console.log('Interval fired')
             }, 100))
         } else {
             // noinspection JSCheckFunctionSignatures
@@ -48,7 +49,7 @@ const Workstation = props => {
     }
 
     return (
-        <div>
+        <div className="container">
             <Transport
                 playing={playing}
                 toggleTransport={toggleTransport}
@@ -58,6 +59,15 @@ const Workstation = props => {
                 getSwing={Tone.Transport.swing}
                 position={position}
             />
+            <div className="split-pane">
+                <div className="sample-browser-container">
+                    <SampleBrowser/>
+                </div>
+                <div className="instrument-section">
+                    <Instrument
+                        number={1}/>
+                </div>
+            </div>
         </div>
     )
 }

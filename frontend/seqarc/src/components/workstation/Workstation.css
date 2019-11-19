@@ -2,7 +2,79 @@
 
 }
 
-/*CSS for transport-component*/
+/* CSS for Workstation.js*/
+
+.container {
+    background-color: black;
+    height: 100vh;
+}
+
+.split-pane {
+    display: flex;
+    flex-direction: row;
+}
+
+.sample-browser-container {
+    width: 33%;
+}
+
+.instrument-section {
+    width: 67%;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+/* CSS for Instrument.js */
+
+.instrument-container {
+    color: dimgrey;
+    /*background-color: #282c34;*/
+    border-style: solid;
+    border-radius: 10px;
+    margin: auto auto auto auto;
+    height: 4rem;
+    display: flex;
+}
+
+.instr-header {
+    display: flex;
+    padding: 10px;
+}
+
+.trigger-button {
+    display: flex;
+    width: 3rem;
+    border-radius: 5px;
+    background: #8cb3d9;
+}
+
+.trigger-button:active {
+    background: #538cc6;
+    box-shadow: none;
+}
+
+.instr-number {
+    margin: auto;
+    font-size: 2rem;
+    color: black;
+}
+
+.instr-name {
+    width: 6rem;
+    margin: auto auto auto 5px;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: #4e5565;
+}
+
+/* CSS for SampleBrowser.js */
+
+.sample-browser-container {
+    color: dimgrey;
+}
+
+/* CSS for Transport.js */
 
 .transport-bar {
     background-color: #282c34;
