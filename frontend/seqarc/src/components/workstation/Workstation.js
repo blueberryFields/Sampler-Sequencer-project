@@ -64,8 +64,14 @@ const Workstation = props => {
                     <SampleBrowser/>
                 </div>
                 <div className="instrument-section">
-                    <Instrument
-                        number={1}/>
+                    <Instrument number={1}/>
+                    <Instrument number={2}/>
+                    <Instrument number={3}/>
+                    <Instrument number={4}/>
+                    <Instrument number={5}/>
+                    <Instrument number={6}/>
+                    <Instrument number={7}/>
+                    <Instrument number={8}/>
                 </div>
             </div>
         </div>

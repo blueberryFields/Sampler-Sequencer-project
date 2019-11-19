@@ -20,7 +20,6 @@
 
 .instrument-section {
     width: 67%;
-    margin-top: 10px;
     margin-right: 5px;
 }
 
@@ -32,7 +31,7 @@
     border-style: solid;
     border-width: 3px;
     border-radius: 10px;
-    margin: auto auto auto auto;
+    margin: 6px auto auto auto;
     height: 4rem;
     display: flex;
 }
@@ -112,6 +111,15 @@
 }
 
 .led-active {
+    margin: auto;
+    width: 15px;
+    height: 15px;
+    background-color: #4dff4d;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -1px 7px 1px, inset #001a00 0 -1px 9px, rgba(77, 255, 77, 0.5) 0 2px 12px;
+}
+
+.led-trigger {
     margin: auto;
     width: 15px;
     height: 15px;
