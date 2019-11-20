@@ -5,6 +5,7 @@ import Step from "./step";
 const Instrument = props => {
 
     const [steps, setSteps] = useState([
+        {id: 0, on: false},
         {id: 1, on: false},
         {id: 2, on: false},
         {id: 3, on: false},
@@ -19,14 +20,17 @@ const Instrument = props => {
         {id: 12, on: false},
         {id: 13, on: false},
         {id: 14, on: false},
-        {id: 15, on: false},
-        {id: 16, on: false}
+        {id: 15, on: false}
     ])
 
     const toggleStepOn = (id) => {
         setSteps(steps.map(step => (step.id === id ? {id: step.id, on: !step.on} : step)))
-        if (steps[id - 1]) {
-            props.addNote(props.index, id)
+        if (!steps[id].on) {
+            console.log('add', steps[id].on)
+            props.addNote(props.index, id, 'C3')
+        } else {
+            console.log('remove', steps[id].on)
+            props.removeNote(props.index, id, 'C3')
         }
     }
 
