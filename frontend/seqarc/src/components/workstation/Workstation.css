@@ -23,6 +23,12 @@
     margin-right: 5px;
 }
 
+.plus {
+    color: dimgray;
+    font-size: 3rem;
+    margin-left: 0;
+}
+
 /* CSS for Instrument.js */
 
 .instrument-container {
@@ -225,9 +231,8 @@
     /*box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);*/
 }
 
-
 .playing {
-    background:  #4dff4d;
+    background: #4dff4d;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 9px, rgba(63, 140, 255, 0.2) 0 2px 14px;
 }
 

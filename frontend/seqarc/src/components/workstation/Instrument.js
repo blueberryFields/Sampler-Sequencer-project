@@ -26,18 +26,16 @@ const Instrument = props => {
     const toggleStepOn = (id) => {
         setSteps(steps.map(step => (step.id === id ? {id: step.id, on: !step.on} : step)))
         if (!steps[id].on) {
-            console.log('add', steps[id].on)
             props.addNote(props.index, id, 'C3')
         } else {
-            console.log('remove', steps[id].on)
             props.removeNote(props.index, id, 'C3')
         }
     }
 
-    const [name, setName] = useState("Instr " + (props.index + 1))
+    const [name, setName] = useState(props.name)
 
     const updateName = () => {
-        console.log(name)
+        if (name !== props.name) props.updateInstrumentName(props.index, name)
     }
 
     return (

@@ -3,6 +3,8 @@ import Tone from 'tone'
 import Transport from "./Transport";
 import Instrument from "./Instrument";
 import SampleBrowser from "./SampleBrowser";
+import {faPlay, faPlus, faStop} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Workstation = props => {
 
@@ -48,24 +50,25 @@ const Workstation = props => {
         togglePositionUpdater()
     }
 
-    const [instruments, setInstruments] = useState([])
-
     // SOUND-ENGINE
 
-    const [instrumentEngines, setInstrumentEngines] = useState([])
+    const [instrument, setInstrument] = useState([])
 
     const addNote = (instrIndex, notePosition, noteValue) => {
-        console.log("Add in WS", instrIndex)
-        instrumentEngines[instrIndex].part.add(
+        instrument[instrIndex].part.add(
             {time: {'16n': notePosition}, note: noteValue}
         )
     }
 
     const removeNote = (instrIndex, notePosition) => {
-        console.log("Remove in WS", instrIndex)
-        instrumentEngines[instrIndex].part.remove(
+        instrument[instrIndex].part.remove(
             {'16n': notePosition}
         )
+    }
+
+    const updateInstrumentName = (index, name) => {
+        instrument[index].name = name
+        console.log(instrument[0].name)
     }
 
     useEffect(() => {
@@ -84,14 +87,45 @@ const Workstation = props => {
         part1.loop = true
         part1.loopEnd = '1n'
 
+        setInstrument([
+            ...instrument,
+            {
+                name: 'Instr 1',
+                instrument: instrument1,
+                part: part1
+            }
+        ])
 
-        instrumentEngines.push({
-            name: 'Instr 1',
-            instrument: instrument1,
-            part: part1
-        })
+        let instrument2 = new Tone.Sampler({
+            'C3': 'samples/hihat.wav',
+        }).toMaster()
 
-    }, [instrumentEngines])
+        // pass in an array of events
+        let part2 = new Tone.Part(function (time, event) {
+            //the events will be given to the callback with the time they occur
+            instrument2.triggerAttack(event.note, time)
+        }, [])
+
+        //start the part at the beginning of the Transport's timeline
+        part2.start(0)
+        part2.loop = true
+        part2.loopEnd = '1n'
+
+        setInstrument([
+            ...instrument,
+            {
+                name: 'Instr 1',
+                instrument: instrument1,
+                part: part1
+            },
+            {
+                name: 'Instr 2',
+                instrument: instrument2,
+                part: part2
+            }
+        ])
+
+    }, [])
 
 
     return (
@@ -110,20 +144,19 @@ const Workstation = props => {
                     <SampleBrowser/>
                 </div>
                 <div className="instrument-section">
-                    {/*{
-                        instrumentEngines.map((instrument, index) => {
+                    {
+                        instrument.map((instrument, index) => {
                             return <Instrument
                                 key={index}
                                 index={index}
+                                name={instrument.name}
                                 addNote={addNote}
+                                removeNote={removeNote}
+                                updateInstrumentName={updateInstrumentName}
                             />
                         })
-                    }*/}
-                    <Instrument
-                        index={0}
-                        addNote={addNote}
-                        removeNote={removeNote}
-                    />
+                    }
+                    <FontAwesomeIcon className="plus" icon={faPlus}/>
                 </div>
             </div>
         </div>
