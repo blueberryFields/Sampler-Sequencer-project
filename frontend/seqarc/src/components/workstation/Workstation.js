@@ -52,7 +52,7 @@ const Workstation = props => {
 
     // SOUND-ENGINE
 
-    let instrumentEngines = []
+    const [instrumentEngines, setInstrumentEngines] = useState([])
 
     const addNote = (instrIndex, notePosition, noteValue) => {
         console.log("Add in WS", instrIndex)
@@ -61,9 +61,10 @@ const Workstation = props => {
         )
     }
 
-    const removeNote = (instrIndex, notePosition, noteValue) => {
+    const removeNote = (instrIndex, notePosition) => {
         console.log("Remove in WS", instrIndex)
-        instrumentEngines[instrIndex].part.removeAll(
+        instrumentEngines[instrIndex].part.remove(
+            {'16n': notePosition}
         )
     }
 
