@@ -23,12 +23,14 @@ const Instrument = props => {
         {id: 16, on: false}
     ])
 
-    const setStepOn = (id) => {
-        setSteps(steps.map(step => (step.id === id ? {id: step.id ,on: !step.on} : step))
-        )
+    const toggleStepOn = (id) => {
+        setSteps(steps.map(step => (step.id === id ? {id: step.id, on: !step.on} : step)))
+        if (steps[id - 1]) {
+            props.addNote(props.index, id)
+        }
     }
 
-    const [name, setName] = useState("Instr " + props.number)
+    const [name, setName] = useState("Instr " + (props.index + 1))
 
     const updateName = () => {
         console.log(name)
@@ -38,7 +40,7 @@ const Instrument = props => {
         <div className="instrument-container">
             <div className="instr-header">
                 <div className="trigger-button">
-                    <div className="instr-number">{props.number}</div>
+                    <div className="instr-number">{props.index + 1}</div>
                 </div>
                 <input
                     className="instr-name"
@@ -55,7 +57,7 @@ const Instrument = props => {
             </div>
             <div className="steps">
                 {steps.map((step, index) => {
-                    return <Step on={step.on} key={index} id={step.id} setStepOn={setStepOn} />
+                    return <Step on={step.on} key={index} id={step.id} toggleStepOn={toggleStepOn}/>
                 })}
             </div>
         </div>

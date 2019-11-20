@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Tone from 'tone'
 import Transport from "./Transport";
 import Instrument from "./Instrument";
@@ -48,6 +48,51 @@ const Workstation = props => {
         togglePositionUpdater()
     }
 
+    const [instruments, setInstruments] = useState([])
+
+
+
+    // SOUND-ENGINE
+
+    let instrumentEngines = []
+
+    const addNote = (instrIndex, notePosition) => {
+        instrumentEngines[instrIndex].part.add(
+            {time: {'16n': notePosition}, note: 'C3'}
+        )
+    }
+
+    useEffect(() => {
+        let instrument1 = new Tone.Sampler({
+            'C3': 'samples/kick.wav',
+        }).toMaster()
+
+        // pass in an array of events
+        let part1 = new Tone.Part(function (time, event) {
+            //the events will be given to the callback with the time they occur
+            instrument1.triggerAttack(event.note, time)
+        }, [])
+
+        //start the part at the beginning of the Transport's timeline
+        part1.start(0)
+        part1.loop = true
+        part1.loopEnd = '1n'
+
+
+        instrumentEngines.push({
+            name: 'Instr 1',
+            instrument: instrument1,
+            part: part1
+        })
+
+        // addNote(0, 0)
+        // addNote(0, 4)
+        // addNote(0, 8)
+        // addNote(0, 12)
+
+    }, [])
+
+
     return (
         <div className="container">
             <Transport
@@ -64,14 +109,19 @@ const Workstation = props => {
                     <SampleBrowser/>
                 </div>
                 <div className="instrument-section">
-                    <Instrument number={1}/>
-                    <Instrument number={2}/>
-                    <Instrument number={3}/>
-                    <Instrument number={4}/>
-                    <Instrument number={5}/>
-                    <Instrument number={6}/>
-                    <Instrument number={7}/>
-                    <Instrument number={8}/>
+                    {/*{
+                        instrumentEngines.map((instrument, index) => {
+                            return <Instrument
+                                key={index}
+                                index={index}
+                                addNote={addNote}
+                            />
+                        })
+                    }*/}
+                    <Instrument
+                        index={0}
+                        addNote={addNote}
+                    />
                 </div>
             </div>
         </div>
