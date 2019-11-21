@@ -3,9 +3,9 @@ import './Workstation.css'
 
 const Step = props => {
     return (
-        <div className={props.id === 0 || props.id === 4 || props.id === 8 || props.id === 12 ? 'step on-beat' : 'step' }
-                onClick={() => props.toggleStepOn(props.id)}>
-            <div className={props.on ? 'led-on' : 'led-off'}/>
+        <div className={props.index === 0 || props.index === 4 || props.index === 8 || props.index === 12 ? 'step on-beat' : 'step' }
+                onClick={() => props.toggleStepOn(props.index)}>
+            <div className={props.ledStatus}/>
         </div>
     )
 }

@@ -26,7 +26,12 @@
 .plus {
     color: dimgray;
     font-size: 3rem;
-    margin-left: 0;
+    display: flex;
+    margin-top: 5px;
+}
+
+.plus:active {
+    color: #4d4d4d;
 }
 
 /* CSS for Instrument.js */
@@ -111,7 +116,7 @@
     margin: auto;
     width: 15px;
     height: 15px;
-    background-color: #009bb3;
+    background-color: #999999 /*#009bb3*/;
     border-radius: 50%;
     box-shadow: rgba(0, 0, 0, 0.5) 0 -1px 7px 1px, inset #000000 0 -1px 9px;
 }
@@ -120,7 +125,7 @@
     margin: auto;
     width: 15px;
     height: 15px;
-    background-color: #4dff4d;
+    background-color: #99ff99;
     border-radius: 50%;
     box-shadow: rgba(0, 0, 0, 0.5) 0 -1px 7px 1px, inset #001a00 0 -1px 9px, rgba(77, 255, 77, 0.5) 0 2px 12px;
 }
@@ -129,7 +134,7 @@
     margin: auto;
     width: 15px;
     height: 15px;
-    background-color: #ff1a1a;
+    background-color: #ff4d4d;
     border-radius: 50%;
     box-shadow: rgba(0, 0, 0, 0.5) 0 -1px 7px 1px, inset #000000 0 -1px 9px, rgba(255, 0, 4, 0.5) 0 2px 12px;
 }
@@ -232,7 +237,7 @@
 }
 
 .playing {
-    background: #4dff4d;
+    background: #66ff66; /*#4dff4d;*/
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 9px, rgba(63, 140, 255, 0.2) 0 2px 14px;
 }
 

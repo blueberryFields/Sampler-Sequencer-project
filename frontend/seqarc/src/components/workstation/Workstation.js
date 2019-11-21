@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import Tone from 'tone'
 import Transport from "./Transport";
 import Instrument from "./Instrument";
 import SampleBrowser from "./SampleBrowser";
-import {faPlay, faPlus, faStop} from '@fortawesome/free-solid-svg-icons'
+import {faPlus} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Workstation = props => {
@@ -45,31 +45,37 @@ const Workstation = props => {
     }
 
     const toggleTransport = () => {
+        if(playing) setActiveStep(-1)
         Tone.Transport.toggle()
         setPlaying(!playing)
         togglePositionUpdater()
     }
 
+    const [activeStep, setActiveStep] = useState(-1)
+    
+    const stepForward = () => {
+        activeStep < 15 ? setActiveStep(activeStep + 1) : setActiveStep(0)
+        console.log('Step forward fired')
+    }
+
+    useEffect(() => {
+        console.log(activeStep)
+    }, [activeStep])
+
+    const initStepper = (() => {
+        Tone.Transport.scheduleRepeat(stepForward, '4n')
+    })
+
+    useEffect(() => {
+        initStepper()
+    }, [])
+
     // SOUND-ENGINE
 
-    const [instrument, setInstrument] = useState([])
+    const [instruments, setInstruments] = useState([])
 
-    const addNote = (instrIndex, notePosition, noteValue) => {
-        instrument[instrIndex].part.add(
-            {time: {'16n': notePosition}, note: noteValue}
-        )
-    }
-
-    const removeNote = (instrIndex, notePosition) => {
-        instrument[instrIndex].part.remove(
-            {'16n': notePosition}
-        )
-    }
-
-    const updateInstrumentName = (index, name) => {
-        instrument[index].name = name
-        console.log(instrument[0].name)
-    }
+    // Runs only once, when component is mounted.
+    // Initializes the instruments
 
     useEffect(() => {
         let instrument1 = new Tone.Sampler({
@@ -87,18 +93,10 @@ const Workstation = props => {
         part1.loop = true
         part1.loopEnd = '1n'
 
-        setInstrument([
-            ...instrument,
-            {
-                name: 'Instr 1',
-                instrument: instrument1,
-                part: part1
-            }
-        ])
-
         let instrument2 = new Tone.Sampler({
             'C3': 'samples/hihat.wav',
         }).toMaster()
+
 
         // pass in an array of events
         let part2 = new Tone.Part(function (time, event) {
@@ -111,8 +109,7 @@ const Workstation = props => {
         part2.loop = true
         part2.loopEnd = '1n'
 
-        setInstrument([
-            ...instrument,
+        setInstruments([
             {
                 name: 'Instr 1',
                 instrument: instrument1,
@@ -127,6 +124,50 @@ const Workstation = props => {
 
     }, [])
 
+    // Methods for editing instruments and parts
+
+    const addNote = (instrIndex, notePosition, noteValue) => {
+        instruments[instrIndex].part.add(
+            {time: {'16n': notePosition}, note: noteValue}
+        )
+    }
+
+    const removeNote = (instrIndex, notePosition) => {
+        instruments[instrIndex].part.remove(
+            {'16n': notePosition}
+        )
+    }
+
+    const updateInstrumentName = (index, name) => {
+        instruments[index].name = name
+        console.log(instruments[index].name)
+    }
+
+    const addNewInstrument = () => {
+        let instrument = new Tone.Sampler({
+            'C3': 'samples/snare.wav',
+        }).toMaster()
+
+        // pass in an array of events
+        let part = new Tone.Part(function (time, event) {
+            //the events will be given to the callback with the time they occur
+            instrument.triggerAttack(event.note, time)
+        }, [])
+
+        //start the part at the beginning of the Transport's timeline
+        part.start(0)
+        part.loop = true
+        part.loopEnd = '1n'
+
+        setInstruments([
+            ...instruments,
+            {
+                name: 'Instr ' + (instruments.length + 1),
+                instrument: instrument,
+                part: part
+            }
+        ])
+    }
 
     return (
         <div className="container">
@@ -145,7 +186,7 @@ const Workstation = props => {
                 </div>
                 <div className="instrument-section">
                     {
-                        instrument.map((instrument, index) => {
+                        instruments.map((instrument, index) => {
                             return <Instrument
                                 key={index}
                                 index={index}
@@ -153,10 +194,22 @@ const Workstation = props => {
                                 addNote={addNote}
                                 removeNote={removeNote}
                                 updateInstrumentName={updateInstrumentName}
+                                activeStep={activeStep}
                             />
                         })
                     }
-                    <FontAwesomeIcon className="plus" icon={faPlus}/>
+                    <div className="plus">
+                        <FontAwesomeIcon
+                            className="plus-icon"
+                            icon={faPlus}
+                            onClick={() => addNewInstrument()}
+                        />
+                    </div>
+                    <button
+                        style={{width: '4rem', height: '2rem'}}
+                        onClick={() => stepForward()}>
+                        {activeStep}
+                    </button>
                 </div>
             </div>
         </div>

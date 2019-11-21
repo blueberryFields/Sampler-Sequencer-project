@@ -1,34 +1,78 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './Workstation.css'
 import Step from "./step";
 
 const Instrument = props => {
 
     const [steps, setSteps] = useState([
-        {id: 0, on: false},
-        {id: 1, on: false},
-        {id: 2, on: false},
-        {id: 3, on: false},
-        {id: 4, on: false},
-        {id: 5, on: false},
-        {id: 6, on: false},
-        {id: 7, on: false},
-        {id: 8, on: false},
-        {id: 9, on: false},
-        {id: 10, on: false},
-        {id: 11, on: false},
-        {id: 12, on: false},
-        {id: 13, on: false},
-        {id: 14, on: false},
-        {id: 15, on: false}
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
     ])
 
-    const toggleStepOn = (id) => {
-        setSteps(steps.map(step => (step.id === id ? {id: step.id, on: !step.on} : step)))
-        if (!steps[id].on) {
-            props.addNote(props.index, id, 'C3')
+    const [ledStatus, setLedStatus] = useState([
+        'led-off',
+        'led-off',
+        'led-off',
+        'led-off',
+        'led-off',
+        'led-off',
+        'led-off',
+        'led-off',
+        'led-off',
+        'led-off',
+        'led-off',
+        'led-off',
+        'led-off',
+        'led-off',
+        'led-off',
+        'led-off'
+    ])
+
+    // Update led-status when stepping through the steps
+    useEffect(() => {
+        let newLedStatusArray = [...ledStatus]
+        steps[props.activeStep] ? newLedStatusArray[props.activeStep] = 'led-trigger' : newLedStatusArray[props.activeStep] = 'led-active'
+        if (props.activeStep > 0) {
+            steps[props.activeStep - 1] ? newLedStatusArray[props.activeStep - 1] = 'led-on' : newLedStatusArray[props.activeStep - 1] = 'led-off'
+        } else if (props.activeStep === 0) {
+            steps[props.activeStep - 1] ? newLedStatusArray[steps.length - 1] = 'led-on' : newLedStatusArray[steps.length -1] = 'led-off'
+        } else if(props.activeStep === -1) {
+            newLedStatusArray = newLedStatusArray.map((status, index) => steps[index] ? 'led-on' : 'led-off')
+        }
+        setLedStatus(newLedStatusArray)
+
+    }, [props.activeStep])
+
+    const updateLedStatus = ((index, status) => {
+        let newArray = [...ledStatus]
+        newArray[index] = status
+        setLedStatus(newArray)
+    })
+
+    const toggleStepOn = (index) => {
+        let newArray = [...steps]
+        newArray[index] = !steps[index]
+        setSteps(newArray)
+        if (!steps[index]) {
+            props.addNote(props.index, index, 'C3')
+            updateLedStatus(index, 'led-on')
         } else {
-            props.removeNote(props.index, id, 'C3')
+            props.removeNote(props.index, index, 'C3')
+            updateLedStatus(index, 'led-off')
         }
     }
 
@@ -59,7 +103,13 @@ const Instrument = props => {
             </div>
             <div className="steps">
                 {steps.map((step, index) => {
-                    return <Step on={step.on} key={index} id={step.id} toggleStepOn={toggleStepOn}/>
+                    return <Step
+                        on={step.on}
+                        key={index}
+                        index={index}
+                        toggleStepOn={toggleStepOn}
+                        ledStatus={ledStatus[index]}
+                    />
                 })}
             </div>
         </div>
