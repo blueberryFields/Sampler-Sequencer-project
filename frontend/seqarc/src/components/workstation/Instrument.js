@@ -49,7 +49,7 @@ const Instrument = props => {
         if (props.activeStep > 0) {
             steps[props.activeStep - 1] ? newLedStatusArray[props.activeStep - 1] = 'led-on' : newLedStatusArray[props.activeStep - 1] = 'led-off'
         } else if (props.activeStep === 0) {
-            steps[props.activeStep - 1] ? newLedStatusArray[steps.length - 1] = 'led-on' : newLedStatusArray[steps.length -1] = 'led-off'
+            steps[steps.length - 1] ? newLedStatusArray[steps.length - 1] = 'led-on' : newLedStatusArray[steps.length -1] = 'led-off'
         } else if(props.activeStep === -1) {
             newLedStatusArray = newLedStatusArray.map((status, index) => steps[index] ? 'led-on' : 'led-off')
         }

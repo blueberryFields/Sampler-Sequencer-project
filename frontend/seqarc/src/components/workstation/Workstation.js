@@ -58,7 +58,16 @@ const Workstation = props => {
         togglePositionUpdater()
     }
 
+    // ACTIVE STEPS
+    // Keeps track of active steps whicg Instrument listens to and lights LEDs accordingly
 
+    const initStepper = (() => {
+        Tone.Transport.scheduleRepeat(stepForward, '16n')
+    })
+
+    useEffect(() => {
+        initStepper()
+    }, [])
 
     const [activeStep, setActiveStep] = useState(-1)
 
@@ -67,20 +76,14 @@ const Workstation = props => {
         console.log('Step forward fired', activeStep)
     }
 
-    const initStepper = (() => {
-        Tone.Transport.scheduleRepeat(stepForward, '16n')
-    })
-
     const stepperRef = useRef(activeStep)
 
     useEffect(
-        () => { stepperRef.current = activeStep },
+        () => {
+            stepperRef.current = activeStep
+        },
         [activeStep]
     )
-
-    useEffect(() => {
-        initStepper()
-    }, [])
 
     // SOUND-ENGINE
 
@@ -217,12 +220,6 @@ const Workstation = props => {
                             onClick={() => addNewInstrument()}
                         />
                     </div>
-                    <button
-                        style={{width: '4rem', height: '2rem', background: 'grey'}}
-                        // onClick={() => stepForward()}
-                    >
-                        {activeStep}
-                    </button>
                 </div>
             </div>
         </div>
