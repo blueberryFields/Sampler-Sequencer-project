@@ -18,7 +18,7 @@ const Workstation = props => {
         if (!playing) {
             setTimerId(setInterval(() => {
                 setPosition(formatPosition(Tone.Transport.position))
-            }, 100))
+            }, 0))
         } else {
             // noinspection JSCheckFunctionSignatures
             clearInterval(timerId)
@@ -29,6 +29,13 @@ const Workstation = props => {
     const formatPosition = (position) => {
         return position.split(":")[0] + ':' + position.split(":")[1] + ':' + parseFloat(position.split(":")[2]).toFixed(0)
     }
+
+    useEffect(() => {
+        /*if(playing) {
+            setActiveStep(position.split(":")[1] * position.split(":")[2])
+        }*/
+        // console.log('position updated:', activeStep, parseInt(position.split(":")[1]) +1, parseInt(position.split(":")[2]))
+    }, [position])
 
     const [bpm, setBpm] = useState(Tone.Transport.bpm.value)
 
@@ -45,26 +52,31 @@ const Workstation = props => {
     }
 
     const toggleTransport = () => {
-        if(playing) setActiveStep(-1)
+        if (playing) setActiveStep(-1)
         Tone.Transport.toggle()
         setPlaying(!playing)
         togglePositionUpdater()
     }
 
+
+
     const [activeStep, setActiveStep] = useState(-1)
-    
+
     const stepForward = () => {
-        activeStep < 15 ? setActiveStep(activeStep + 1) : setActiveStep(0)
-        console.log('Step forward fired')
+        stepperRef.current < 15 ? setActiveStep(stepperRef.current + 1) : setActiveStep(0)
+        console.log('Step forward fired', activeStep)
     }
 
-    useEffect(() => {
-        console.log(activeStep)
-    }, [activeStep])
-
     const initStepper = (() => {
-        Tone.Transport.scheduleRepeat(stepForward, '4n')
+        Tone.Transport.scheduleRepeat(stepForward, '16n')
     })
+
+    const stepperRef = useRef(activeStep)
+
+    useEffect(
+        () => { stepperRef.current = activeStep },
+        [activeStep]
+    )
 
     useEffect(() => {
         initStepper()
@@ -206,8 +218,9 @@ const Workstation = props => {
                         />
                     </div>
                     <button
-                        style={{width: '4rem', height: '2rem'}}
-                        onClick={() => stepForward()}>
+                        style={{width: '4rem', height: '2rem', background: 'grey'}}
+                        // onClick={() => stepForward()}
+                    >
                         {activeStep}
                     </button>
                 </div>
