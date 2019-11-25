@@ -8,34 +8,15 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Workstation = props => {
 
+    // Transport-related stuff
+
     const [position, setPosition] = useState(Tone.Transport.position)
 
     const [playing, setPlaying] = useState(false)
 
-    const [timerId, setTimerId] = useState(null)
-
-    const togglePositionUpdater = () => {
-        if (!playing) {
-            setTimerId(setInterval(() => {
-                setPosition(formatPosition(Tone.Transport.position))
-            }, 0))
-        } else {
-            // noinspection JSCheckFunctionSignatures
-            clearInterval(timerId)
-            setPosition(formatPosition(Tone.Transport.position))
-        }
-    }
-
     const formatPosition = (position) => {
         return position.split(":")[0] + ':' + position.split(":")[1] + ':' + parseFloat(position.split(":")[2]).toFixed(0)
     }
-
-    useEffect(() => {
-        /*if(playing) {
-            setActiveStep(position.split(":")[1] * position.split(":")[2])
-        }*/
-        // console.log('position updated:', activeStep, parseInt(position.split(":")[1]) +1, parseInt(position.split(":")[2]))
-    }, [position])
 
     const [bpm, setBpm] = useState(Tone.Transport.bpm.value)
 
@@ -52,14 +33,17 @@ const Workstation = props => {
     }
 
     const toggleTransport = () => {
-        if (playing) setActiveStep(-1)
         Tone.Transport.toggle()
+        if (playing) {
+            setActiveStep(-1)
+            setPosition(formatPosition(Tone.Transport.position))
+        }
         setPlaying(!playing)
-        togglePositionUpdater()
+
     }
 
     // ACTIVE STEPS
-    // Keeps track of active steps whicg Instrument listens to and lights LEDs accordingly
+    // Keeps track of active steps which Instrument listens to and lights LEDs accordingly
 
     const initStepper = (() => {
         Tone.Transport.scheduleRepeat(stepForward, '16n')
@@ -73,6 +57,7 @@ const Workstation = props => {
 
     const stepForward = () => {
         stepperRef.current < 15 ? setActiveStep(stepperRef.current + 1) : setActiveStep(0)
+        setPosition(formatPosition(Tone.Transport.position))
         console.log('Step forward fired', activeStep)
     }
 
