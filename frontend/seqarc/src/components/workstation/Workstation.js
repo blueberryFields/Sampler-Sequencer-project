@@ -35,11 +35,12 @@ const Workstation = props => {
     const toggleTransport = () => {
         Tone.Transport.toggle()
         if (playing) {
-            setActiveStep(-1)
             setPosition(formatPosition(Tone.Transport.position))
+            // Timeout required else sometimes the scheduled stepForward will fire after activeStep set to -1 which lead
+            // to led lights remaining lit on step 0
+            setTimeout(() => setActiveStep(-1), 50)
         }
         setPlaying(!playing)
-
     }
 
     // ACTIVE STEPS
@@ -58,7 +59,6 @@ const Workstation = props => {
     const stepForward = () => {
         stepperRef.current < 15 ? setActiveStep(stepperRef.current + 1) : setActiveStep(0)
         setPosition(formatPosition(Tone.Transport.position))
-        console.log('Step forward fired', activeStep)
     }
 
     const stepperRef = useRef(activeStep)
@@ -124,6 +124,21 @@ const Workstation = props => {
 
     }, [])
 
+    // Sample-auditioner
+
+    // const [auditionerIsLoaded, setAuditionerIsLoaded] = useState(false);
+    const sampleAuditioner = useRef(new Tone.Player().toMaster())
+
+    const auditSample = (name, fileExtension) => {
+        console.log(name + '.' + fileExtension)
+        sampleAuditioner.current.load(
+            'samples/' + name + '.' + fileExtension,
+            () => {
+                sampleAuditioner.current.start()
+            }
+        )
+    }
+
     // Methods for editing instruments and parts
 
     const addNote = (instrIndex, notePosition, noteValue) => {
@@ -181,8 +196,10 @@ const Workstation = props => {
                 position={position}
             />
             <div className="split-pane">
-                <div className="sample-browser-container">
-                    <SampleBrowser/>
+                <div className="sample-browser-section">
+                    <SampleBrowser
+                        auditSample={auditSample}
+                    />
                 </div>
                 <div className="instrument-section">
                     {

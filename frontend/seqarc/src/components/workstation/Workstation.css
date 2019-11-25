@@ -14,25 +14,16 @@
     flex-direction: row;
 }
 
-.sample-browser-container {
+.sample-browser-section {
     width: 33%;
+    height: 67vh;
 }
 
 .instrument-section {
     width: 67%;
-    margin-right: 5px;
+    margin: 0 5px;
 }
 
-.plus {
-    color: dimgray;
-    font-size: 3rem;
-    display: flex;
-    margin-top: 5px;
-}
-
-.plus:active {
-    color: #4d4d4d;
-}
 
 /* CSS for Instrument.js */
 
@@ -139,10 +130,130 @@
     box-shadow: rgba(0, 0, 0, 0.5) 0 -1px 7px 1px, inset #000000 0 -1px 9px, rgba(255, 0, 4, 0.5) 0 2px 12px;
 }
 
+.plus {
+    color: dimgray;
+    font-size: 3rem;
+    display: flex;
+    margin-top: 5px;
+}
+
+.plus:active {
+    color: #4d4d4d;
+}
+
 /* CSS for SampleBrowser.js */
 
 .sample-browser-container {
+    height: 100%;
+    /*color: dimgrey;*/
+    color: #21242c;
+    /*border-style: solid;*/
+    /*border-width: 2px;*/
+    background-color: #0b0c0f;
+    display: flex;
+    flex-direction: column;
+}
+
+.browser-footer {
+    margin-bottom: 0;
+    background: #16181d;
+    height: 2rem;
+    display: flex;
+}
+
+.audition-icon {
+    margin: auto auto auto 10px;
+}
+
+.audition-on {
+    color: dimgray;
+}
+
+.audition-off {
+    /*color: #595959;*/
+    color: black;
+}
+
+.filter {
+    padding-top: 8px;
     color: dimgrey;
+    background: #21242c;
+    background: linear-gradient(180deg,rgba(11,12,15,1) 0%, rgba(22,24,29,1) 30%, rgba(33,36,44,1) 100%);
+    /*background: #16181d;*/
+}
+
+.search {
+    margin: 5px 0 5px 10px;
+    padding: 2px;
+    width: 20rem;
+    font-size: 1.2rem;
+    border-radius: 25px;
+    color: dimgray;
+    background: #cccccc;
+    /*background: #0b0c0f;*/
+    display: flex;
+}
+
+.search-icon {
+    padding: 3px 8px;
+}
+
+.search-field {
+    /*margin-left: 5px;*/
+    flex: 1;
+    background: none;
+    border: none;
+    color: #0b0c0f;
+    font-size: 1.2rem;
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+}
+
+.category {
+    padding: 2px 15px;
+    margin: 5px;
+    background-color: #2c303a;
+    border-radius: 15px;
+    /*box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);*/
+}
+
+.cat-selected {
+    background-color: #373c49;
+}
+
+.cat-not-selected {
+    background-color: #2c303a;
+}
+
+table {
+    margin: 0 auto auto auto;
+    padding: 5px;
+    color: dimgrey;
+    text-align: left;
+    border-collapse: collapse;
+    width: 97%;
+}
+
+tbody tr:hover {
+    /*background: #16181d;*/
+    color: #cccccc;
+}
+
+th {
+    padding: 10px 0;
+    color: #808080;
+}
+
+th, td {
+    border-bottom: 1px solid #16181d;
+}
+
+td {
+    padding: 5px 0;
 }
 
 /* CSS for Transport.js */
