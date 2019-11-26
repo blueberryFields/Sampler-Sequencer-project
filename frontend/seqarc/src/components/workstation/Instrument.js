@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import './Workstation.css'
 import Step from "./step";
-import {faEdit, faVolumeUp, faWrench} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faTimes, faVolumeUp, faWrench} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Instrument = props => {
@@ -93,7 +93,10 @@ const Instrument = props => {
     return (
         <div className="instrument-container">
             <div className="instr-header">
-                <div className="trigger-button">
+                <div
+                    className="trigger-button"
+                    onClick={() => props.triggerInstrument(props.index)}
+                >
                     <div className="instr-number">{props.index + 1}</div>
                 </div>
                 <input
@@ -108,11 +111,18 @@ const Instrument = props => {
                     }}
                     onBlur={() => updateName()}
                 />
-                <FontAwesomeIcon
-                    className={props.editSampleModeValue === props.index ? 'edit-sample-button edit-sample-button-on' : 'edit-sample-button edit-sample-button-off'}
-                    icon={faWrench}
-                    onClick={() => handleClickOnEditSample()}
-                />
+                <div className="instrument-icons">
+                    <FontAwesomeIcon
+                        className={props.editSampleModeValue === props.index ? 'edit-sample-button edit-sample-button-on' : 'edit-sample-button edit-sample-button-off'}
+                        icon={faWrench}
+                        onClick={() => handleClickOnEditSample()}
+                    />
+                    <FontAwesomeIcon
+                        className="delete-instrument"
+                        icon={faTimes}
+                        onClick={() => props.deleteInstrument(props.index)}
+                    />
+                </div>
             </div>
             <div className="steps">
                 {steps.map((step, index) => {

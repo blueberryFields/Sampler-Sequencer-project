@@ -70,63 +70,55 @@ const Workstation = props => {
         [activeStep]
     )
 
-    // SOUND-ENGINE
-
+    // This contains all the instruments
     const [instruments, setInstruments] = useState([])
 
-    // Runs only once, when component is mounted.
-    // Initializes the instruments
+    // Add new Instruments
+    const addNewInstrument = () => {
 
-    useEffect(() => {
-        let instrument1 = new Tone.Sampler({
-            'C3': 'samples/kick.wav',
-        }).toMaster()
+        let instrument = new Tone.Sampler({
+                'C3': 'samples/kick.wav'
+            }
+        ).toMaster()
 
         // pass in an array of events
-        let part1 = new Tone.Part(function (time, event) {
+        let part = new Tone.Part(function (time, event) {
             //the events will be given to the callback with the time they occur
-            instrument1.triggerAttack(event.note, time)
+            if(instrument.loaded) instrument.triggerAttack(event.note, time)
         }, [])
 
         //start the part at the beginning of the Transport's timeline
-        part1.start(0)
-        part1.loop = true
-        part1.loopEnd = '1n'
-
-        /*let instrument2 = new Tone.Sampler({
-            'C3': 'samples/hihat.wav',
-        }).toMaster()
-
-
-        // pass in an array of events
-        let part2 = new Tone.Part(function (time, event) {
-            //the events will be given to the callback with the time they occur
-            instrument2.triggerAttack(event.note, time)
-        }, [])
-
-        //start the part at the beginning of the Transport's timeline
-        part2.start(0)
-        part2.loop = true
-        part2.loopEnd = '1n'*/
+        part.start(0)
+        part.loop = true
+        part.loopEnd = '1n'
 
         setInstruments([
+            ...instruments,
             {
-                name: 'Instr 1',
-                instrument: instrument1,
-                part: part1
-            },
-           /* {
-                name: 'Instr 2',
-                instrument: instrument2,
-                part: part2
-            }*/
+                name: 'Instr ' + (instruments.length + 1),
+                instrument,
+                part
+            }
         ])
+    }
 
+    const deleteInstrument = (index) => {
+        instruments[index].instrument.dispose()
+        instruments[index].part.dispose()
+        let newInstrumentArr = [...instruments]
+        newInstrumentArr.splice(index)
+        setInstruments(newInstrumentArr)
+    }
+
+    // Runs only once, when component is mounted.
+    // Make one instrument at start
+    useEffect(() => {
+        addNewInstrument()
     }, [])
 
     // Sample-auditioner
 
-    const auditionVol = useRef(new Tone.Volume(-12))
+    const auditionVol = useRef(new Tone.Volume(-6))
     const sampleAuditioner = useRef(new Tone.Player().chain(auditionVol.current, Tone.Master))
 
     const setAuditionVol = (decibel) => {
@@ -142,12 +134,18 @@ const Workstation = props => {
         )
     }
 
+    // Instrument auditioning
+    const triggerInstrument = (index) => {
+        instruments[index].instrument.triggerAttack('C3')
+    }
+
     // Methods for editing instruments and parts
 
     // If set to > -1 where in editSampleMode and the value represents which instrument is being edited
     const [editSampleModeValue, setEditSampleModeValue] = useState(-1)
 
     const selectInstrumentSample = (name, fileExtension) => {
+        instruments[editSampleModeValue].loaded = false
         instruments[editSampleModeValue].instrument.add('C3', `samples/${name}.${fileExtension}`)
     }
 
@@ -166,32 +164,6 @@ const Workstation = props => {
     const updateInstrumentName = (index, name) => {
         instruments[index].name = name
         console.log(instruments[index].name)
-    }
-
-    const addNewInstrument = () => {
-        let instrument = new Tone.Sampler({
-            'C3': 'samples/snare.wav',
-        }).toMaster()
-
-        // pass in an array of events
-        let part = new Tone.Part(function (time, event) {
-            //the events will be given to the callback with the time they occur
-            instrument.triggerAttack(event.note, time)
-        }, [])
-
-        //start the part at the beginning of the Transport's timeline
-        part.start(0)
-        part.loop = true
-        part.loopEnd = '1n'
-
-        setInstruments([
-            ...instruments,
-            {
-                name: 'Instr ' + (instruments.length + 1),
-                instrument: instrument,
-                part: part
-            }
-        ])
     }
 
     return (
@@ -227,6 +199,8 @@ const Workstation = props => {
                                 activeStep={activeStep}
                                 editSampleModeValue={editSampleModeValue}
                                 setEditSampleModeValue={setEditSampleModeValue}
+                                triggerInstrument={triggerInstrument}
+                                deleteInstrument={deleteInstrument}
                             />
                         })
                     }

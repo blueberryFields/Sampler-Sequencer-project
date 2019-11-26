@@ -79,7 +79,7 @@ const SampleBrowser = props => {
         audition ? setAuditionClass('audition-icon audition-on') : setAuditionClass('audition-icon audition-off')
     }, [audition])
 
-    const [volInt, setVolInt] = useState(2)
+    const [volInt, setVolInt] = useState(3)
 
     const volUp = () => {
         if (volInt < 4) setVolInt(volInt + 1)
