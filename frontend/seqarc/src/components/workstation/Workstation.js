@@ -126,11 +126,14 @@ const Workstation = props => {
 
     // Sample-auditioner
 
-    // const [auditionerIsLoaded, setAuditionerIsLoaded] = useState(false);
-    const sampleAuditioner = useRef(new Tone.Player().toMaster())
+    const auditionVol = useRef(new Tone.Volume(-12))
+    const sampleAuditioner = useRef(new Tone.Player().chain(auditionVol.current, Tone.Master))
+
+    const setAuditionVol = (decibel) => {
+        auditionVol.current.volume.value = decibel
+    }
 
     const auditSample = (name, fileExtension) => {
-        console.log(name + '.' + fileExtension)
         sampleAuditioner.current.load(
             'samples/' + name + '.' + fileExtension,
             () => {
@@ -199,6 +202,7 @@ const Workstation = props => {
                 <div className="sample-browser-section">
                     <SampleBrowser
                         auditSample={auditSample}
+                        setAuditionVol={setAuditionVol}
                     />
                 </div>
                 <div className="instrument-section">

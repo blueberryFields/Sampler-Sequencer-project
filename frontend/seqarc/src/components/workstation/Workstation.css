@@ -145,10 +145,7 @@
 
 .sample-browser-container {
     height: 100%;
-    /*color: dimgrey;*/
     color: #21242c;
-    /*border-style: solid;*/
-    /*border-width: 2px;*/
     background-color: #0b0c0f;
     display: flex;
     flex-direction: column;
@@ -170,22 +167,67 @@
 }
 
 .audition-off {
-    /*color: #595959;*/
+    /*color: #0b0c0f;*/
     color: black;
+}
+
+.audition-vol {
+    display: flex;
+    width: 10rem;
+}
+
+.volume-icon {
+    margin: auto;
+    color: dimgray;
+}
+
+.vol-ticks {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.vol-tick {
+    margin: auto 5px;
+    width: 6px;
+    border-radius: 3px;
+}
+
+.vol-tick-on {
+    background: dimgray;
+}
+
+.vol-tick-off {
+    background-color: #0b0c0f;
+}
+
+.vol-tick-0 {
+    height: 6px;
+}
+.vol-tick-1 {
+    height: 9px;
+}
+.vol-tick-2 {
+    height: 12px;
+}
+.vol-tick-3 {
+    height: 15px;
+}
+.vol-tick-4 {
+    height: 18px;
 }
 
 .filter {
     padding-top: 8px;
     color: dimgrey;
     background: #21242c;
-    background: linear-gradient(180deg,rgba(11,12,15,1) 0%, rgba(22,24,29,1) 30%, rgba(33,36,44,1) 100%);
+    background: linear-gradient(180deg, rgba(11, 12, 15, 1) 0%, rgba(22, 24, 29, 1) 30%, rgba(33, 36, 44, 1) 100%);
     /*background: #16181d;*/
 }
 
 .search {
     margin: 5px 0 5px 10px;
     padding: 2px;
-    width: 20rem;
+    width: 16rem;
     font-size: 1.2rem;
     border-radius: 25px;
     color: dimgray;
@@ -200,7 +242,8 @@
 
 .search-field {
     /*margin-left: 5px;*/
-    flex: 1;
+    width: 12rem;
+    /*flex: 1;*/
     background: none;
     border: none;
     color: #0b0c0f;
@@ -216,16 +259,20 @@
 .category {
     padding: 2px 15px;
     margin: 5px;
-    background-color: #2c303a;
     border-radius: 15px;
-    /*box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);*/
+}
+
+.category:active {
+    background-color: #21242c;
 }
 
 .cat-selected {
-    background-color: #373c49;
+    color: #cccccc;
+    background-color: #4d5466;
 }
 
 .cat-not-selected {
+    color: dimgray;
     background-color: #2c303a;
 }
 
@@ -239,7 +286,6 @@ table {
 }
 
 tbody tr:hover {
-    /*background: #16181d;*/
     color: #cccccc;
 }
 
