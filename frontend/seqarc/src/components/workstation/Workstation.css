@@ -70,6 +70,25 @@
     color: #4e5565;
 }
 
+.edit-sample-button {
+    color: dimgray
+}
+
+.edit-sample-button-off {
+    color: dimgray
+}
+
+.edit-sample-button-on {
+    color: #66ff66;
+    /*box-shadow: !*inset #001a00 0 -1px 9px,*! rgba(102, 255, 102, 0.5) 0 0 10px;*/
+    filter: drop-shadow(0 0 7px rgba(102, 255, 102, 1))
+}
+
+.edit-sample-button:active {
+    color: #404040;
+    filter: drop-shadow(0 0 5px rgba(102, 255, 102, 0))
+}
+
 .steps {
     display: flex;
     width: 100%;
@@ -158,8 +177,27 @@
     display: flex;
 }
 
-.audition-icon {
+.browser-footer-buttons {
+    display: flex;
+}
+
+.browser-footer-button {
     margin: auto auto auto 10px;
+    color: dimgray;
+    background: #21242c;
+    font-size: 0.8rem;
+    padding: 3px 8px;
+    border-radius: 3px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+.browser-footer-button:active {
+    background: #0b0c0f;
+    color: #4d4d4d;
+    box-shadow: none;
+}
+
+.audition-icon {
+    margin: auto 10px auto auto;
 }
 
 .audition-on {
@@ -225,7 +263,7 @@
 }
 
 .search {
-    margin: 5px 0 5px 10px;
+    margin: 10px 0 5px 10px;
     padding: 2px;
     width: 16rem;
     font-size: 1.2rem;
@@ -238,6 +276,7 @@
 
 .search-icon {
     padding: 3px 8px;
+    font-size: 1rem;
 }
 
 .search-field {
@@ -247,7 +286,7 @@
     background: none;
     border: none;
     color: #0b0c0f;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .categories {
@@ -395,12 +434,12 @@ td {
 
 .playing {
     background: #66ff66; /*#4dff4d;*/
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 9px, rgba(63, 140, 255, 0.2) 0 2px 14px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 9px, rgba(102, 255, 102, 0.2) 0 2px 14px;
 }
 
 .playing:active {
     background: #00cc00;
-    box-shadow: inset #001a00 0 -1px 9px, rgba(63, 140, 255, 0.2) 0 2px 14px;
+    box-shadow: inset #001a00 0 -1px 9px, rgba(102, 255, 102, 0.2) 0 2px 14px;
 }
 
 .stopped {

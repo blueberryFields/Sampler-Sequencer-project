@@ -124,6 +124,13 @@ const SampleBrowser = props => {
 
     }, [volInt])
 
+    const handleClickOnSample = (name, fileExtension) => {
+        if (audition) props.auditSample(name, fileExtension)
+        if(props.editSampleModeValue > -1) {
+            props.selectInstrumentSample(name, fileExtension)
+        }
+    }
+
     return (
         <div className="sample-browser-container">
             <div className="filter">
@@ -174,9 +181,9 @@ const SampleBrowser = props => {
                 <tbody>
                 {
                     fakeSampleData.map((sample, index) => {
-                        return <tr key={index} onClick={() => {
-                            if (audition) props.auditSample(sample.name, sample.fileExtension)
-                        }}>
+                        return <tr
+                            key={index}
+                            onClick={() => handleClickOnSample(sample.name, sample.fileExtension)}>
                             <td>{sample.name}</td>
                             <td>.{sample.fileExtension}</td>
                             <td>{sample.duration} sec</td>
@@ -187,6 +194,10 @@ const SampleBrowser = props => {
                 </tbody>
             </table>
             <div className="browser-footer">
+                <div className="browser-footer-buttons">
+                    <div className="browser-footer-button">Upload Sample</div>
+                    <div className="browser-footer-button">Record Sample</div>
+                </div>
                 <FontAwesomeIcon
                     className={auditionClass}
                     icon={faHeadphones}

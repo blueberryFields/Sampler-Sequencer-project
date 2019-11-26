@@ -93,7 +93,7 @@ const Workstation = props => {
         part1.loop = true
         part1.loopEnd = '1n'
 
-        let instrument2 = new Tone.Sampler({
+        /*let instrument2 = new Tone.Sampler({
             'C3': 'samples/hihat.wav',
         }).toMaster()
 
@@ -107,7 +107,7 @@ const Workstation = props => {
         //start the part at the beginning of the Transport's timeline
         part2.start(0)
         part2.loop = true
-        part2.loopEnd = '1n'
+        part2.loopEnd = '1n'*/
 
         setInstruments([
             {
@@ -115,11 +115,11 @@ const Workstation = props => {
                 instrument: instrument1,
                 part: part1
             },
-            {
+           /* {
                 name: 'Instr 2',
                 instrument: instrument2,
                 part: part2
-            }
+            }*/
         ])
 
     }, [])
@@ -135,7 +135,7 @@ const Workstation = props => {
 
     const auditSample = (name, fileExtension) => {
         sampleAuditioner.current.load(
-            'samples/' + name + '.' + fileExtension,
+            `samples/${name}.${fileExtension}`,
             () => {
                 sampleAuditioner.current.start()
             }
@@ -143,6 +143,13 @@ const Workstation = props => {
     }
 
     // Methods for editing instruments and parts
+
+    // If set to > -1 where in editSampleMode and the value represents which instrument is being edited
+    const [editSampleModeValue, setEditSampleModeValue] = useState(-1)
+
+    const selectInstrumentSample = (name, fileExtension) => {
+        instruments[editSampleModeValue].instrument.add('C3', `samples/${name}.${fileExtension}`)
+    }
 
     const addNote = (instrIndex, notePosition, noteValue) => {
         instruments[instrIndex].part.add(
@@ -203,6 +210,8 @@ const Workstation = props => {
                     <SampleBrowser
                         auditSample={auditSample}
                         setAuditionVol={setAuditionVol}
+                        selectInstrumentSample={selectInstrumentSample}
+                        editSampleModeValue={editSampleModeValue}
                     />
                 </div>
                 <div className="instrument-section">
@@ -216,6 +225,8 @@ const Workstation = props => {
                                 removeNote={removeNote}
                                 updateInstrumentName={updateInstrumentName}
                                 activeStep={activeStep}
+                                editSampleModeValue={editSampleModeValue}
+                                setEditSampleModeValue={setEditSampleModeValue}
                             />
                         })
                     }

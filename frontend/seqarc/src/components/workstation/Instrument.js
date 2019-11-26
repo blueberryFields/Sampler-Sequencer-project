@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import './Workstation.css'
 import Step from "./step";
+import {faEdit, faVolumeUp, faWrench} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Instrument = props => {
 
@@ -80,6 +82,13 @@ const Instrument = props => {
     const updateName = () => {
         if (name !== props.name) props.updateInstrumentName(props.index, name)
     }
+    const handleClickOnEditSample = () => {
+        if (props.editSampleModeValue !== props.index) {
+            props.setEditSampleModeValue(props.index)
+        } else {
+            props.setEditSampleModeValue(-1)
+        }
+    }
 
     return (
         <div className="instrument-container">
@@ -98,6 +107,11 @@ const Instrument = props => {
                         }
                     }}
                     onBlur={() => updateName()}
+                />
+                <FontAwesomeIcon
+                    className={props.editSampleModeValue === props.index ? 'edit-sample-button edit-sample-button-on' : 'edit-sample-button edit-sample-button-off'}
+                    icon={faWrench}
+                    onClick={() => handleClickOnEditSample()}
                 />
             </div>
             <div className="steps">
