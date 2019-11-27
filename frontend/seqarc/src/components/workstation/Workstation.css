@@ -188,7 +188,7 @@
 .browser-footer {
     margin-bottom: 0;
     background: #16181d;
-    height: 2rem;
+    height: 2.5rem;
     display: flex;
 }
 
@@ -200,7 +200,7 @@
     margin: auto auto auto 10px;
     color: dimgray;
     background: #21242c;
-    font-size: 0.8rem;
+    font-size: 1rem;
     padding: 3px 8px;
     border-radius: 3px;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);

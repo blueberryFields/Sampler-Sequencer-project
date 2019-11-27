@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import './Workstation.css'
 import Step from "./step";
-import {faEdit, faTimes, faVolumeUp, faWrench} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faFileAudio, faTimes, faVolumeUp, faWrench} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Instrument = props => {
@@ -114,7 +114,7 @@ const Instrument = props => {
                 <div className="instrument-icons">
                     <FontAwesomeIcon
                         className={props.editSampleModeValue === props.index ? 'edit-sample-button edit-sample-button-on' : 'edit-sample-button edit-sample-button-off'}
-                        icon={faWrench}
+                        icon={faFileAudio}
                         onClick={() => handleClickOnEditSample()}
                     />
                     <FontAwesomeIcon
