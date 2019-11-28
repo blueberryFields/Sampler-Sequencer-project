@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import './Workstation.css'
-import Step from "./step";
+import Step from "./Step";
 import {faEdit, faFileAudio, faTimes, faVolumeUp, faWrench} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
