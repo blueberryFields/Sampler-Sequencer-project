@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import './Workstation.css'
-import {faHeadphones, faPlus, faSearch, faTimes, faVolumeDown, faVolumeUp} from "@fortawesome/free-solid-svg-icons";
+import {faHeadphones, faSearch, faTimes, faVolumeDown, faVolumeUp} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import useModal from "../hooks/useModal";
 import UploadSampleModal from "./UploadSampleModal";
