@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import './Workstation.css'
-import Step from "./step";
-import {faEdit, faFileAudio, faTimes, faVolumeUp, faWrench} from "@fortawesome/free-solid-svg-icons";
+import Step from "./Step";
+import {faFileAudio, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Instrument = props => {
@@ -56,7 +56,7 @@ const Instrument = props => {
             newLedStatusArray = steps.map((step) => step ? 'led-on' : 'led-off')
         }
         setLedStatus(newLedStatusArray)
-    }, [props.activeStep])
+    }, [props.activeStep, steps])
 
     const updateLedStatus = ((index, status) => {
         let newArray = [...ledStatus]

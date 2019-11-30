@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import './Workstation.css'
-import {faHeadphones, faPlus, faSearch, faTimes, faVolumeDown, faVolumeUp} from "@fortawesome/free-solid-svg-icons";
+import {faHeadphones, faSearch, faTimes, faVolumeDown, faVolumeUp} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import useModal from "../hooks/useModal";
+import UploadSampleModal from "./UploadSampleModal";
 
 const SampleBrowser = props => {
 
@@ -126,10 +128,14 @@ const SampleBrowser = props => {
 
     const handleClickOnSample = (name, fileExtension) => {
         if (audition) props.auditSample(name, fileExtension)
-        if(props.editSampleModeValue > -1) {
+        if (props.editSampleModeValue > -1) {
             props.selectInstrumentSample(name, fileExtension)
         }
     }
+
+    // Upload Sample-modal stuff
+    const {uploadModalIsShowing, uploadModalToggle} = useModal();
+
 
     return (
         <div className="sample-browser-container">
@@ -195,7 +201,15 @@ const SampleBrowser = props => {
             </table>
             <div className="browser-footer">
                 <div className="browser-footer-buttons">
-                    <div className="browser-footer-button">Upload Sample</div>
+                    <div
+                        className="browser-footer-button"
+                        onClick={uploadModalToggle}>
+                        Upload Sample
+                    </div>
+                    <UploadSampleModal
+                        isShowing={uploadModalIsShowing}
+                        hide={uploadModalToggle}
+                    />
                     <div className="browser-footer-button">Record Sample</div>
                 </div>
                 <FontAwesomeIcon

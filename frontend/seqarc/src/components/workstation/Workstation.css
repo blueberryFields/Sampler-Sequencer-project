@@ -49,6 +49,7 @@
     border-radius: 5px;
     background: #8cb3d9;
     box-shadow: inset #006 0 -1px 9px, rgba(63, 140, 255, 0.2) 0 2px 14px;
+    cursor: pointer;
 }
 
 .trigger-button:active {
@@ -73,6 +74,7 @@
 .edit-sample-button {
     color: dimgray;
     margin: auto;
+    cursor: pointer;
 }
 
 .edit-sample-button-off {
@@ -98,6 +100,7 @@
     margin: auto;
     color: dimgray;
     font-size: 1.2rem;
+    cursor: pointer;
 }
 
 .delete-instrument:active {
@@ -169,6 +172,7 @@
     font-size: 3rem;
     display: flex;
     margin-top: 5px;
+    cursor: pointer;
 }
 
 .plus:active {
@@ -204,7 +208,9 @@
     padding: 3px 8px;
     border-radius: 3px;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 }
+
 .browser-footer-button:active {
     background: #0b0c0f;
     color: #4d4d4d;
@@ -213,6 +219,7 @@
 
 .audition-icon {
     margin: auto 10px auto auto;
+    cursor: pointer;
 }
 
 .audition-on {
@@ -234,6 +241,7 @@
 .volume-icon {
     margin: auto;
     color: dimgray;
+    cursor: pointer;
 }
 
 .vol-ticks {
@@ -258,15 +266,19 @@
 .vol-tick-0 {
     height: 6px;
 }
+
 .vol-tick-1 {
     height: 9px;
 }
+
 .vol-tick-2 {
     height: 12px;
 }
+
 .vol-tick-3 {
     height: 15px;
 }
+
 .vol-tick-4 {
     height: 18px;
 }
@@ -316,6 +328,7 @@
     padding: 2px 15px;
     margin: 5px;
     border-radius: 15px;
+    cursor: pointer;
 }
 
 .category:active {
@@ -339,6 +352,10 @@ table {
     text-align: left;
     border-collapse: collapse;
     width: 97%;
+}
+
+tbody tr {
+    cursor: pointer;
 }
 
 tbody tr:hover {
@@ -446,6 +463,7 @@ td {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    cursor: pointer;
     /*box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);*/
 }
 
@@ -467,4 +485,109 @@ td {
 .stopped:active {
     background: #538cc6;
     box-shadow: inset #006 0 -1px 9px, rgba(63, 140, 255, 0.2) 0 2px 14px;
+}
+
+/* UPLOAD SAMPLE MODAL */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    opacity: .6;
+}
+
+.modal-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+}
+
+.modal {
+    z-index: 100;
+    color: dimgray;
+    background-color: #16181d;
+    position: relative;
+    margin: 10rem auto;
+    border-radius: 10px;
+    max-width: 500px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 10px 10px 25px rgba(0, 0, 0, 1);
+
+}
+
+.modal-header {
+    text-align: center;
+    Font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-button {
+    cursor: pointer;
+    border: none;
+    color: dimgray;
+    background: #21242c;
+    font-size: 1rem;
+    padding: 3px 20px;
+    border-radius: 3px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+    width: 6rem;
+    margin-left: 2rem;
+}
+
+.modal-button:active {
+    background: #0b0c0f;
+    color: #4d4d4d;
+}
+
+.upload-file {
+    margin: 1.5rem 0;
+    /*display: flex;*/
+    border: dashed #404040 2px;
+    height: 6rem;
+    border-radius: 5px;
+}
+
+.fileContainer {
+    /*margin: auto;*/
+    overflow: hidden;
+    position: relative;
+    min-height: 100%;
+    min-width: 100%;
+    display: flex;
+}
+
+.upload-text {
+    margin: auto;
+}
+
+.fileContainer [type=file] {
+    height: 10rem;
+    cursor: inherit;
+    display: block;
+    /*font-size: 999px;*/
+    filter: alpha(opacity=0);
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+
 }
