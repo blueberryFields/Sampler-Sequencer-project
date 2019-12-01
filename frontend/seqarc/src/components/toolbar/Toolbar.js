@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import Workstation from "../workstation/Workstation";
 import Home from "../home/Home";
 import About from "../about/About";
+import Profile from "../profile/Profile";
 import './Toolbar.css'
 
 const toolbar = props => {
@@ -15,13 +16,16 @@ const toolbar = props => {
                         <div className="toolbar_navigation_items">
                         <ul className="navbar">
                             <li>
-                            <Link to="/">Home</Link>
+                                <Link to="/">Home</Link>
                             </li>
                             <li> 
-                            <Link to="/about">About</Link>
+                                <Link to="/about">About</Link>
                             </li>            
                             <li>
-                            <Link to="/workstation">Workstation</Link>
+                                <Link to="/workstation">Workstation</Link>
+                            </li>
+                            <li>
+                                <Link to="/profile">Profile</Link>
                             </li>
                         </ul>
                         </div>
@@ -34,6 +38,9 @@ const toolbar = props => {
                     </Route>
                     <Route path="/workstation">
                         <Workstation />
+                    </Route>
+                    <Route path="/profile">
+                        <Profile />
                     </Route>
                     <Route path="/">
                         <Home />
