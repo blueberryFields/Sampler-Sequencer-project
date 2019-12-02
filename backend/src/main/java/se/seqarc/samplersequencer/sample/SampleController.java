@@ -8,7 +8,10 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import se.seqarc.samplersequencer.samplestorage.SampleStorageService;
 
+import java.util.List;
+
 @RestController
+@RequestMapping("/sample")
 public class SampleController {
 
     private final SampleService sampleService;
@@ -19,27 +22,45 @@ public class SampleController {
         this.sampleStorageService = sampleStorageService;
     }
 
-    @GetMapping("/getsamplebyid/{id}")
+    @GetMapping("/findbyid/{id}")
     public ResponseEntity<SampleDTO> getSampleById(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(sampleService.getSample(id), HttpStatus.OK);
+            return new ResponseEntity<>(sampleService.getSampleById(id), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sample not found");
         }
     }
 
-    @PostMapping("/")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
-
-        sampleStorageService.store(file);
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
-
-        return "redirect:/";
+    @GetMapping("/findbycategory/{category}")
+    public ResponseEntity<List<SampleDTO>> getSampleByCategory(@PathVariable String category) {
+        try {
+            return new ResponseEntity<>(sampleService.getSamplesByCategory(category), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
+    @GetMapping("/search/{searchphrase}")
+    public ResponseEntity<List<SampleDTO>> searchForSample(@PathVariable String searchphrase) {
+        try {
+            return new ResponseEntity<>(sampleService.search(searchphrase), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No samples found with searchphrase: " + searchphrase);
+        }
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<SampleDTO> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("name") String name, @RequestParam("category") String category) {
+        try {
+            return new ResponseEntity<>(sampleService.uploadSample(file, name, category), HttpStatus.CREATED);
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error uploading file");
+        }
+    }
 
 
 }

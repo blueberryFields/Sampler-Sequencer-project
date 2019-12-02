@@ -1,8 +1,10 @@
 package se.seqarc.samplersequencer.sample;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import se.seqarc.samplersequencer.category.CategoryDTO;
 
 @Getter
 @Setter
@@ -13,16 +15,17 @@ public class SampleDTO {
     private String name;
     private double length;
     private String format;
-    private String category;
-    private String subCategory;
+    @JsonIgnore
+    private CategoryDTO categoryDTO;
+    private String checksum;
 
     public SampleDTO(Sample sample) {
         this.id = sample.getId();
         this.name = sample.getName();
         this.length = sample.getLength();
         this.format = sample.getFormat();
-        this.category = sample.getCategory();
-        this.subCategory = sample.getSubCategory();
+        this.categoryDTO =  new CategoryDTO(sample.getCategory());
+        this.checksum = sample.getChecksum();
     }
 
 }

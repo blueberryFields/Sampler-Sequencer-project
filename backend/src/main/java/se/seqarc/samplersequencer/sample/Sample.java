@@ -1,13 +1,12 @@
 package se.seqarc.samplersequencer.sample;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import se.seqarc.samplersequencer.category.Category;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Entity
@@ -22,16 +21,19 @@ public class Sample {
     private String name;
     private double length;
     private String format;
-    private String category;
-    private String subCategory;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    @JsonIgnore
+    private Category category;
+    private String checksum;
 
     public Sample(SampleDTO sampleDTO) {
         this.id = sampleDTO.getId();
         this.name = sampleDTO.getName();
         this.length = sampleDTO.getLength();
         this.format = sampleDTO.getFormat();
-        this.category = sampleDTO.getCategory();
-        this.subCategory = sampleDTO.getSubCategory();
+        this.category = new Category(sampleDTO.getCategoryDTO());
+        this.checksum = sampleDTO.getChecksum();
     }
 
 }
