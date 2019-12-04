@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import se.seqarc.samplersequencer.category.Category;
 import se.seqarc.samplersequencer.category.CategoryNotFoundException;
 import se.seqarc.samplersequencer.category.CategoryRepository;
-import se.seqarc.samplersequencer.samplestorage.SampleStorageService;
+import se.seqarc.samplersequencer.storage.StorageService;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,9 +21,9 @@ public class SampleServiceImpl implements SampleService {
 
     private final SampleRepository sampleRepository;
     private final CategoryRepository categoryRepository;
-    private final SampleStorageService sampleStorageService;
+    private final StorageService sampleStorageService;
 
-    public SampleServiceImpl(SampleRepository sampleRepository, CategoryRepository categoryRepository, SampleStorageService sampleStorageService) {
+    public SampleServiceImpl(SampleRepository sampleRepository, CategoryRepository categoryRepository, StorageService sampleStorageService) {
         this.sampleRepository = sampleRepository;
         this.categoryRepository = categoryRepository;
         this.sampleStorageService = sampleStorageService;
@@ -36,7 +36,7 @@ public class SampleServiceImpl implements SampleService {
         // Temporary
         String checksum = "test";
         System.out.println(checksum);
-        sampleStorageService.store(file);
+        sampleStorageService.store(file, "sample");
         return create(name, category, checksum);
     }
 

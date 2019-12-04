@@ -1,6 +1,5 @@
-package se.seqarc.samplersequencer.samplestorage;
+package se.seqarc.samplersequencer.storage;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,12 +12,24 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Service
-public class SampleStorageServiceImpl implements SampleStorageService {
+public class StorageServiceImpl implements StorageService {
 
-   private final Path rootLocation = Paths.get("src/main/resources/samples");
+   private final Path SampleRootLocation = Paths.get("src/main/resources/samples");
+   private final Path ProfilePicRootLoc = Paths.get("src/main/resources/profilepictures");
 
     @Override
-    public void store(MultipartFile file) {
+    public void store(MultipartFile file, String type) {
+        Path rootLocation;
+        switch (type){
+            case "sample":
+                rootLocation = SampleRootLocation;
+                break;
+            case "profilepicture":
+                rootLocation = ProfilePicRootLoc;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + type);
+        }
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             if (file.isEmpty()) {
@@ -31,7 +42,7 @@ public class SampleStorageServiceImpl implements SampleStorageService {
                                 + filename);
             }
             try (InputStream inputStream = file.getInputStream()) {
-                Files.copy(inputStream, this.rootLocation.resolve(filename),
+                Files.copy(inputStream, rootLocation.resolve(filename),
                         StandardCopyOption.REPLACE_EXISTING);
             }
         }

@@ -5,8 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import se.seqarc.samplersequencer.samplestorage.SampleStorageService;
+import se.seqarc.samplersequencer.storage.StorageService;
 
 import java.util.List;
 
@@ -15,9 +14,9 @@ import java.util.List;
 public class SampleController {
 
     private final SampleService sampleService;
-    private final SampleStorageService sampleStorageService;
+    private final StorageService sampleStorageService;
 
-    public SampleController(SampleService sampleService, SampleStorageService sampleStorageService) {
+    public SampleController(SampleService sampleService, StorageService sampleStorageService) {
         this.sampleService = sampleService;
         this.sampleStorageService = sampleStorageService;
     }
