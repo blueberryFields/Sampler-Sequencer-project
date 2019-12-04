@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Sample {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private double length;
