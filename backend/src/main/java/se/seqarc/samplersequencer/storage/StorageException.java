@@ -1,4 +1,4 @@
-package se.seqarc.samplersequencer.samplestorage;
+package se.seqarc.samplersequencer.storage;
 
 public class StorageException extends RuntimeException {
 

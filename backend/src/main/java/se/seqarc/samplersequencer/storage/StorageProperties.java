@@ -1,4 +1,4 @@
-package se.seqarc.samplersequencer.samplestorage;
+package se.seqarc.samplersequencer.storage;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
