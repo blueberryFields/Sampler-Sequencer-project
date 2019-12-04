@@ -60,4 +60,5 @@ frontend/seqarc/.pnp.js
 npm-debug.log
 
 # Dev-Files
-**/samples/
+**/samples/*
+**/profilepictures/*
