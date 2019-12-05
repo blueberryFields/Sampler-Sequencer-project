@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 import se.seqarc.samplersequencer.category.Category;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -25,6 +27,8 @@ public class Sample {
     @JoinColumn(name = "category_id", nullable = false)
     @JsonIgnore
     private Category category;
+    @NotNull
+    @Length(max = 32)
     private String checksum;
 
     public Sample(SampleDTO sampleDTO) {

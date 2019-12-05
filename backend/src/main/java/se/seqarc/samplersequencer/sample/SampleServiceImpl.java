@@ -6,6 +6,7 @@ import se.seqarc.samplersequencer.category.Category;
 import se.seqarc.samplersequencer.category.CategoryNotFoundException;
 import se.seqarc.samplersequencer.category.CategoryRepository;
 import se.seqarc.samplersequencer.storage.StorageService;
+import se.seqarc.samplersequencer.storage.UploadType;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,22 +22,27 @@ public class SampleServiceImpl implements SampleService {
 
     private final SampleRepository sampleRepository;
     private final CategoryRepository categoryRepository;
-    private final StorageService sampleStorageService;
+    private final StorageService storageService;
 
     public SampleServiceImpl(SampleRepository sampleRepository, CategoryRepository categoryRepository, StorageService sampleStorageService) {
         this.sampleRepository = sampleRepository;
         this.categoryRepository = categoryRepository;
-        this.sampleStorageService = sampleStorageService;
+        this.storageService = sampleStorageService;
     }
 
 
     @Override
-    public SampleDTO uploadSample(MultipartFile file, String name, String category) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException {
-//        String checksum = getFileChecksum(MessageDigest.getInstance("MD5"), (File) file);
-        // Temporary
-        String checksum = "test";
-        System.out.println(checksum);
-        sampleStorageService.store(file, "sample");
+    public SampleDTO uploadSample(MultipartFile multipartFile, String name, String category) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException {
+        String filename = storageService.store(multipartFile, UploadType.TEMPSAMPLE);
+        File file = storageService.load(filename, UploadType.TEMPSAMPLE);
+        String checksum = getFileChecksum(MessageDigest.getInstance("MD5"), file);
+//        Check if file already exists, and if not add it
+        Optional<List<Sample>> result = sampleRepository.findSamplesByChecksum(checksum);
+        if (result.isPresent()) {
+            storageService.delete(file, UploadType.TEMPSAMPLE);
+        } else {
+            storageService.moveAndRenameSample(file, checksum);
+        }
         return create(name, category, checksum);
     }
 
@@ -46,7 +52,7 @@ public class SampleServiceImpl implements SampleService {
         sample.setName(name);
         //Check if category exists, else throw exception
         Optional<Category> result = categoryRepository.findCategoryByCategory(category);
-        sample.setCategory(result.orElseThrow(CategoryNotFoundException::new));
+        sample.setCategory(result.orElseThrow(() -> new CategoryNotFoundException(category)));
         sample.setLength(0.5);
         sample.setFormat("wav");
         sample.setChecksum(checksum);
@@ -64,7 +70,7 @@ public class SampleServiceImpl implements SampleService {
     public List<SampleDTO> getSamplesByCategory(String category) throws Exception {
         //Check if category exists, else throw exception
         Optional<Category> result = categoryRepository.findCategoryByCategory(category);
-        Optional<List<Sample>> resultList = sampleRepository.getSamplesByCategory(result.orElseThrow(CategoryNotFoundException::new));
+        Optional<List<Sample>> resultList = sampleRepository.findSamplesByCategory(result.orElseThrow(CategoryNotFoundException::new));
         return convertSampleListToSampleDTOList(resultList.orElseThrow(SampleNotFoundException::new));
     }
 
@@ -95,7 +101,6 @@ public class SampleServiceImpl implements SampleService {
         while ((bytesCount = fis.read(byteArray)) != -1) {
             digest.update(byteArray, 0, bytesCount);
         }
-        ;
 
         //close the stream; We don't need it now.
         fis.close();

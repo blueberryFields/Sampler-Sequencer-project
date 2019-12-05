@@ -57,7 +57,7 @@ public class SampleController {
             return new ResponseEntity<>(sampleService.uploadSample(file, name, category), HttpStatus.CREATED);
         } catch(Exception e) {
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error uploading file");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error uploading file: " + e.getMessage());
         }
     }
 
