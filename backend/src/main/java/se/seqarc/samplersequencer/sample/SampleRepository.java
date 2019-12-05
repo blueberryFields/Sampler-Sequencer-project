@@ -12,5 +12,5 @@ public interface SampleRepository extends CrudRepository<Sample, Long> {
 
     Optional<List<Sample>> findByNameContainingIgnoreCase(String searchphrase);
 
-    Optional<List<Sample>> findSamplesByChecksum(String checksum);
+    Optional<Sample> findFirstByChecksum(String checksum);
 }

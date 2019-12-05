@@ -1,5 +1,6 @@
 package se.seqarc.samplersequencer.storage;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,20 +22,26 @@ public class StorageServiceImpl implements StorageService {
 
 
     @Override
-    public File load(String filename, UploadType uploadType) {
-        Path rootLocation = getRootLocation(uploadType);
+    public File load(String filename, UploadLocation uploadLocation) {
+        Path rootLocation = getRootLocation(uploadLocation);
         return new File(String.valueOf(rootLocation.resolve(filename)));
     }
 
     @Override
-    public void moveAndRenameSample(File file, String checksum) {
+    public void moveAndRenameSample(File file, String checksum, String fileExtension) {
         String filename = getFileNameFromFile(file);
         try {
-            Files.move(tempSampleRootLoc.resolve(filename), sampleRootLoc.resolve(checksum + ".wav"), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(tempSampleRootLoc.resolve(filename), sampleRootLoc.resolve(checksum + "." + fileExtension), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
             throw new StorageException("Failed to move sample: " + filename, e);
         }
+    }
+
+    @Override
+    public String getFileExtension(String filename, UploadLocation uploadLocation) {
+        Path rootLocation = getRootLocation(uploadLocation);
+        return FilenameUtils.getExtension(String.valueOf(rootLocation.resolve(filename)));
     }
 
     @Override
@@ -48,9 +55,9 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public void delete(File file, UploadType uploadType) {
+    public void delete(File file, UploadLocation uploadLocation) {
         String filename = getFileNameFromFile(file);
-        Path rootLocation = getRootLocation(uploadType);
+        Path rootLocation = getRootLocation(uploadLocation);
         try {
             Files.delete(tempSampleRootLoc.resolve(filename));
         } catch (IOException e) {
@@ -59,8 +66,8 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public String store(MultipartFile file, UploadType uploadType) {
-        Path rootLocation = getRootLocation(uploadType);
+    public String store(MultipartFile file, UploadLocation uploadLocation) {
+        Path rootLocation = getRootLocation(uploadLocation);
         String filename = getFileNameFromMultipartFile(file);
         try {
             if (file.isEmpty()) {
@@ -82,9 +89,10 @@ public class StorageServiceImpl implements StorageService {
         }
     }
 
-    private Path getRootLocation(UploadType uploadType) {
+    @Override
+    public Path getRootLocation(UploadLocation uploadLocation) {
         Path rootLocation;
-        switch (uploadType) {
+        switch (uploadLocation) {
             case TEMPSAMPLE:
                 rootLocation = tempSampleRootLoc;
                 break;
@@ -92,7 +100,7 @@ public class StorageServiceImpl implements StorageService {
                 rootLocation = ProfilePicRootLoc;
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + uploadType);
+                throw new IllegalStateException("Unexpected value: " + uploadLocation);
         }
         return rootLocation;
     }

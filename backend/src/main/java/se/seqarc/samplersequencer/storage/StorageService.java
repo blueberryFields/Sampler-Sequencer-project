@@ -7,16 +7,19 @@ import java.nio.file.Path;
 
 public interface StorageService {
 
-    void moveAndRenameSample(File file, String checksum);
+    void moveAndRenameSample(File file, String checksum, String fileExtension);
 
-    void delete(File file, UploadType uploadType);
+    void delete(File file, UploadLocation uploadLocation);
 
-    File load(String filename, UploadType type);
+    File load(String filename, UploadLocation type);
 
-    String store(MultipartFile file, UploadType type);
+    String store(MultipartFile file, UploadLocation type);
 
     String getFileNameFromFile(File file);
 
     String getFileNameFromMultipartFile(MultipartFile file);
 
+    String getFileExtension(String filename, UploadLocation uploadLocation);
+
+    Path getRootLocation(UploadLocation uploadLocation);
 }

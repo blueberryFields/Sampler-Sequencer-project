@@ -20,9 +20,11 @@ public class Sample {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotNull
     private String name;
-    private double length;
-    private String format;
+    private double duration;
+    @NotNull
+    private String fileExtension;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
     @JsonIgnore
@@ -34,8 +36,8 @@ public class Sample {
     public Sample(SampleDTO sampleDTO) {
         this.id = sampleDTO.getId();
         this.name = sampleDTO.getName();
-        this.length = sampleDTO.getLength();
-        this.format = sampleDTO.getFormat();
+        this.duration = sampleDTO.getLength();
+        this.fileExtension = sampleDTO.getFormat();
         this.category = new Category(sampleDTO.getCategoryDTO());
         this.checksum = sampleDTO.getChecksum();
     }

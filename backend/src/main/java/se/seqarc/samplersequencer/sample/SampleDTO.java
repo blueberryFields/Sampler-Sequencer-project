@@ -22,8 +22,8 @@ public class SampleDTO {
     public SampleDTO(Sample sample) {
         this.id = sample.getId();
         this.name = sample.getName();
-        this.length = sample.getLength();
-        this.format = sample.getFormat();
+        this.length = sample.getDuration();
+        this.format = sample.getFileExtension();
         this.categoryDTO =  new CategoryDTO(sample.getCategory());
         this.checksum = sample.getChecksum();
     }
