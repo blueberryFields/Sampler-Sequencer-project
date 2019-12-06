@@ -52,6 +52,7 @@ const Workstation = props => {
 
     useEffect(() => {
         initStepper()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const [activeStep, setActiveStep] = useState(-1)
@@ -114,6 +115,7 @@ const Workstation = props => {
     // Make one instrument at start
     useEffect(() => {
         addNewInstrument()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // Sample-auditioner

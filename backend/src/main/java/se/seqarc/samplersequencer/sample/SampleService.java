@@ -21,5 +21,7 @@ public interface SampleService {
 
     List<SampleDTO> search(String searchword) throws SampleNotFoundException;
 
+    List<SampleDTO> searchAndFilterByCategory(String searchphrase, String category) throws SampleNotFoundException, CategoryNotFoundException;
+
     double calculateWaveDurationInSeconds(File audioFile) throws IOException, UnsupportedAudioFileException;
 }

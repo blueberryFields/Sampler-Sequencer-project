@@ -56,6 +56,7 @@ const Instrument = props => {
             newLedStatusArray = steps.map((step) => step ? 'led-on' : 'led-off')
         }
         setLedStatus(newLedStatusArray)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.activeStep, steps])
 
     const updateLedStatus = ((index, status) => {

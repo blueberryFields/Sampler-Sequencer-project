@@ -1,64 +1,69 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import './Workstation.css'
 import {faHeadphones, faSearch, faTimes, faVolumeDown, faVolumeUp} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import useModal from "../hooks/useModal";
 import UploadSampleModal from "./UploadSampleModal";
+import Axios from 'axios-observable';
 
 const SampleBrowser = props => {
 
-    const fakeSampleData = [
-        {
-            id: 1,
-            name: 'hihat',
-            category: 'hihat',
-            duration: '0.102',
-            fileExtension: 'wav',
-            user: 'SeqArc'
-        },
-        {
-            id: 2,
-            name: 'hihat2',
-            category: 'hihat',
-            duration: '0.45',
-            fileExtension: 'wav',
-            user: 'SeqArc'
-        },
-        {
-            id: 3,
-            name: 'kick',
-            category: 'bassdrum',
-            duration: '0.062',
-            fileExtension: 'wav',
-            user: 'SeqArc'
+    const [categories, setCategories] = useState([])
 
-        },
-        {
-            id: 4,
-            name: 'snare',
-            category: 'bassdrum',
-            duration: '0.126',
-            fileExtension: 'wav',
-            user: 'SeqArc'
-        },
-    ]
+    const [categoriesIsLoading, setCategoriesIsLoading] = useState(true)
 
-    const fakeCategoryData = [
-        {name: 'hihat'},
-        {name: 'bassdrum'},
-        {name: 'snare'},
-        {name: 'kick'},
-        {name: 'synth'},
-        {name: 'guitar'}
-    ]
+    useEffect(() => {
+        Axios.get('http://localhost:8080/category/findall')
+            .subscribe(
+                (response) => {
+                    setCategories(response.data)
+                    setCategoriesIsLoading(false)
+                },
+                error => console.log(error)
+            );
+    }, [])
 
-    const [searchWord, setSearchWord] = useState('')
+    const [categoryFilter, setCategoryFilter] = useState('')
+
+    const [samples, setSamples] = useState([])
+
+    const [searchphrase, setSearchWord] = useState('')
+
+    const getFilteredSamples = useCallback(() => {
+        return Axios.get('http://localhost:8080/sample/filteredsearch',
+            {
+                params: {
+                    searchphrase: searchphrase,
+                    category: categoryFilter
+                }
+            })
+            .subscribe((response) => {
+                    setSamples(response.data)
+                },
+                error => setSamples([]))
+    }, [categoryFilter, searchphrase])
 
     const initSearch = () => {
         setSearchWord('')
     }
 
-    const [categoryFilter, setCategoryFilter] = useState('')
+    const handleEnterSearch = (e) => {
+        if (e.key === 'Enter') {
+            getFilteredSamples()
+        }
+    }
+
+    useEffect(() => {
+        getFilteredSamples()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [categoryFilter])
+
+    useEffect(() => {
+        if (!searchphrase) {
+            getFilteredSamples()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchphrase])
 
     const handleCategory = (name) => {
         if (name === categoryFilter) {
@@ -124,6 +129,7 @@ const SampleBrowser = props => {
                 break
         }
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [volInt])
 
     const handleClickOnSample = (name, fileExtension) => {
@@ -136,7 +142,6 @@ const SampleBrowser = props => {
     // Upload Sample-modal stuff
     const {uploadModalIsShowing, uploadModalToggle} = useModal();
 
-
     return (
         <div className="sample-browser-container">
             <div className="filter">
@@ -148,10 +153,11 @@ const SampleBrowser = props => {
                     />
                     <input
                         className="search-field"
-                        value={searchWord}
+                        value={searchphrase}
                         placeholder="Search..."
                         type="text"
                         onChange={(e) => setSearchWord(e.target.value)}
+                        onKeyDown={(e) => handleEnterSearch(e)}
                     />
                     <FontAwesomeIcon
                         className="search-icon"
@@ -161,17 +167,18 @@ const SampleBrowser = props => {
                 </div>
                 <div className="categories">
                     {
-                        fakeCategoryData.map((category, index) => {
-                            return (
-                                <div
-                                    key={index}
-                                    className={categoryClass(category.name)}
-                                    onClick={() => handleCategory(category.name)}
-                                >
-                                    {category.name}
-                                </div>
-                            )
-                        })
+                        categoriesIsLoading ? <div>Loading!</div> :
+                            categories.map((category, index) => {
+                                return (
+                                    <div
+                                        key={index}
+                                        className={categoryClass(category.category)}
+                                        onClick={() => handleCategory(category.category)}
+                                    >
+                                        {category.category}
+                                    </div>
+                                )
+                            })
                     }
                 </div>
             </div>
@@ -186,12 +193,12 @@ const SampleBrowser = props => {
                 </thead>
                 <tbody>
                 {
-                    fakeSampleData.map((sample, index) => {
+                    samples.map((sample, index) => {
                         return <tr
                             key={index}
                             onClick={() => handleClickOnSample(sample.name, sample.fileExtension)}>
                             <td>{sample.name}</td>
-                            <td>.{sample.fileExtension}</td>
+                            <td>{sample.fileExtension}</td>
                             <td>{sample.duration} sec</td>
                             <td>{sample.user}</td>
                         </tr>

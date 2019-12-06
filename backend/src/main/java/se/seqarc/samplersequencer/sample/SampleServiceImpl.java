@@ -158,13 +158,20 @@ public class SampleServiceImpl implements SampleService {
     public List<SampleDTO> getSamplesByCategory(String category) throws Exception {
         //Check if category exists, else throw exception
         Optional<Category> result = categoryRepository.findCategoryByCategory(category);
-        Optional<List<Sample>> resultList = sampleRepository.findSamplesByCategory(result.orElseThrow(CategoryNotFoundException::new));
-        return convertSampleListToSampleDTOList(resultList.orElseThrow(SampleNotFoundException::new));
+        Optional<List<Sample>> resultList = sampleRepository.findSamplesByCategory(result.orElseThrow(() -> new CategoryNotFoundException(category)));
+        return convertSampleListToSampleDTOList(resultList.orElseThrow(() -> new SampleNotFoundException("No samples in that category: " + category)));
     }
 
     @Override
     public List<SampleDTO> search(String searchphrase) throws SampleNotFoundException {
         Optional<List<Sample>> resultList = sampleRepository.findByNameContainingIgnoreCase(searchphrase);
+        return convertSampleListToSampleDTOList(resultList.orElseThrow(SampleNotFoundException::new));
+    }
+
+    @Override
+    public List<SampleDTO> searchAndFilterByCategory(String searchphrase, String category) throws SampleNotFoundException, CategoryNotFoundException {
+        Optional<Category> result = categoryRepository.findCategoryByCategory(category);
+        Optional<List<Sample>> resultList = sampleRepository.findByNameContainingIgnoreCaseAndCategory(searchphrase, result.orElseThrow(() -> new CategoryNotFoundException(category)));
         return convertSampleListToSampleDTOList(resultList.orElseThrow(SampleNotFoundException::new));
     }
 

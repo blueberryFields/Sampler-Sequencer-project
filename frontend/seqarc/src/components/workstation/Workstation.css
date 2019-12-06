@@ -338,11 +338,13 @@
 .cat-selected {
     color: #cccccc;
     background-color: #4d5466;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .cat-not-selected {
     color: dimgray;
     background-color: #2c303a;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 table {

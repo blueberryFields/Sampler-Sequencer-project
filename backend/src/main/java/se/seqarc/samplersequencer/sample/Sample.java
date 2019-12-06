@@ -36,7 +36,7 @@ public class Sample {
     public Sample(SampleDTO sampleDTO) {
         this.id = sampleDTO.getId();
         this.name = sampleDTO.getName();
-        this.duration = sampleDTO.getLength();
+        this.duration = sampleDTO.getDuration();
         this.fileExtension = sampleDTO.getFileExtension();
         this.category = new Category(sampleDTO.getCategoryDTO());
         this.checksum = sampleDTO.getChecksum();

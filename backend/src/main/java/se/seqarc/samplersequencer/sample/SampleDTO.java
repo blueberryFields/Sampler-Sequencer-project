@@ -13,7 +13,7 @@ public class SampleDTO {
 
     private Long id;
     private String name;
-    private double length;
+    private double duration;
     private String fileExtension;
     @JsonIgnore
     private CategoryDTO categoryDTO;
@@ -22,7 +22,7 @@ public class SampleDTO {
     public SampleDTO(Sample sample) {
         this.id = sample.getId();
         this.name = sample.getName();
-        this.length = sample.getDuration();
+        this.duration = sample.getDuration();
         this.fileExtension = sample.getFileExtension();
         this.categoryDTO =  new CategoryDTO(sample.getCategory());
         this.checksum = sample.getChecksum();
