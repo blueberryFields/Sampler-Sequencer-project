@@ -36,48 +36,18 @@ public class SampleServiceImpl implements SampleService {
         this.storageService = sampleStorageService;
     }
 
-    public File processSample(File file) {
-        File outputFile = Paths.get(String.valueOf(storageService.getRootLocation(UploadLocation.TEMPSAMPLE).resolve("temp.wav"))).toFile();
-        try {
-            // create the ffmpeg process command to run.
-            Process ffmpeg = new ProcessBuilder(
-                    "/opt/local/bin/ffmpeg",
-                    "-i", file.getAbsolutePath(),
-                    "-acodec", "pcm_s16le",
-                    "-ar", "16k",
-                    "-ac", "1",
-                    outputFile.toString())
-                    .start();
-            // this blocks until the execute is complete.
-            ffmpeg.waitFor();
-            if (0 != ffmpeg.exitValue()) {
-                // a non-zero exit value means something blew up
-//                log.error("ffmpeg failed! Exit value: {}", ffmpeg.exitValue());
-                System.out.println("ffmpeg failed! Exit value: {}" + ffmpeg.exitValue());
-            }
-        } catch (IOException e) {
-//            log.error("Unable to run ffmpeg", e);
-            throw new RuntimeException("Unable to run ffmpeg", e);
-        } catch (InterruptedException e) {
-            // you could potentially get this thrown from the waitFor() call.
-//            log.error("Interupted!", e);
-            System.out.println("Interupted!!!");
-        }
-        return outputFile;
-    }
-
-
     @Override
-    public SampleDTO uploadSample(MultipartFile multipartFile, String name, String category) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException {
+    public SampleDTO uploadSample(MultipartFile multipartFile, String name, String category) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException, SampleProcessingException {
         // Store file temporarily
         String filename = storageService.store(multipartFile, UploadLocation.TEMPSAMPLE);
         // Check fileExtension to see if format is supported
         String fileExtension = storageService.getFileExtension(filename, UploadLocation.TEMPSAMPLE);
-        if (!fileExtension.equals("wav") && !fileExtension.equals("mp3")) {
-            throw new FileNotSupportedException(fileExtension);
-        }
         // Load file
         File file = storageService.load(filename, UploadLocation.TEMPSAMPLE);
+        if (!fileExtension.equals("wav") && !fileExtension.equals("mp3")) {
+            storageService.delete(file, UploadLocation.TEMPSAMPLE);
+            throw new FileNotSupportedException(fileExtension);
+        }
         // Process sample, convert to mono Wave with low bitrate, and delete the old file
         File processedFile = processSample(file);
         storageService.delete(file, UploadLocation.TEMPSAMPLE);
@@ -96,6 +66,73 @@ public class SampleServiceImpl implements SampleService {
         return create(name, category, checksum, duration, "wav");
     }
 
+    public File processSample(File file) throws SampleProcessingException {
+        File outputFile = Paths.get(String.valueOf(storageService.getRootLocation(UploadLocation.TEMPSAMPLE).resolve("temp.wav"))).toFile();
+        try {
+            // create the ffmpeg process command to run.
+            Process ffmpeg = new ProcessBuilder(
+                    "/opt/local/bin/ffmpeg",
+                    "-i", file.getAbsolutePath(),
+                    "-acodec", "pcm_s16le",
+                    "-ar", "16k",
+                    "-ac", "1",
+                    outputFile.toString())
+                    .start();
+            // this blocks until the execute is complete.
+            ffmpeg.waitFor();
+            if (0 != ffmpeg.exitValue()) {
+                // a non-zero exit value means something blew up
+//                log.error("ffmpeg failed! Exit value: {}", ffmpeg.exitValue());
+                System.out.println("ffmpeg failed! Exit value: {}" + ffmpeg.exitValue());
+                throw new SampleProcessingException("ffmpeg failed! Exit value: " + ffmpeg.exitValue());
+            }
+        } catch (IOException e) {
+//            log.error("Unable to run ffmpeg", e);
+            throw new SampleProcessingException("Unable to run ffmpeg", e);
+        } catch (InterruptedException e) {
+            // you could potentially get this thrown from the waitFor() call.
+//            log.error("Interupted!", e);
+            System.out.println("Interupted!!!");
+            throw new SampleProcessingException("ffmpeg was interupted!", e);
+        }
+        return outputFile;
+    }
+
+    private static String getFileChecksum(MessageDigest digest, File file) throws IOException {
+        //Get file input stream for reading the file content
+        FileInputStream fis = new FileInputStream(file);
+        //Create byte array to read data in chunks
+        byte[] byteArray = new byte[1024];
+        int bytesCount = 0;
+        //Read file data and update in message digest
+        while ((bytesCount = fis.read(byteArray)) != -1) {
+            digest.update(byteArray, 0, bytesCount);
+        }
+        //close the stream; We don't need it now.
+        fis.close();
+        //Get the hash's bytes
+        byte[] bytes = digest.digest();
+        //This bytes[] has bytes in decimal format;
+        //Convert it to hexadecimal format
+        StringBuilder sb = new StringBuilder();
+        for (byte aByte : bytes) {
+            sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+        }
+        //return complete hash
+        return sb.toString();
+    }
+
+    @Override
+    public double calculateWaveDurationInSeconds(File file) throws IOException, UnsupportedAudioFileException {
+        AudioInputStream audioInputStream = null;
+        audioInputStream = AudioSystem.getAudioInputStream(file);
+        AudioFormat format = audioInputStream.getFormat();
+        long audioFileLength = file.length();
+        int frameSize = format.getFrameSize();
+        float frameRate = format.getFrameRate();
+        return (audioFileLength / (frameSize * frameRate));
+    }
+
     @Override
     public SampleDTO create(String name, String category, String checksum, double duration, String fileExtension) throws CategoryNotFoundException {
         Sample sample = new Sample();
@@ -109,16 +146,6 @@ public class SampleServiceImpl implements SampleService {
         return new SampleDTO(sampleRepository.save(sample));
     }
 
-    @Override
-    public double calculateWaveDurationInSeconds(File file) throws IOException, UnsupportedAudioFileException {
-        AudioInputStream audioInputStream = null;
-        audioInputStream = AudioSystem.getAudioInputStream(file);
-        AudioFormat format = audioInputStream.getFormat();
-        long audioFileLength = file.length();
-        int frameSize = format.getFrameSize();
-        float frameRate = format.getFrameRate();
-        return (audioFileLength / (frameSize * frameRate));
-    }
 
     @Override
     public SampleDTO getSampleById(Long id) throws Exception {
@@ -148,36 +175,4 @@ public class SampleServiceImpl implements SampleService {
         }
         return sampleDTOList;
     }
-
-
-    private static String getFileChecksum(MessageDigest digest, File file) throws IOException {
-        //Get file input stream for reading the file content
-        FileInputStream fis = new FileInputStream(file);
-
-        //Create byte array to read data in chunks
-        byte[] byteArray = new byte[1024];
-        int bytesCount = 0;
-
-        //Read file data and update in message digest
-        while ((bytesCount = fis.read(byteArray)) != -1) {
-            digest.update(byteArray, 0, bytesCount);
-        }
-
-        //close the stream; We don't need it now.
-        fis.close();
-
-        //Get the hash's bytes
-        byte[] bytes = digest.digest();
-
-        //This bytes[] has bytes in decimal format;
-        //Convert it to hexadecimal format
-        StringBuilder sb = new StringBuilder();
-        for (byte aByte : bytes) {
-            sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
-        }
-
-        //return complete hash
-        return sb.toString();
-    }
-
 }

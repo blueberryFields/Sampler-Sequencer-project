@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface SampleService {
 
-    SampleDTO uploadSample(MultipartFile file, String name, String category) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException;
+    SampleDTO uploadSample(MultipartFile file, String name, String category) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException, SampleProcessingException;
 
     SampleDTO create(String name, String category, String checksum, double duration, String fileExtension) throws CategoryNotFoundException;
 
