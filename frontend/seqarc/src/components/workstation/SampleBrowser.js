@@ -123,7 +123,7 @@ const SampleBrowser = props => {
                 break
         }
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+
     }, [volInt])
 
     const handleClickOnSample = (checksum, fileExtension) => {
@@ -143,7 +143,7 @@ const SampleBrowser = props => {
                     <FontAwesomeIcon
                         className="search-icon"
                         icon={faSearch}
-                        // onClick={() => search()}
+                        onClick={() => getFilteredSamples()}
                     />
                     <input
                         className="search-field"

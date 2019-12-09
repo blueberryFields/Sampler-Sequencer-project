@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef, useCallback} from 'react'
 import Tone from 'tone'
 import Transport from "./Transport";
 import Instrument from "./Instrument";
@@ -46,21 +46,18 @@ const Workstation = props => {
     // ACTIVE STEPS
     // Keeps track of active steps which Instrument listens to and lights LEDs accordingly
 
-    const initStepper = (() => {
-        Tone.Transport.scheduleRepeat(stepForward, '16n')
-    })
-
-    useEffect(() => {
-        initStepper()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     const [activeStep, setActiveStep] = useState(-1)
 
-    const stepForward = () => {
+    const stepForward = useCallback(() => {
         stepperRef.current < 15 ? setActiveStep(stepperRef.current + 1) : setActiveStep(0)
         setPosition(formatPosition(Tone.Transport.position))
-    }
+    }, [])
+
+    useEffect(() => {
+        Tone.Transport.scheduleRepeat(stepForward, '16n')
+    }, [stepForward])
+
 
     const stepperRef = useRef(activeStep)
 
@@ -75,7 +72,7 @@ const Workstation = props => {
     const [instruments, setInstruments] = useState([])
 
     // Add new Instruments
-    const addNewInstrument = () => {
+    const addNewInstrument = useCallback(() => {
 
         let instrument = new Tone.Sampler({
                 'C3': 'samples/kick.wav'
@@ -85,7 +82,7 @@ const Workstation = props => {
         // pass in an array of events
         let part = new Tone.Part(function (time, event) {
             //the events will be given to the callback with the time they occur
-            if(instrument.loaded) instrument.triggerAttack(event.note, time)
+            if (instrument.loaded) instrument.triggerAttack(event.note, time)
         }, [])
 
         //start the part at the beginning of the Transport's timeline
@@ -101,7 +98,7 @@ const Workstation = props => {
                 part
             }
         ])
-    }
+    }, [instruments])
 
     const deleteInstrument = (index) => {
         instruments[index].instrument.dispose()
@@ -110,13 +107,6 @@ const Workstation = props => {
         newInstrumentArr.splice(index)
         setInstruments(newInstrumentArr)
     }
-
-    // Runs only once, when component is mounted.
-    // Make one instrument at start
-    useEffect(() => {
-        addNewInstrument()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     // Sample-auditioner
 
@@ -176,7 +166,7 @@ const Workstation = props => {
                 updateBpm={updateBpm}
                 getBpm={bpm}
                 updateSwing={updateSwing}
-                getSwing={Tone.Transport.swing}
+                getSwing={swing}
                 position={position}
             />
             <div className="split-pane">
