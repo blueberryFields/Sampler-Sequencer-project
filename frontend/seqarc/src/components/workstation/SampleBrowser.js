@@ -23,7 +23,7 @@ const SampleBrowser = props => {
             );
     }, [])
 
-    const [categoryFilter, setCategoryFilter] = useState('')
+    const [category, setCategory] = useState('')
 
     const [samples, setSamples] = useState([])
 
@@ -33,15 +33,15 @@ const SampleBrowser = props => {
         return Axios.get('http://localhost:8080/sample/filteredsearch',
             {
                 params: {
-                    searchphrase: searchphrase,
-                    category: categoryFilter
+                    searchphrase,
+                    category
                 }
             })
             .subscribe((response) => {
                     setSamples(response.data)
                 },
                 error => setSamples([]))
-    }, [categoryFilter, searchphrase])
+    }, [category, searchphrase])
 
     const initSearch = () => {
         setSearchWord('')
@@ -54,28 +54,22 @@ const SampleBrowser = props => {
     }
 
     useEffect(() => {
-        getFilteredSamples()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [categoryFilter])
-
-    useEffect(() => {
         if (!searchphrase) {
             getFilteredSamples()
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchphrase])
+    }, [getFilteredSamples, searchphrase, category])
 
     const handleCategory = (name) => {
-        if (name === categoryFilter) {
-            setCategoryFilter('')
+        if (name === category) {
+            setCategory('')
         } else {
-            setCategoryFilter(name)
+            setCategory(name)
         }
     }
 
     const categoryClass = (name) => {
         let categoryClass = 'category'
-        let selectedClass = categoryFilter === name ? ' cat-selected' : ' cat-not-selected'
+        let selectedClass = category === name ? ' cat-selected' : ' cat-not-selected'
         return categoryClass + selectedClass
     }
 
@@ -132,10 +126,10 @@ const SampleBrowser = props => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [volInt])
 
-    const handleClickOnSample = (name, fileExtension) => {
-        if (audition) props.auditSample(name, fileExtension)
+    const handleClickOnSample = (checksum, fileExtension) => {
+        if (audition) props.auditSample(checksum, fileExtension)
         if (props.editSampleModeValue > -1) {
-            props.selectInstrumentSample(name, fileExtension)
+            props.selectInstrumentSample(checksum, fileExtension)
         }
     }
 
@@ -196,7 +190,7 @@ const SampleBrowser = props => {
                     samples.map((sample, index) => {
                         return <tr
                             key={index}
-                            onClick={() => handleClickOnSample(sample.name, sample.fileExtension)}>
+                            onClick={() => handleClickOnSample(sample.checksum, sample.fileExtension)}>
                             <td>{sample.name}</td>
                             <td>{sample.fileExtension}</td>
                             <td>{sample.duration} sec</td>
@@ -216,6 +210,8 @@ const SampleBrowser = props => {
                     <UploadSampleModal
                         isShowing={uploadModalIsShowing}
                         hide={uploadModalToggle}
+                        getFilteredSamples={getFilteredSamples}
+                        testMessage={'hej'}
                     />
                     <div className="browser-footer-button">Record Sample</div>
                 </div>

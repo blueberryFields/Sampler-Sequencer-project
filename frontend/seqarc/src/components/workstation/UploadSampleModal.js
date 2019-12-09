@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './Workstation.css'
 import Axios from "axios-observable";
 
-const Modal = ({isShowing, hide}) => {
+const Modal = ({isShowing, hide, getFilteredSamples}) => {
 
     const [categories, setCategories] = useState([])
 
@@ -19,23 +19,44 @@ const Modal = ({isShowing, hide}) => {
 
     const upLoadSample = () => {
         if (selectedFile && selectedCategory && sampleName) {
-            console.log(selectedFile, selectedCategory, sampleName)
-            
-            Axios.post('http://localhost:8080/sample/upload', {
-                headers: {'Content-Type': 'multipart/form-data'},
-                params: {
-                    file: selectedFile,
-                    name: sampleName,
-                    category: selectedCategory
-                }
+
+            const bodyFormData = new FormData();
+            bodyFormData.set('name', sampleName);
+            bodyFormData.set('category', selectedCategory);
+            bodyFormData.append('file', selectedFile);
+
+            Axios.request({
+                method: 'post',
+                url: 'http://localhost:8080/sample/upload',
+                data: bodyFormData,
+                headers: {'Content-Type': 'multipart/form-data'}
             })
                 .subscribe(
-                    response => console.log(response),
-                    error => console.log(error)
+                    response => {
+                        setSelectedFile(null)
+                        setSelectedCategory('')
+                        setSampleName('')
+                        setMessage("Sample successfully uploaded!")
+                        getFilteredSamples()
+                    },
+                    error => {
+                        console.log(error)
+                        setMessage("Sample upload failed!")
+                    }
                 );
+
+            if (message) setMessage('')
         } else {
             setMessage("Something is missing!")
         }
+    }
+
+    const handleExit = () => {
+        setSelectedFile(null)
+        setSelectedCategory('')
+        setSampleName('')
+        setMessage('')
+        hide()
     }
 
     useEffect(() => {
@@ -68,11 +89,17 @@ const Modal = ({isShowing, hide}) => {
                     </div>
                     <div className="upload-modal-inputs">
                         <input
+                            className="name-input"
                             type="text"
                             value={sampleName}
                             onChange={(e) => setSampleName(e.target.value)}
+                            placeholder="Name"
                         />
-                        <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+                        <select
+                            className="category-chooser"
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}>
+                            {/*<FontAwesomeIcon icon={faCaretDown} />*/}
                             <option value="">Choose Category</option>
                             {
                                 categories.map((category, index) => {
@@ -88,6 +115,9 @@ const Modal = ({isShowing, hide}) => {
                             }
                         </select>
                     </div>
+                    <div className="message">
+                        {message}
+                    </div>
                     <div className="modal-buttons">
                         <button
                             type="button"
@@ -100,7 +130,7 @@ const Modal = ({isShowing, hide}) => {
                                 className="modal-button"
                                 data-dismiss="modal"
                                 aria-label="Close"
-                                onClick={hide}>
+                                onClick={() => handleExit()}>
                             Exit
                         </button>
                     </div>

@@ -146,9 +146,9 @@ const Workstation = props => {
     // If set to > -1 where in editSampleMode and the value represents which instrument is being edited
     const [editSampleModeValue, setEditSampleModeValue] = useState(-1)
 
-    const selectInstrumentSample = (name, fileExtension) => {
+    const selectInstrumentSample = (checksum, fileExtension) => {
         instruments[editSampleModeValue].loaded = false
-        instruments[editSampleModeValue].instrument.add('C3', `samples/${name}.${fileExtension}`)
+        instruments[editSampleModeValue].instrument.add('C3', `samples/${checksum}.${fileExtension}`)
     }
 
     const addNote = (instrIndex, notePosition, noteValue) => {

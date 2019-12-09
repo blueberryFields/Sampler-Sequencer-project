@@ -74,7 +74,7 @@ public class SampleServiceImpl implements SampleService {
                     "/opt/local/bin/ffmpeg",
                     "-i", file.getAbsolutePath(),
                     "-acodec", "pcm_s16le",
-                    "-ar", "16k",
+                    "-ar", "22050",
                     "-ac", "1",
                     outputFile.toString())
                     .start();
