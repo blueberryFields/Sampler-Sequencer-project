@@ -19,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDTO createCategory(String category) throws CategoryAlreadyExistsException {
         Optional<Category> result = categoryRepository.findCategoryByCategory(category);
         if (result.isPresent()) {
-            throw new CategoryAlreadyExistsException();
+            throw new CategoryAlreadyExistsException(category);
         } else {
             Category newCategory = new Category();
             newCategory.setCategory(category);

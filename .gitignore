@@ -44,6 +44,7 @@ frontend/seqarc/build
 
 # misc
 frontend/seqarc/.DS_Store
+frontend/seqarc/public/.DS_Store
 frontend/seqarc/.env.local
 frontend/seqarc/.env.development.local
 frontend/seqarc/.env.test.local
@@ -62,3 +63,4 @@ npm-debug.log
 # Dev-Files
 **/samples/*
 **/profilepictures/*
+**/temp-samples/*
