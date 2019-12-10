@@ -8,9 +8,11 @@ import java.util.Optional;
 
 public interface SampleRepository extends CrudRepository<Sample, Long> {
 
-    Optional<List<Sample>> getSamplesByCategory(Category category);
+    Optional<List<Sample>> findSamplesByCategory(Category category);
 
     Optional<List<Sample>> findByNameContainingIgnoreCase(String searchphrase);
 
+    Optional<List<Sample>> findByNameContainingIgnoreCaseAndCategory(String searchphrase, Category category);
 
+    Optional<Sample> findFirstByChecksum(String checksum);
 }
