@@ -21,12 +21,12 @@ public class SampleServiceImpl implements SampleService {
 
     private final SampleRepository sampleRepository;
     private final CategoryRepository categoryRepository;
-    private final StorageService sampleStorageService;
+    private final StorageService storageService;
 
     public SampleServiceImpl(SampleRepository sampleRepository, CategoryRepository categoryRepository, StorageService sampleStorageService) {
         this.sampleRepository = sampleRepository;
         this.categoryRepository = categoryRepository;
-        this.sampleStorageService = sampleStorageService;
+        this.storageService = sampleStorageService;
     }
 
 
@@ -36,7 +36,7 @@ public class SampleServiceImpl implements SampleService {
         // Temporary
         String checksum = "test";
         System.out.println(checksum);
-        sampleStorageService.store(file, "sample");
+        storageService.store(file, "sample");
         return create(name, category, checksum);
     }
 
