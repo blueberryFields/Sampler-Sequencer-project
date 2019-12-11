@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import se.seqarc.samplersequencer.sample.SampleNotFoundException;
 import se.seqarc.samplersequencer.storage.StorageService;
+import se.seqarc.samplersequencer.storage.UploadLocation;
 
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO uploadProfilePicture(MultipartFile multipartFile) {
-        storageService.store(multipartFile, "profilepicture");
+        storageService.store(multipartFile, UploadLocation.PROFILEPIC);
         return null;
     }
 
