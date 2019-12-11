@@ -1,7 +1,7 @@
 .toolbar {
     position: fixed;
     width: 100%;
-    height: 56px;
+    height: 4vh;
     top: 0;
     left: 0;
     background: rgb(77, 160, 185);
@@ -28,7 +28,7 @@
 }
 
 .main {
-    margin-top: 56px;
+    margin-top: 4vh;
 }
 
 .toolbar_navigation_items a {
