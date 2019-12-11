@@ -18,7 +18,7 @@ public class StorageServiceImpl implements StorageService {
 
     private final Path tempSampleRootLoc = Paths.get("src/main/resources/temp-samples");
     private final Path sampleRootLoc = Paths.get("../frontend/seqarc/public/samples");
-    private final Path ProfilePicRootLoc = Paths.get("src/main/resources/profilepictures");
+    private final Path ProfilePicRootLoc = Paths.get("../frontend/seqarc/public/profilepictures");
 
 
     @Override
