@@ -1,5 +1,4 @@
 import React from 'react';
-import { Grid, Cell} from 'react-mdl';
 import "./Profile.css"
 import "../images/Doom_Guy.jpg"
 import UploadImage from './UploadImage.js';
