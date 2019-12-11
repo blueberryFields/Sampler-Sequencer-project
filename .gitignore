@@ -27,6 +27,11 @@ backend/nbdist/
 backend/.nb-gradle/
 backend/build/
 
+#Backend misc
+.DS_Store
+backend/.DS_Store
+backend/log/
+
 #Database-related stuff
 backend/database
 

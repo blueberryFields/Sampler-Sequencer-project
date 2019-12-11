@@ -33,7 +33,6 @@ public class StorageServiceImpl implements StorageService {
         try {
             Files.move(tempSampleRootLoc.resolve(filename), sampleRootLoc.resolve(checksum + "." + fileExtension), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            e.printStackTrace();
             throw new StorageException("Failed to move sample: " + filename, e);
         }
     }
@@ -59,7 +58,7 @@ public class StorageServiceImpl implements StorageService {
         String filename = getFileNameFromFile(file);
         Path rootLocation = getRootLocation(uploadLocation);
         try {
-            Files.delete(tempSampleRootLoc.resolve(filename));
+            Files.delete(rootLocation.resolve(filename));
         } catch (IOException e) {
             throw new StorageException("Failed to delete temporary sample: " + filename, e);
         }
