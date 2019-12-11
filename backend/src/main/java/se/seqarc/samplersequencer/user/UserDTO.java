@@ -1,5 +1,6 @@
 package se.seqarc.samplersequencer.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ public class UserDTO {
     private String profilePicture;
     private String profileDescription;
     private String userName;
+    @JsonIgnore
     private String password;
 
     public UserDTO(User user) {
