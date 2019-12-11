@@ -119,7 +119,7 @@ const Workstation = props => {
 
     const auditSample = (name, fileExtension) => {
         sampleAuditioner.current.load(
-            `samples/${name}.${fileExtension}`,
+            `samples/${name}`,
             () => {
                 sampleAuditioner.current.start()
             }
@@ -136,9 +136,9 @@ const Workstation = props => {
     // If set to > -1 where in editSampleMode and the value represents which instrument is being edited
     const [editSampleModeValue, setEditSampleModeValue] = useState(-1)
 
-    const selectInstrumentSample = (checksum, fileExtension) => {
+    const selectInstrumentSample = (checksum) => {
         instruments[editSampleModeValue].loaded = false
-        instruments[editSampleModeValue].instrument.add('C3', `samples/${checksum}.${fileExtension}`)
+        instruments[editSampleModeValue].instrument.add('C3', `samples/${checksum}`)
     }
 
     const addNote = (instrIndex, notePosition, noteValue) => {
