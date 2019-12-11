@@ -1,5 +1,7 @@
 package se.seqarc.samplersequencer.user;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserController {
 
     private final UserService userService;
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -37,4 +41,16 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error uploading profile picture");
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> handleProfileDescriptionUpdate(@RequestParam String description, @PathVariable String id) {
+        try {
+            LOGGER.info("Updating description for user " + id + ", description follows: " + description);
+            return new ResponseEntity<>(userService.uploadProfileDescription(description), HttpStatus.OK);
+        } catch(Exception e) {
+            LOGGER.error("Error updating description, full stacktrace follows: ", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error updating profile description");
+        }
+    }
+
 }
