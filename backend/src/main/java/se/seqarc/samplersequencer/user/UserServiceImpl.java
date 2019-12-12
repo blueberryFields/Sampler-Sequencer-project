@@ -6,7 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import se.seqarc.samplersequencer.security.CustomException;
+import se.seqarc.samplersequencer.security.SecurityException;
 import se.seqarc.samplersequencer.security.JwtTokenProvider;
 import se.seqarc.samplersequencer.storage.StorageService;
 import se.seqarc.samplersequencer.storage.UploadLocation;
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO createUser(UserDTO userDTO) throws UsernameTakenException {
+    public void createUser(UserDTO userDTO) throws UsernameTakenException {
         if(userRepository.existsUserByUsername(userDTO.getUsername())) {
             throw new UsernameTakenException(userDTO.getUsername());
         } else {
@@ -58,17 +58,17 @@ public class UserServiceImpl implements UserService {
             user.setUsername(userDTO.getUsername());
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             user.setRoles(userDTO.getRoles());
-            return new UserDTO(userRepository.save(user));
+            userRepository.save(user);
         }
     }
 
     @Override
-    public String login(String username, String password) {
+    public String login(LoginFormDTO loginFormDTO) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginFormDTO.getUsername(), loginFormDTO.getPassword()));
+            return jwtTokenProvider.createToken(loginFormDTO.getUsername(), userRepository.findByUsername(loginFormDTO.getUsername()).getRoles());
         } catch (Exception e) {
-            throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+            throw new SecurityException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import se.seqarc.samplersequencer.user.Role;
 
 @Configuration
 @EnableWebSecurity
@@ -37,10 +38,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/create").permitAll()//
                 .antMatchers("/category/findall").permitAll()
                 .antMatchers("/sample/filteredsearch").permitAll()
+                .antMatchers("/category/create").hasRole("ADMIN")
                 // Disallow everything else..
                 .anyRequest().authenticated();
 
         // If a user try to access a resource without having enough permissions
+        // TODO: is this doing anything?
         http.exceptionHandling().accessDeniedPage("/login");
 
         // Apply JWT

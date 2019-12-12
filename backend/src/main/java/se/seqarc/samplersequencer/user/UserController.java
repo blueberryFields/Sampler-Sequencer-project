@@ -21,20 +21,21 @@ public class UserController {
         this.userService = userService;
     }
 
+    // TODO: Maybe it would be better to use a signupFormDTO rather than UserDTO here?
     @PostMapping("/create")
-    public ResponseEntity<UserDTO> handleCreateUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<Void> handleCreateUser(@RequestBody UserDTO userDTO) {
         try {
-            return new ResponseEntity<>(userService.createUser(userDTO), HttpStatus.CREATED);
-        } catch (Exception e) {
-            e.printStackTrace();
+            userService.createUser(userDTO);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (UsernameTakenException e) {
+            LOGGER.error("Username already taken", e);
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
 
     @PostMapping("/login")
-    // TODO: change to requestbody
-    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
-        return new ResponseEntity<>(userService.login(username, password), HttpStatus.OK);
+    public ResponseEntity<String> login(@RequestBody LoginFormDTO loginFormDTO) {
+        return new ResponseEntity<>(userService.login(loginFormDTO), HttpStatus.OK);
     }
 
     @PostMapping("/upload")
