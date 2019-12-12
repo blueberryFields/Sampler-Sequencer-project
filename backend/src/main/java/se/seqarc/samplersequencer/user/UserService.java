@@ -1,5 +1,6 @@
 package se.seqarc.samplersequencer.user;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
@@ -12,5 +13,5 @@ public interface UserService {
 
     public UserDTO createUser(UserDTO userDTO) throws UsernameTakenException;
 
-
+    public String login(String username, String password);
 }

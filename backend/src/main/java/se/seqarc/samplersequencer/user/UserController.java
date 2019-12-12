@@ -25,18 +25,23 @@ public class UserController {
     public ResponseEntity<UserDTO> handleCreateUser(@RequestBody UserDTO userDTO) {
         try {
             return new ResponseEntity<>(userService.createUser(userDTO), HttpStatus.CREATED);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
+    }
 
+    @PostMapping("/login")
+    // TODO: change to requestbody
+    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
+        return new ResponseEntity<>(userService.login(username, password), HttpStatus.OK);
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<UserDTO> handleProfilePictureUpload(@RequestParam("file")MultipartFile multipartFile) {
+    public ResponseEntity<UserDTO> handleProfilePictureUpload(@RequestParam("file") MultipartFile multipartFile) {
         try {
             return new ResponseEntity<>(userService.uploadProfilePicture(multipartFile), HttpStatus.CREATED);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error uploading profile picture");
         }
@@ -47,7 +52,7 @@ public class UserController {
         try {
             LOGGER.info("Updating description for user " + id + ", description follows: " + description);
             return new ResponseEntity<>(userService.uploadProfileDescription(description), HttpStatus.OK);
-        } catch(Exception e) {
+        } catch (Exception e) {
             LOGGER.error("Error updating description, full stacktrace follows: ", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error updating profile description");
         }
