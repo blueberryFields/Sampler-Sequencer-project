@@ -192,7 +192,7 @@ const SampleBrowser = props => {
                             onClick={() => handleClickOnSample(sample.checksum)}>
                             <td>{sample.name}</td>
                             <td>{sample.duration} sec</td>
-                            <td>{sample.user}</td>
+                            <td>{sample.user.username}</td>
                         </tr>
                     })
                 }

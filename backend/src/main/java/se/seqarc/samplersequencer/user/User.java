@@ -31,4 +31,9 @@ public class User {
         this.password = userDTO.getPassword();
         this.roles = userDTO.getRoles();
     }
+
+    public User(ReducedUserDTO userDTO) {
+        this.id = userDTO.getId();
+        this.username = userDTO.getUsername();
+    }
 }
