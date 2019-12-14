@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> handleProfileDescriptionUpdate(@RequestParam String description, @PathVariable String id) {
+    public ResponseEntity<UserDTO> handleProfileDescriptionUpdate(@RequestBody String description, @PathVariable String id) {
         try {
             LOGGER.info("Updating description for user " + id + ", description follows: " + description);
             return new ResponseEntity<>(userService.uploadProfileDescription(description), HttpStatus.OK);
