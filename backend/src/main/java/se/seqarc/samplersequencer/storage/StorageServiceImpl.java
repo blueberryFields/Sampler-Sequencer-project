@@ -31,7 +31,7 @@ public class StorageServiceImpl implements StorageService {
     public void moveAndRenameSample(File file, String checksum, String fileExtension) {
         String filename = getFileNameFromFile(file);
         try {
-            Files.move(tempSampleRootLoc.resolve(filename), sampleRootLoc.resolve(checksum + "." + fileExtension), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(tempSampleRootLoc.resolve(filename), sampleRootLoc.resolve(checksum), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new StorageException("Failed to move sample: " + filename, e);
         }

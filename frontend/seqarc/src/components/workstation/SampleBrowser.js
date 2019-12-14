@@ -126,10 +126,10 @@ const SampleBrowser = props => {
 
     }, [volInt])
 
-    const handleClickOnSample = (checksum, fileExtension) => {
-        if (audition) props.auditSample(checksum, fileExtension)
+    const handleClickOnSample = (checksum) => {
+        if (audition) props.auditSample(checksum)
         if (props.editSampleModeValue > -1) {
-            props.selectInstrumentSample(checksum, fileExtension)
+            props.selectInstrumentSample(checksum)
         }
     }
 
@@ -180,7 +180,6 @@ const SampleBrowser = props => {
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Format</th>
                     <th>Duration</th>
                     <th>User</th>
                 </tr>
@@ -190,9 +189,8 @@ const SampleBrowser = props => {
                     samples.map((sample, index) => {
                         return <tr
                             key={index}
-                            onClick={() => handleClickOnSample(sample.checksum, sample.fileExtension)}>
+                            onClick={() => handleClickOnSample(sample.checksum)}>
                             <td>{sample.name}</td>
-                            <td>{sample.fileExtension}</td>
                             <td>{sample.duration} sec</td>
                             <td>{sample.user}</td>
                         </tr>
