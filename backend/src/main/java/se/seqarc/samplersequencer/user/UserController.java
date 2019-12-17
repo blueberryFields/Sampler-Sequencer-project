@@ -43,10 +43,11 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> handleProfileDescriptionUpdate(@RequestBody String description, @PathVariable String id) {
+    public ResponseEntity<UserDTO> handleProfileDescriptionUpdate(@RequestBody UserDTO userDTO, @PathVariable Long id) {
         try {
+            String description = userDTO.getProfileDescription();
             LOGGER.info("Updating description for user " + id + ", description follows: " + description);
-            return new ResponseEntity<>(userService.uploadProfileDescription(description), HttpStatus.OK);
+            return new ResponseEntity<>(userService.uploadProfileDescription(description, id), HttpStatus.OK);
         } catch(Exception e) {
             LOGGER.error("Error updating description, full stacktrace follows: ", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error updating profile description");

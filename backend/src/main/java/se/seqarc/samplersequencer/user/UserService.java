@@ -6,7 +6,7 @@ public interface UserService {
 
     public UserDTO uploadProfilePicture (MultipartFile multipartFile);
 
-    public UserDTO uploadProfileDescription (String string);
+    public UserDTO uploadProfileDescription (String string, Long id) throws UserNotFoundException;
 
     public UserDTO getUserById(Long id) throws Exception;
 

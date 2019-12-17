@@ -2,7 +2,6 @@ package se.seqarc.samplersequencer.user;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import se.seqarc.samplersequencer.sample.SampleNotFoundException;
 import se.seqarc.samplersequencer.storage.StorageService;
 import se.seqarc.samplersequencer.storage.UploadLocation;
 
@@ -26,9 +25,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO uploadProfileDescription(String string) {
-
-        return null;
+    public UserDTO uploadProfileDescription(String description, Long id) throws UserNotFoundException {
+        Optional<User> result = userRepository.findById(id);
+        User user = result.orElseThrow(UserNotFoundException::new);
+        user.setProfileDescription(description);
+        userRepository.save(user);
+        return new UserDTO(user);
     }
 
     @Override
