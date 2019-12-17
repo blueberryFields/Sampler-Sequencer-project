@@ -1,30 +1,26 @@
 package se.seqarc.samplersequencer.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Entity;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDTO {
+public class ReducedUserDTO {
 
     private Long id;
+    private String username;
     private String profilePicture;
     private String profileDescription;
-    private String username;
-    private String password;
-    List<Role> roles;
 
-    public UserDTO(User user) {
+    public ReducedUserDTO(User user) {
         this.id = user.getId();
+        this.username = user.getUsername();
         this.profilePicture = user.getProfilePicture();
         this.profileDescription = user.getProfileDescription();
-        this.username = user.getUsername();
-        this.password = user.getPassword();
-        this.roles = user.getRoles();
     }
 }

@@ -28,7 +28,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public void moveAndRenameSample(File file, String checksum, String fileExtension) {
+    public void moveAndRenameSample(File file, String checksum) {
         String filename = getFileNameFromFile(file);
         try {
             Files.move(tempSampleRootLoc.resolve(filename), sampleRootLoc.resolve(checksum), StandardCopyOption.REPLACE_EXISTING);

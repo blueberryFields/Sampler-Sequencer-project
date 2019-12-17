@@ -2,6 +2,7 @@ package se.seqarc.samplersequencer.sample;
 
 import org.springframework.web.multipart.MultipartFile;
 import se.seqarc.samplersequencer.category.CategoryNotFoundException;
+import se.seqarc.samplersequencer.user.UserNotFoundException;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
@@ -11,9 +12,9 @@ import java.util.List;
 
 public interface SampleService {
 
-    SampleDTO uploadSample(MultipartFile file, String name, String category) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException, SampleProcessingException;
+    SampleDTO uploadSample(MultipartFile file, String name, String category, String username) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException, SampleProcessingException, UserNotFoundException;
 
-    SampleDTO create(String name, String category, String checksum, double duration, String fileExtension) throws CategoryNotFoundException;
+    SampleDTO create(String name, String category, String checksum, double duration, String username) throws CategoryNotFoundException, UserNotFoundException;
 
     SampleDTO getSampleById(Long id) throws Exception;
 

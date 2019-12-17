@@ -81,9 +81,9 @@ public class SampleController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<SampleDTO> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("name") String name, @RequestParam("category") String category) {
+    public ResponseEntity<SampleDTO> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("name") String name, @RequestParam("category") String category, @RequestParam("username") String username) {
         try {
-            SampleDTO sampleDTO = sampleService.uploadSample(file, name, category);
+            SampleDTO sampleDTO = sampleService.uploadSample(file, name, category, username);
             LOGGER.info("Sample successfully uploaded: " + name);
             return new ResponseEntity<>(sampleDTO, HttpStatus.CREATED);
         } catch (Exception e) {

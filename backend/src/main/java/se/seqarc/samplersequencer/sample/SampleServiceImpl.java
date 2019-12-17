@@ -1,6 +1,7 @@
 package se.seqarc.samplersequencer.sample;
 
 import org.apache.commons.math3.util.Precision;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import se.seqarc.samplersequencer.category.Category;
@@ -8,6 +9,9 @@ import se.seqarc.samplersequencer.category.CategoryNotFoundException;
 import se.seqarc.samplersequencer.category.CategoryRepository;
 import se.seqarc.samplersequencer.storage.StorageService;
 import se.seqarc.samplersequencer.storage.UploadLocation;
+import se.seqarc.samplersequencer.user.User;
+import se.seqarc.samplersequencer.user.UserNotFoundException;
+import se.seqarc.samplersequencer.user.UserRepository;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -29,15 +33,17 @@ public class SampleServiceImpl implements SampleService {
     private final SampleRepository sampleRepository;
     private final CategoryRepository categoryRepository;
     private final StorageService storageService;
+    private final UserRepository userRepository;
 
-    public SampleServiceImpl(SampleRepository sampleRepository, CategoryRepository categoryRepository, StorageService sampleStorageService) {
+    public SampleServiceImpl(SampleRepository sampleRepository, CategoryRepository categoryRepository, StorageService sampleStorageService, UserRepository userRepository) {
         this.sampleRepository = sampleRepository;
         this.categoryRepository = categoryRepository;
         this.storageService = sampleStorageService;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public SampleDTO uploadSample(MultipartFile multipartFile, String name, String category) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException, SampleProcessingException {
+    public SampleDTO uploadSample(MultipartFile multipartFile, String name, String category, String username) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException, SampleProcessingException, UserNotFoundException {
         // Store file temporarily
         String filename = storageService.store(multipartFile, UploadLocation.TEMPSAMPLE);
         // Check fileExtension to see if format is supported
@@ -61,9 +67,9 @@ public class SampleServiceImpl implements SampleService {
             duration = result.get().getDuration();
         } else {
             duration = Precision.round(calculateWaveDurationInSeconds(processedFile), 2);
-            storageService.moveAndRenameSample(processedFile, checksum, "wav");
+            storageService.moveAndRenameSample(processedFile, checksum);
         }
-        return create(name, category, checksum, duration, "wav");
+        return create(name, category, checksum, duration, username);
     }
 
     public File processSample(File file) throws SampleProcessingException {
@@ -134,15 +140,16 @@ public class SampleServiceImpl implements SampleService {
     }
 
     @Override
-    public SampleDTO create(String name, String category, String checksum, double duration, String fileExtension) throws CategoryNotFoundException {
+    public SampleDTO create(String name, String category, String checksum, double duration, String username) throws CategoryNotFoundException, UserNotFoundException {
         Sample sample = new Sample();
         sample.setName(name);
         // Check if category exists, else throw exception
         Optional<Category> result = categoryRepository.findCategoryByCategory(category);
         sample.setCategory(result.orElseThrow(() -> new CategoryNotFoundException(category)));
         sample.setDuration(duration);
-        sample.setFileExtension(fileExtension);
         sample.setChecksum(checksum);
+        Optional<User> userResult = userRepository.findOneByUsername(username);
+        sample.setUser(userResult.orElseThrow(() -> new UserNotFoundException(username)));
         return new SampleDTO(sampleRepository.save(sample));
     }
 

@@ -21,31 +21,37 @@ public class UserController {
         this.userService = userService;
     }
 
+    // TODO: Maybe it would be better to use a signupFormDTO rather than UserDTO here?
     @PostMapping("/create")
-    public ResponseEntity<UserDTO> handleCreateUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<Void> handleCreateUser(@RequestBody UserDTO userDTO) {
         try {
-            return new ResponseEntity<>(userService.createUser(userDTO), HttpStatus.CREATED);
-        } catch(Exception e) {
-            e.printStackTrace();
+            userService.createUser(userDTO);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (UsernameTakenException e) {
+            LOGGER.error("Username already taken", e);
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
+    }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginFormDTO loginFormDTO) {
+        return new ResponseEntity<>(userService.login(loginFormDTO), HttpStatus.OK);
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<UserDTO> handleProfilePictureUpload(@RequestParam("file")MultipartFile multipartFile) {
+    public ResponseEntity<ReducedUserDTO> handleProfilePictureUpload(@RequestParam("file") MultipartFile multipartFile) {
         try {
             return new ResponseEntity<>(userService.uploadProfilePicture(multipartFile), HttpStatus.CREATED);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error uploading profile picture");
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> handleProfileDescriptionUpdate(@RequestBody UserDTO userDTO, @PathVariable Long id) {
+    public ResponseEntity<ReducedUserDTO> handleProfileDescriptionUpdate(@RequestBody ReducedUserDTO reducedUserDTO, @PathVariable Long id) {
         try {
-            String description = userDTO.getProfileDescription();
+            String description = reducedUserDTO.getProfileDescription();
             LOGGER.info("Updating description for user " + id + ", description follows: " + description);
             return new ResponseEntity<>(userService.uploadProfileDescription(description, id), HttpStatus.OK);
         } catch(Exception e) {
