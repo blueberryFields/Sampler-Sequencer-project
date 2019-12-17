@@ -1,4 +1,4 @@
-package se.seqarc.samplersequencer.categoryTests;
+package se.seqarc.samplersequencer;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

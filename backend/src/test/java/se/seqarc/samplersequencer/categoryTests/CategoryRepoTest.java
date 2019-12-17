@@ -27,28 +27,28 @@ public class CategoryRepoTest {
 
 
     @Test
-    public void whenFindByCategory_thenReturnCategory() throws Throwable {
-        // given
-        Category bassdrum = new Category();
-        bassdrum.setCategory("Bass Drum");
-        entityManager.persist(bassdrum);
+    public void testFindCategoryByCategory() throws Throwable {
+        // GIVEN
+        Category bassDrum = new Category();
+        bassDrum.setCategory("Bass Drum");
+        entityManager.persist(bassDrum);
         entityManager.flush();
 
-        // when
+        // WHEN
         Optional<Category> result = categoryRepository.findCategoryByCategory("Bass Drum");
         Category found = result.orElseThrow(CategoryNotFoundException::new);
 
-        // then
+        // THEN
         assertThat(found.getCategory())
-                .isEqualTo(bassdrum.getCategory());
+                .isEqualTo(bassDrum.getCategory());
     }
 
     @Test
-    public void whenFindAll_thenReturnAllCategories() {
-        // given
-        Category bassdrum = new Category();
-        bassdrum.setCategory("Bass Drum");
-        entityManager.persist(bassdrum);
+    public void testFindAllCategories() {
+        // GIVEN
+        Category bassDrum = new Category();
+        bassDrum.setCategory("Bass Drum");
+        entityManager.persist(bassDrum);
         Category snare= new Category();
         snare.setCategory("Snare");
         entityManager.persist(snare);
@@ -57,9 +57,11 @@ public class CategoryRepoTest {
         entityManager.persist(clap);
         entityManager.flush();
 
-        // when
+        // WHEN
         List<Category> found = (List<Category>) categoryRepository.findAll();
-        assertThat(found.get(0).getCategory()).isEqualTo(bassdrum.getCategory());
+
+        // THEN
+        assertThat(found.get(0).getCategory()).isEqualTo(bassDrum.getCategory());
         assertThat(found.get(1).getCategory()).isEqualTo(snare.getCategory());
         assertThat(found.get(2).getCategory()).isEqualTo(clap.getCategory());
     }

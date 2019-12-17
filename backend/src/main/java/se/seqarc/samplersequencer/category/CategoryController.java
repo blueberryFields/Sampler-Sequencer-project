@@ -36,7 +36,7 @@ public class CategoryController {
     }
 
     @GetMapping("/findall")
-    public ResponseEntity<List<CategoryDTO>> getSampleByCategory() {
+    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
         return new ResponseEntity<>(categoryService.getAllCategories(),  HttpStatus.OK);
     }
 }
