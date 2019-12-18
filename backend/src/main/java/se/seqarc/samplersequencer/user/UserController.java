@@ -38,10 +38,10 @@ public class UserController {
         return new ResponseEntity<>(userService.login(loginFormDTO), HttpStatus.OK);
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<ReducedUserDTO> handleProfilePictureUpload(@RequestParam("file") MultipartFile multipartFile) {
+    @PostMapping("/upload/{id}")
+    public ResponseEntity<ReducedUserDTO> handleProfilePictureUpload(@RequestParam("file") MultipartFile multipartFile, @PathVariable Long id) {
         try {
-            return new ResponseEntity<>(userService.uploadProfilePicture(multipartFile), HttpStatus.CREATED);
+            return new ResponseEntity<>(userService.uploadProfilePicture(multipartFile, id), HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error uploading profile picture");

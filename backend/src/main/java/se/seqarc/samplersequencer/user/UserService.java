@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
-    public ReducedUserDTO uploadProfilePicture (MultipartFile multipartFile);
+    public ReducedUserDTO uploadProfilePicture (MultipartFile multipartFile, Long id) throws UserNotFoundException;
 
     public ReducedUserDTO uploadProfileDescription (String string, Long id) throws UserNotFoundException;
 

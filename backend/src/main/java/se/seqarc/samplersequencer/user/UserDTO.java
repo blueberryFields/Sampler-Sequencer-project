@@ -27,4 +27,5 @@ public class UserDTO {
         this.password = user.getPassword();
         this.roles = user.getRoles();
     }
+
 }
