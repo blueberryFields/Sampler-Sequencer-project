@@ -10,4 +10,6 @@ public interface CategoryService {
 
     public abstract List<CategoryDTO> getAllCategories();
 
+    public abstract CategoryDTO getCategoryByCategory(String category) throws CategoryNotFoundException;
+
 }

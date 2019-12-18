@@ -40,4 +40,9 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return categoryDTOList;
     }
+
+    public CategoryDTO getCategoryByCategory(String category) throws CategoryNotFoundException {
+        Optional<Category> result = categoryRepository.findCategoryByCategory(category);
+        return new CategoryDTO(result.orElseThrow(CategoryNotFoundException::new));
+    }
 }
