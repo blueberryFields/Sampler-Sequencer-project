@@ -31,9 +31,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReducedUserDTO uploadProfilePicture(MultipartFile multipartFile) {
-        storageService.store(multipartFile, UploadLocation.PROFILEPIC);
-        return null;
+    public ReducedUserDTO uploadProfilePicture(MultipartFile multipartFile, Long id) throws UserNotFoundException {
+        String filename = storageService.store(multipartFile, UploadLocation.PROFILEPIC);
+        Optional<User> result = userRepository.findById(id);
+        User user = result.orElseThrow(UserNotFoundException::new);
+        user.setProfilePicture(filename);
+        userRepository.save(user);
+        return new ReducedUserDTO(user);
     }
 
     @Override
