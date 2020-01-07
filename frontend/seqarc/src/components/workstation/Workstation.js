@@ -5,6 +5,7 @@ import Instrument from "./Instrument";
 import SampleBrowser from "./SampleBrowser";
 import {faPlus} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { uuid } from 'uuidv4';
 
 const Workstation = props => {
 
@@ -95,7 +96,8 @@ const Workstation = props => {
             {
                 name: 'Instr ' + (instruments.length + 1),
                 instrument,
-                part
+                part,
+                key: uuid()
             }
         ])
     }, [instruments])
@@ -104,7 +106,7 @@ const Workstation = props => {
         instruments[index].instrument.dispose()
         instruments[index].part.dispose()
         let newInstrumentArr = [...instruments]
-        newInstrumentArr.splice(index)
+        newInstrumentArr.splice(index, 1)
         setInstruments(newInstrumentArr)
     }
 
@@ -182,7 +184,7 @@ const Workstation = props => {
                     {
                         instruments.map((instrument, index) => {
                             return <Instrument
-                                key={index}
+                                key={instrument.key}
                                 index={index}
                                 name={instrument.name}
                                 addNote={addNote}
