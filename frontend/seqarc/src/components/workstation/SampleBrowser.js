@@ -6,7 +6,7 @@ import useModal from "../hooks/useModal";
 import UploadSampleModal from "./UploadSampleModal";
 import Axios from 'axios-observable';
 
-const SampleBrowser = props => {
+const SampleBrowser = (props) => {
 
     const [categories, setCategories] = useState([])
 
@@ -23,7 +23,7 @@ const SampleBrowser = props => {
             );
     }, [])
 
-    const [category, setCategory] = useState('')
+    const [selectedCategory, setSelectedCategory] = useState('')
 
     const [samples, setSamples] = useState([])
 
@@ -34,14 +34,14 @@ const SampleBrowser = props => {
             {
                 params: {
                     searchphrase,
-                    category
+                    category: selectedCategory
                 }
             })
             .subscribe((response) => {
                     setSamples(response.data)
                 },
                 error => setSamples([]))
-    }, [category, searchphrase])
+    }, [selectedCategory, searchphrase])
 
     const initSearch = () => {
         setSearchWord('')
@@ -57,28 +57,17 @@ const SampleBrowser = props => {
         if (!searchphrase) {
             getFilteredSamples()
         }
-    }, [getFilteredSamples, searchphrase, category])
+    }, [getFilteredSamples, searchphrase, selectedCategory])
 
     const handleCategory = (name) => {
-        if (name === category) {
-            setCategory('')
+        if (name === selectedCategory) {
+            setSelectedCategory('')
         } else {
-            setCategory(name)
+            setSelectedCategory(name)
         }
     }
 
-    const categoryClass = (name) => {
-        let categoryClass = 'category'
-        let selectedClass = category === name ? ' cat-selected' : ' cat-not-selected'
-        return categoryClass + selectedClass
-    }
-
     const [audition, setAudition] = useState(false)
-    const [auditionClass, setAuditionClass] = useState('audition-icon audition-off')
-
-    useEffect(() => {
-        audition ? setAuditionClass('audition-icon audition-on') : setAuditionClass('audition-icon audition-off')
-    }, [audition])
 
     const [volInt, setVolInt] = useState(3)
 
@@ -90,41 +79,29 @@ const SampleBrowser = props => {
         if (volInt > 0) setVolInt(volInt - 1)
     }
 
-    const [auditVolClass, setAuditVolClass] = useState([
-        'vol-tick vol-tick-0 vol-tick-on',
-        'vol-tick vol-tick-1 vol-tick-on',
-        'vol-tick vol-tick-2 vol-tick-on',
-        'vol-tick vol-tick-3 vol-tick-off',
-        'vol-tick vol-tick-4 vol-tick-off',
-    ])
+    const {setAuditionVol} = props
 
     useEffect(() => {
-        let classBase = 'vol-tick vol-tick-'
-        let newAuditVolClassArr = auditVolClass.map((element, index) => index <= volInt ? classBase + index + ' vol-tick-on' : classBase + index + ' vol-tick-off')
-        setAuditVolClass(newAuditVolClassArr)
-
         switch (volInt) {
             case 0:
-                props.setAuditionVol(-36)
+                setAuditionVol(-36)
                 break
             case 1:
-                props.setAuditionVol(-24)
+                setAuditionVol(-24)
                 break
             case 2:
-                props.setAuditionVol(-12)
+                setAuditionVol(-12)
                 break
             case 3:
-                props.setAuditionVol(-6)
+                setAuditionVol(-6)
                 break
             case 4:
-                props.setAuditionVol(-1)
+                setAuditionVol(-1)
                 break
             default:
                 break
         }
-
-
-    }, [volInt])
+    }, [volInt, setAuditionVol])
 
     const handleClickOnSample = (checksum) => {
         if (audition) props.auditSample(checksum)
@@ -166,7 +143,7 @@ const SampleBrowser = props => {
                                 return (
                                     <div
                                         key={index}
-                                        className={categoryClass(category.category)}
+                                        className={`category ${selectedCategory === category.category ? ' cat-selected' : ' cat-not-selected'}`}
                                         onClick={() => handleCategory(category.category)}
                                     >
                                         {category.category}
@@ -214,7 +191,7 @@ const SampleBrowser = props => {
                     <div className="browser-footer-button">Record Sample</div>
                 </div>
                 <FontAwesomeIcon
-                    className={auditionClass}
+                    className={`audition-icon ${audition ? 'audition-on': 'audition-off'}`}
                     icon={faHeadphones}
                     onClick={() => setAudition(!audition)}
                 />
@@ -225,11 +202,11 @@ const SampleBrowser = props => {
                         onClick={() => volDown()}
                     />
                     <div className="vol-ticks">
-                        <div className={auditVolClass[0]}/>
-                        <div className={auditVolClass[1]}/>
-                        <div className={auditVolClass[2]}/>
-                        <div className={auditVolClass[3]}/>
-                        <div className={auditVolClass[4]}/>
+                        <div className={`vol-tick vol-tick-0 vol-tick-${volInt >= 0 ? 'on' : 'off'}`}/>
+                        <div className={`vol-tick vol-tick-1 vol-tick-${volInt >= 1 ? 'on' : 'off'}`}/>
+                        <div className={`vol-tick vol-tick-2 vol-tick-${volInt >= 2 ? 'on' : 'off'}`}/>
+                        <div className={`vol-tick vol-tick-3 vol-tick-${volInt >= 3 ? 'on' : 'off'}`}/>
+                        <div className={`vol-tick vol-tick-4 vol-tick-${volInt >= 4 ? 'on' : 'off'}`}/>
                     </div>
                     <FontAwesomeIcon
                         className="volume-icon"

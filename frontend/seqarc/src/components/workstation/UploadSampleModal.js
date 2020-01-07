@@ -95,25 +95,28 @@ const Modal = ({isShowing, hide, getFilteredSamples}) => {
                             onChange={(e) => setSampleName(e.target.value)}
                             placeholder="Name"
                         />
-                        <select
-                            className="category-chooser"
-                            value={selectedCategory}
-                            onChange={(e) => setSelectedCategory(e.target.value)}>
-                            {/*<FontAwesomeIcon icon={faCaretDown} />*/}
-                            <option value="">Choose Category</option>
-                            {
-                                categories.map((category, index) => {
-                                    return (
-                                        <option
-                                            key={index}
-                                            value={category.category}
-                                        >
-                                            {category.category}
-                                        </option>
-                                    )
-                                })
-                            }
-                        </select>
+                        {
+                            categoriesIsLoading ? <p>Categories is loading</p> :
+                            <select
+                                className="category-chooser"
+                                value={selectedCategory}
+                                onChange={(e) => setSelectedCategory(e.target.value)}>
+                                {/*<FontAwesomeIcon icon={faCaretDown} />*/}
+                                <option value="">Choose Category</option>
+                                {
+                                    categories.map((category, index) => {
+                                        return (
+                                            <option
+                                                key={index}
+                                                value={category.category}
+                                            >
+                                                {category.category}
+                                            </option>
+                                        )
+                                    })
+                                }
+                            </select>
+                        }
                     </div>
                     <div className="message">
                         {message}

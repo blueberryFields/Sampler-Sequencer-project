@@ -46,8 +46,6 @@ const Workstation = props => {
 
     // ACTIVE STEPS
     // Keeps track of active steps which Instrument listens to and lights LEDs accordingly
-
-
     const [activeStep, setActiveStep] = useState(-1)
 
     const stepForward = useCallback(() => {
@@ -119,7 +117,7 @@ const Workstation = props => {
         auditionVol.current.volume.value = decibel
     }
 
-    const auditSample = (name, fileExtension) => {
+    const auditSample = (name) => {
         sampleAuditioner.current.load(
             `samples/${name}`,
             () => {

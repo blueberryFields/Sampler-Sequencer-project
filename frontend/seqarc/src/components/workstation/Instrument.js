@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import './Workstation.css'
 import Step from "./Step";
 import {faFileAudio, faTimes} from "@fortawesome/free-solid-svg-icons";
@@ -25,45 +25,12 @@ const Instrument = props => {
         false
     ])
 
-    const [ledStatus, setLedStatus] = useState([
-        'led-off',
-        'led-off',
-        'led-off',
-        'led-off',
-        'led-off',
-        'led-off',
-        'led-off',
-        'led-off',
-        'led-off',
-        'led-off',
-        'led-off',
-        'led-off',
-        'led-off',
-        'led-off',
-        'led-off',
-        'led-off'
-    ])
-
-    // Update led-status when stepping through the steps
-    useEffect(() => {
-        let newLedStatusArray = [...ledStatus]
-        steps[props.activeStep] ? newLedStatusArray[props.activeStep] = 'led-trigger' : newLedStatusArray[props.activeStep] = 'led-active'
-        if (props.activeStep > 0) {
-            steps[props.activeStep - 1] ? newLedStatusArray[props.activeStep - 1] = 'led-on' : newLedStatusArray[props.activeStep - 1] = 'led-off'
-        } else if (props.activeStep === 0) {
-            steps[steps.length - 1] ? newLedStatusArray[steps.length - 1] = 'led-on' : newLedStatusArray[steps.length - 1] = 'led-off'
-        } else if (props.activeStep === -1) {
-            newLedStatusArray = steps.map((step) => step ? 'led-on' : 'led-off')
+    const calculateLedStatus = (index) => {
+        if (props.activeStep === index) {
+            return steps[props.activeStep] ? 'led-trigger' : 'led-active'
         }
-        setLedStatus(newLedStatusArray)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.activeStep, steps])
-
-    const updateLedStatus = ((index, status) => {
-        let newArray = [...ledStatus]
-        newArray[index] = status
-        setLedStatus(newArray)
-    })
+        return steps[index] ? 'led-on' : 'led-off'
+    }
 
     const toggleStepOn = (index) => {
         let newArray = [...steps]
@@ -71,10 +38,8 @@ const Instrument = props => {
         setSteps(newArray)
         if (!steps[index]) {
             props.addNote(props.index, index, 'C3')
-            updateLedStatus(index, 'led-on')
         } else {
             props.removeNote(props.index, index, 'C3')
-            updateLedStatus(index, 'led-off')
         }
     }
 
@@ -132,7 +97,7 @@ const Instrument = props => {
                         key={index}
                         index={index}
                         toggleStepOn={toggleStepOn}
-                        ledStatus={ledStatus[index]}
+                        ledStatus={calculateLedStatus(index)}
                     />
                 })}
             </div>
