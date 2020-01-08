@@ -138,13 +138,11 @@ const Workstation = props => {
 
     const selectInstrumentSample = (checksum, name) => {
         let newInstrArray = [...instruments]
-
         newInstrArray[editSampleModeValue].loaded = false
         newInstrArray[editSampleModeValue].instrument.add('C3', `samples/${checksum}`)
         newInstrArray[editSampleModeValue].name = name
 
         setInstruments(newInstrArray)
-
     }
 
     const addNote = (instrIndex, notePosition, noteValue) => {
@@ -158,11 +156,6 @@ const Workstation = props => {
             {'16n': notePosition}
         )
     }
-
-   /* const updateInstrumentName = (index, name) => {
-        instruments[index].name = name
-        console.log(instruments[index].name)
-    }*/
 
     return (
         <div className="container">
@@ -193,7 +186,6 @@ const Workstation = props => {
                                 name={instrument.name}
                                 addNote={addNote}
                                 removeNote={removeNote}
-                                // updateInstrumentName={updateInstrumentName}
                                 activeStep={activeStep}
                                 editSampleModeValue={editSampleModeValue}
                                 setEditSampleModeValue={setEditSampleModeValue}
