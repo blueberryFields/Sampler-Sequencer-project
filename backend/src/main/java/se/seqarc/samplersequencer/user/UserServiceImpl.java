@@ -74,7 +74,8 @@ public class UserServiceImpl implements UserService {
     public String login(LoginFormDTO loginFormDTO) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginFormDTO.getUsername(), loginFormDTO.getPassword()));
-            return jwtTokenProvider.createToken(loginFormDTO.getUsername(), userRepository.findByUsername(loginFormDTO.getUsername()).getRoles());
+            User user = userRepository.findByUsername(loginFormDTO.getUsername());
+            return jwtTokenProvider.createToken(user.getUsername(), user.getRoles(), user.getId());
         } catch (Exception e) {
             throw new SecurityException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
         }

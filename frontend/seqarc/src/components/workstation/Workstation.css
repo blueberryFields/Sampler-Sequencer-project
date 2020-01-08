@@ -328,14 +328,13 @@
 
 .search {
     margin: 10px 0 5px 10px;
-    padding: 2px;
+    padding: 5px 2px;
     width: 16rem;
     font-size: 1.2rem;
     border-radius: 25px;
     color: dimgray;
     background: #cccccc;
-    /*background: #0b0c0f;*/
-
+    background: linear-gradient(to bottom, #0b0c0f 25%,black 100%);
     display: flex;
 }
 
@@ -345,12 +344,11 @@
 }
 
 .search-field {
-    /*margin-left: 5px;*/
     width: 12rem;
-    /*flex: 1;*/
     background: none;
     border: none;
-    color: #0b0c0f;
+    /*color: #0b0c0f;*/
+    color: #bfbfbf;
     font-size: 1rem;
 }
 

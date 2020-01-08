@@ -1,0 +1,10 @@
+frågor till Jon:
+
+när man byter routerview skapas ju sidan om på nytt och eventuell musik man har skapat försvunnit.
+Vad kan man göra? Spara till local storage? En lösning är att ha en föräldrakomponent som innehåller state vilken skickar ner state som props
+
+uuid som key? inte helt optialt men ok ändå, alt ha en räknare
+
+loggar in, sparar man info om vilken avnändare i local storage? JWT sparar man i localstorage, den innehåller nu även id
+
++ - på font fackar upp saker och ting!?!?!? Verkar vara mediaqueries som är lösningen...
