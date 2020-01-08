@@ -5,13 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Step = props => {
 
-    const [note, setNote] = useState(13)
-
-    const {changeNoteValue} = props
-
-    useEffect(() => {
-        changeNoteValue(props.index, note)
-    }, [note])
+    const [note, setNote] = useState(12)
 
     return (
         <div
@@ -26,7 +20,8 @@ const Step = props => {
                         className="note-up"
                         icon={faCaretUp}
                         onClick={() => {
-                            if (note < 26) {
+                            if (note < 24) {
+                                props.changeNoteValue(props.index, note + 1)
                                 setNote(note + 1)
                             }
                         }
@@ -37,8 +32,8 @@ const Step = props => {
                         icon={faCaretDown}
                         onClick={() => {
                             if (note > 0) {
+                                props.changeNoteValue(props.index, note - 1)
                                 setNote(note - 1)
-                                props.changeNoteValue(props.index, note)
                             }
                         }
                         }

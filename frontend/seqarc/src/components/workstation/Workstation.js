@@ -133,12 +133,18 @@ const Workstation = props => {
 
     // Methods for editing instruments and parts
 
-    // If set to > -1 where in editSampleMode and the value represents which instrument is being edited
+    // If set to > -1 we are in editSampleMode and the value represents which instrument is being edited
     const [editSampleModeValue, setEditSampleModeValue] = useState(-1)
 
-    const selectInstrumentSample = (checksum) => {
-        instruments[editSampleModeValue].loaded = false
-        instruments[editSampleModeValue].instrument.add('C3', `samples/${checksum}`)
+    const selectInstrumentSample = (checksum, name) => {
+        let newInstrArray = [...instruments]
+
+        newInstrArray[editSampleModeValue].loaded = false
+        newInstrArray[editSampleModeValue].instrument.add('C3', `samples/${checksum}`)
+        newInstrArray[editSampleModeValue].name = name
+
+        setInstruments(newInstrArray)
+
     }
 
     const addNote = (instrIndex, notePosition, noteValue) => {
@@ -153,10 +159,10 @@ const Workstation = props => {
         )
     }
 
-    const updateInstrumentName = (index, name) => {
+   /* const updateInstrumentName = (index, name) => {
         instruments[index].name = name
         console.log(instruments[index].name)
-    }
+    }*/
 
     return (
         <div className="container">
@@ -187,7 +193,7 @@ const Workstation = props => {
                                 name={instrument.name}
                                 addNote={addNote}
                                 removeNote={removeNote}
-                                updateInstrumentName={updateInstrumentName}
+                                // updateInstrumentName={updateInstrumentName}
                                 activeStep={activeStep}
                                 editSampleModeValue={editSampleModeValue}
                                 setEditSampleModeValue={setEditSampleModeValue}

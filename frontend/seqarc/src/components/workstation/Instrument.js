@@ -38,7 +38,6 @@ const Instrument = props => {
     'D2',
     'Eb2',
     'E2',
-    'Fb2',
     'F2',
     'Gb2',
     'G2',
@@ -51,7 +50,6 @@ const Instrument = props => {
     'D3',
     'D#3',
     'E3',
-    'E#3',
     'F3',
     'F#3',
     'G3',
@@ -82,11 +80,12 @@ const Instrument = props => {
         }
     }
 
-    const [name, setName] = useState(props.name)
+    // const [name, setName] = useState(props.name)
 
-    const updateName = () => {
+    /*const updateName = () => {
         if (name !== props.name) props.updateInstrumentName(props.index, name)
-    }
+    }*/
+
     const handleClickOnEditSample = () => {
         if (props.editSampleModeValue !== props.index) {
             props.setEditSampleModeValue(props.index)
@@ -107,14 +106,14 @@ const Instrument = props => {
                 <input
                     className="instr-name"
                     name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={props.name}
+                   /* onChange={(e) => setName(e.target.value)}
                     onKeyPress={(e) => {
                         if (e.key === 'Enter') {
                             updateName()
                         }
                     }}
-                    onBlur={() => updateName()}
+                    onBlur={() => updateName()}*/
                 />
                 <div className="instrument-icons">
                     <FontAwesomeIcon

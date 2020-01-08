@@ -77,7 +77,7 @@ public class SampleServiceImpl implements SampleService {
         try {
             // create the ffmpeg process command to run.
             Process ffmpeg = new ProcessBuilder(
-                    "/opt/local/bin/ffmpeg", // imac: "/opt/local/bin/ffmpeg" linux: "/usr/bin/ffmpeg"
+                    "/usr/bin/ffmpeg", // imac: "/opt/local/bin/ffmpeg" linux: "/usr/bin/ffmpeg"
                     "-i", file.getAbsolutePath(),
                     "-acodec", "pcm_s16le",
                     "-ar", "22050",

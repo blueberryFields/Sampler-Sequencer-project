@@ -103,10 +103,10 @@ const SampleBrowser = (props) => {
         }
     }, [volInt, setAuditionVol])
 
-    const handleClickOnSample = (checksum) => {
+    const handleClickOnSample = (checksum, name) => {
         if (audition) props.auditSample(checksum)
         if (props.editSampleModeValue > -1) {
-            props.selectInstrumentSample(checksum)
+            props.selectInstrumentSample(checksum, name)
         }
     }
 
@@ -166,7 +166,7 @@ const SampleBrowser = (props) => {
                     samples.map((sample, index) => {
                         return <tr
                             key={index}
-                            onClick={() => handleClickOnSample(sample.checksum)}>
+                            onClick={() => handleClickOnSample(sample.checksum, sample.name)}>
                             <td>{sample.name}</td>
                             <td>{sample.duration} sec</td>
                             <td>{sample.user.username}</td>
@@ -186,7 +186,7 @@ const SampleBrowser = (props) => {
                         isShowing={uploadModalIsShowing}
                         hide={uploadModalToggle}
                         getFilteredSamples={getFilteredSamples}
-                        testMessage={'hej'}
+                        testMessage={'hej'} //TODO: wtf?
                     />
                     <div className="browser-footer-button">Record Sample</div>
                 </div>
