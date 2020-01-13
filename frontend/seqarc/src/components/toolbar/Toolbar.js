@@ -6,10 +6,21 @@ import About from "../about/About";
 import Profile from "../profile/Profile";
 import Login from "../login/Login"
 import './Toolbar.css'
+import jwtDecode from 'jwt-decode'
 import {faInfinity} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { useLocalStorage, deleteFromStorage } from '@rehooks/local-storage';
 
-const toolbar = props => {
+
+
+const Toolbar = (props) => {
+
+    const [token, setToken] = useLocalStorage('jwt');
+
+    const decodeJWT = () => {
+        return jwtDecode(token)
+    }
+
     return (
         <Router>
             <header className="toolbar">
@@ -35,12 +46,25 @@ const toolbar = props => {
                             <li>
                                 <Link to="/workstation">Workstation</Link>
                             </li>
-                            <li>
-                                <Link to="/profile">Profile</Link>
-                            </li>
+                            {token ?
+                            <span>
+                                <li>
+                                    <Link to="/profile">Profile</Link>
+                                </li> 
+                                <li onClick={() => deleteFromStorage('jwt')}>
+                                    <Link to="/logout">Logout</Link>
+                                </li> 
+                                </span>: <div>
+                                    <li>
+                                        <Link to="/login">Login</Link>
+                                    </li>
+                                </div>
+                            }
+                            {/* {!token ? 
                             <li>
                                 <Link to="/login">Login</Link>
-                            </li>
+                            </li>: <Link to="/logout">Logout</Link>
+                            } */}
                         </ul>
                     </div>
                 </nav>
@@ -68,4 +92,4 @@ const toolbar = props => {
     )
 }
 
-export default toolbar;
+export default Toolbar;

@@ -1,6 +1,7 @@
 import React, {useState, useCallback} from 'react';
 import "./Login.css"
 import Axios from 'axios-observable';
+import { writeStorage } from '@rehooks/local-storage';
 
 function Login() {
 
@@ -10,15 +11,20 @@ function Login() {
     const login = useCallback(() => {
         return Axios.request({
             method: 'post',
-            url: 'localhost:8080/user/login', 
+            url: 'http://localhost:8080/user/login', 
             data: {
                 username,
                 password
         }})
         .subscribe(
-            response => console.log(response),
-            error => console.log(error)
-        
+            response => {
+                console.log(response)
+                writeStorage('jwt', response.data)
+                setUsername('')
+                setPassword('')},
+            error => {
+                console.log(error)
+                alert("Invalid username and/or password")},
         )
     }, [password, username])
 
@@ -28,8 +34,8 @@ function Login() {
         <main>
             <div>
                 <h1>JWT Token login</h1>
-                <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)}></input>
-                <input type="text" placeholder="Password" onChange={(e) => setPassword(e.target.value)}></input>
+                <input type="text" value={username} placeholder="Username" onChange={(e) => setUsername(e.target.value)}></input>
+                <input type="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)}></input>
                 <button onClick={() => login()}>Login</button>
             </div>
         </main>
