@@ -4,6 +4,7 @@ import Workstation from "../workstation/Workstation";
 import Home from "../home/Home";
 import About from "../about/About";
 import Profile from "../profile/Profile";
+import Login from "../login/Login"
 import './Toolbar.css'
 import {faInfinity} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -37,6 +38,9 @@ const toolbar = props => {
                             <li>
                                 <Link to="/profile">Profile</Link>
                             </li>
+                            <li>
+                                <Link to="/login">Login</Link>
+                            </li>
                         </ul>
                     </div>
                 </nav>
@@ -51,6 +55,9 @@ const toolbar = props => {
                     </Route>
                     <Route path="/profile">
                         <Profile/>
+                    </Route>
+                    <Route path="/login">
+                        <Login/>
                     </Route>
                     <Route path="/">
                         <Home/>

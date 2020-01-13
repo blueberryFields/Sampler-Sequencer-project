@@ -2,6 +2,7 @@ import React from 'react';
 import "./Profile.css"
 import "../images/Doom_Guy.jpg"
 import UploadImage from './UploadImage.js';
+import UserForm from './UserForm.js';
 
 function Profile() {
     return (
@@ -11,9 +12,13 @@ function Profile() {
                 The user will be able to setup and change their profile here.
                 Their profile will be displayed as the "creator" of music they have created
                 and will represent them on the forums. */}
-                <UploadImage>
 
-                </UploadImage>
+            
+                <UploadImage></UploadImage>
+
+                <UserForm></UserForm>
+
+                
                 
                 {/* <Grid className="profile-grid">
                     <Cell col={6}>

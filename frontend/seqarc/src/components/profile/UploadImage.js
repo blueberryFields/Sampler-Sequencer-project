@@ -1,11 +1,12 @@
-import React, {Fragment, useState} from "react";
+import React, {useState} from "react";
+import UserForm from './UserForm.js'
 // import Fragment from 'react-bootstrap/Fragment';
 
 // https://www.youtube.com/watch?v=b6Oe2puTdMQ
 
 const UploadImage = () => {
     const [file, setFile] = useState('');
-    const [filename, setFilename] = useState('Choose File');
+    const [filename, setFilename] = useState('');
 
     // Method that targets the first file in an array (since we only need one file)
     const onChange = e => {
@@ -15,7 +16,7 @@ const UploadImage = () => {
     // const []
 
     return (
-        <Fragment>
+        
             <form>
                 <div className="custom-file">
                     <input type="file" className="custom-file-input" id="customFile" onChange=
@@ -23,27 +24,11 @@ const UploadImage = () => {
                     <label className="custom-file-label" for="customFile">
                         {filename}
                     </label>
+                    {/* <img src={'http://localhost:8080/download/' + userName}></img> */}
                 </div>
                 <input type="submit" value="Upload" className="btn btn-primary btn-block"></input>
             </form>
-        </Fragment>
     )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // const defaultImage = require('../images/Doom_Guy.jpg');
     // const uploadImage = 

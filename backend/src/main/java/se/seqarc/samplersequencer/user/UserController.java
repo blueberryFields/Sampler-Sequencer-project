@@ -48,6 +48,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("/download/{name}")
+    public ResponseEntity<ReducedUserDTO> handleProfilePictureDownload(@RequestParam("file") MultipartFile multipartFile, @PathVariable String name) {
+        try {
+            return new ResponseEntity<>(userService.downloadProfilePicture(multipartFile, name), HttpStatus.OK);
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error downloading profile picture");
+        }
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<ReducedUserDTO> handleProfileDescriptionUpdate(@RequestBody ReducedUserDTO reducedUserDTO, @PathVariable Long id) {
         try {

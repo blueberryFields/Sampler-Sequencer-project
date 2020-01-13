@@ -41,6 +41,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ReducedUserDTO downloadProfilePicture(MultipartFile multipartFile, String name) {
+        return null;
+    }
+
+    @Override
     public ReducedUserDTO uploadProfileDescription(String description, Long id) throws UserNotFoundException {
         Optional<User> result = userRepository.findById(id);
         User user = result.orElseThrow(UserNotFoundException::new);

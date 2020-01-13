@@ -18,7 +18,7 @@ public class StorageServiceImpl implements StorageService {
 
     private final Path tempSampleRootLoc = Paths.get("src/main/resources/temp-samples");
     private final Path sampleRootLoc = Paths.get("../frontend/seqarc/public/samples");
-    private final Path ProfilePicRootLoc = Paths.get("../frontend/seqarc/public/profilepictures");
+    private final Path profilePicRootLoc = Paths.get("backend/profilepictures");
 
 
     @Override
@@ -79,6 +79,8 @@ public class StorageServiceImpl implements StorageService {
                                 + filename);
             }
             try (InputStream inputStream = file.getInputStream()) {
+                System.out.println(filename);
+                System.out.println(rootLocation.resolve(filename));
                 Files.copy(inputStream, rootLocation.resolve(filename),
                         StandardCopyOption.REPLACE_EXISTING);
                 return filename;
@@ -96,7 +98,7 @@ public class StorageServiceImpl implements StorageService {
                 rootLocation = tempSampleRootLoc;
                 break;
             case PROFILEPIC:
-                rootLocation = ProfilePicRootLoc;
+                rootLocation = profilePicRootLoc;
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + uploadLocation);
