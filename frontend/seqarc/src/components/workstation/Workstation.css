@@ -9,9 +9,15 @@
     height: 96vh;
 }
 
-.split-pane {
+.split-pane-vertical {
     display: flex;
     flex-direction: row;
+}
+
+.split-pane-horizontal {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
 }
 
 .sample-browser-section {
@@ -20,7 +26,6 @@
 }
 
 .instrument-section {
-    width: 80%;
     margin: 0 5px;
 }
 
@@ -696,3 +701,52 @@ td {
     height: 2rem;
     margin-top: 10px;
 }
+
+/* CSS for mixer section */
+
+.mixer-section {
+    display: flex;
+    flex-direction: row;
+    /*margin-bottom: 0;*/
+    position: fixed;
+    margin-bottom: 0;
+    bottom: 0;
+    height: 15rem;
+    padding: 5px 5px 10px 5px;
+    color: dimgrey;
+
+}
+
+.mixer-strip-container {
+    display: flex;
+    flex-direction: column;
+    color: dimgrey;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
+    height: 100%;
+    width: 4rem;
+    margin: 5px 5px 10px 5px;
+}
+
+.slider-container {
+    width: 2rem;
+}
+
+.vol-slider {
+    position: relative;
+    /*bottom: -8rem;*/
+    left: -45px;
+    transform: rotate(270deg);
+}
+
+.knob {
+    margin: 0 auto auto auto;
+}
+
+.volume {
+    margin: auto auto 5px auto;
+}
+
+
+

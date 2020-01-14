@@ -3,6 +3,7 @@ import Tone from 'tone'
 import Transport from "./Transport";
 import Instrument from "./Instrument";
 import SampleBrowser from "./SampleBrowser";
+import MixerStrip from "./MixerStrip"
 import {faPlus} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -117,7 +118,7 @@ const Workstation = props => {
                 position={position}
                 reset={reset}
             />
-            <div className="split-pane">
+            <div className="split-pane-vertical">
                 <div className="sample-browser-section">
                     <SampleBrowser
                         auditSample={auditSample}
@@ -126,33 +127,46 @@ const Workstation = props => {
                         editSampleModeValue={editSampleModeValue}
                     />
                 </div>
-                <div className="instrument-section">
-                    {
-                        instruments.map((instrument, index) => {
-                            return <Instrument
-                                key={instrument.key}
-                                index={index}
-                                name={instrument.name}
-                                steps={instrument.steps}
-                                addNote={addNote}
-                                removeNote={removeNote}
-                                activeStep={activeStep}
-                                editSampleModeValue={editSampleModeValue}
-                                setEditSampleModeValue={setEditSampleModeValue}
-                                triggerInstrument={triggerInstrument}
-                                deleteInstrument={deleteInstrument}
-                                toggleStepOn={toggleStepOn}
-                                changeNoteValue={changeNoteValue}
-                                noteValues={noteValues}
+                <div className="split-pane-horizontal">
+                    <div className="instrument-section">
+                        {
+                            instruments.map((instrument, index) => {
+                                return <Instrument
+                                    key={instrument.key}
+                                    index={index}
+                                    name={instrument.name}
+                                    steps={instrument.steps}
+                                    addNote={addNote}
+                                    removeNote={removeNote}
+                                    activeStep={activeStep}
+                                    editSampleModeValue={editSampleModeValue}
+                                    setEditSampleModeValue={setEditSampleModeValue}
+                                    triggerInstrument={triggerInstrument}
+                                    deleteInstrument={deleteInstrument}
+                                    toggleStepOn={toggleStepOn}
+                                    changeNoteValue={changeNoteValue}
+                                    noteValues={noteValues}
+                                />
+                            })
+                        }
+                        <div className="plus">
+                            <FontAwesomeIcon
+                                className="plus-icon"
+                                icon={faPlus}
+                                onClick={() => addNewInstrument()}
                             />
-                        })
-                    }
-                    <div className="plus">
-                        <FontAwesomeIcon
-                            className="plus-icon"
-                            icon={faPlus}
-                            onClick={() => addNewInstrument()}
-                        />
+                        </div>
+                    </div>
+                    <div className="mixer-section">
+                        {
+                            instruments.map((instrument, index) => {
+                                return <MixerStrip
+                                    key={instrument.key}
+                                    index={index}
+                                    name={instrument.name}
+                                />
+                            })
+                        }
                     </div>
                 </div>
             </div>
