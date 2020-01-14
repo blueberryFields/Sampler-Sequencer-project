@@ -8,7 +8,38 @@ const SequencerState = props => {
     // This contains all the instruments
     const [instruments, setInstruments] = useState([])
 
+    // This is the available note values. C# + - 1 octave
+    const noteValues = [
+        'C2',
+        'Db2',
+        'D2',
+        'Eb2',
+        'E2',
+        'F2',
+        'Gb2',
+        'G2',
+        'Ab2',
+        'A2',
+        'Bb2',
+        'B2',
+        'C3',
+        'C#3',
+        'D3',
+        'D#3',
+        'E3',
+        'F3',
+        'F#3',
+        'G3',
+        'G#3',
+        'A3',
+        'A#3',
+        'B3',
+        'C4',
+    ]
+
     const addNewInstrument = useCallback(() => {
+
+        setEditSampleModeValue(-1)
 
         let instrument = new Tone.Sampler({
                 'C3': 'samples/kick.wav'
@@ -32,12 +63,106 @@ const SequencerState = props => {
                 name: 'Instr ' + (instruments.length + 1),
                 instrument,
                 part,
-                key: uuid()
+                key: uuid(),
+                steps:
+                    [
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                        {
+                            on: false,
+                            note: 12
+                        },
+                    ],
             }
         ])
     }, [instruments])
 
+    // Methods for editing instruments and parts
+
+    const toggleStepOn = (instrumentIndex, stepIndex, note) => {
+        let newArray = [...instruments]
+        newArray[instrumentIndex].steps[stepIndex].on = !instruments[instrumentIndex].steps[stepIndex].on
+        setInstruments(newArray)
+        if (instruments[instrumentIndex].steps[stepIndex].on) {
+            console.log('Add note: ' + instrumentIndex, stepIndex, note)
+            addNote(instrumentIndex, stepIndex, noteValues[note])
+        } else {
+            console.log('Remove note: ' + instrumentIndex, stepIndex, note)
+            removeNote(instrumentIndex, stepIndex, noteValues[note])
+        }
+    }
+
+    const changeNoteValue = (instrumentIndex, stepIndex, note) => {
+        // console.log('change note: index: ' + index +', note: ' + note)
+        let newArray = [...instruments]
+        newArray[instrumentIndex].steps[stepIndex].note = note
+        setInstruments(newArray)
+        if (instruments[instrumentIndex].steps[stepIndex].on) {
+            removeNote(instrumentIndex, stepIndex)
+            addNote(instrumentIndex, stepIndex, noteValues[note])
+        }
+    }
+
     const deleteInstrument = (index) => {
+        setEditSampleModeValue(-1)
         instruments[index].instrument.dispose()
         instruments[index].part.dispose()
         let newInstrumentArr = [...instruments]
@@ -45,7 +170,6 @@ const SequencerState = props => {
         setInstruments(newInstrumentArr)
     }
 
-    // Methods for editing instruments and parts
     // If set to > -1 we are in editSampleMode and the value represents which instrument is being edited
     const [editSampleModeValue, setEditSampleModeValue] = useState(-1)
 
@@ -80,7 +204,10 @@ const SequencerState = props => {
             selectInstrumentSample={selectInstrumentSample}
             editSampleModeValue={editSampleModeValue}
             setEditSampleModeValue={setEditSampleModeValue}
+            toggleStepOn={toggleStepOn}
+            changeNoteValue={changeNoteValue}
+            noteValues={noteValues}
         />
     )
 }
-export default  SequencerState
+export default SequencerState

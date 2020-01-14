@@ -18,7 +18,10 @@ const Workstation = props => {
         removeNote,
         selectInstrumentSample,
         editSampleModeValue,
-        setEditSampleModeValue
+        setEditSampleModeValue,
+        toggleStepOn,
+        changeNoteValue,
+        noteValues
     } = props
 
     // Transport-related stuff
@@ -129,6 +132,7 @@ const Workstation = props => {
                                 key={instrument.key}
                                 index={index}
                                 name={instrument.name}
+                                steps={instrument.steps}
                                 addNote={addNote}
                                 removeNote={removeNote}
                                 activeStep={activeStep}
@@ -136,6 +140,9 @@ const Workstation = props => {
                                 setEditSampleModeValue={setEditSampleModeValue}
                                 triggerInstrument={triggerInstrument}
                                 deleteInstrument={deleteInstrument}
+                                toggleStepOn={toggleStepOn}
+                                changeNoteValue={changeNoteValue}
+                                noteValues={noteValues}
                             />
                         })
                     }

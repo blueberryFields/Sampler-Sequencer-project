@@ -57,6 +57,9 @@ const toolbar = props => {
                             selectInstrumentSample={props.selectInstrumentSample}
                             editSampleModeValue={props.editSampleModeValue}
                             setEditSampleModeValue={props.setEditSampleModeValue}
+                            noteValues={props.noteValues}
+                            changeNoteValue={props.changeNoteValue}
+                            toggleStepOn={props.toggleStepOn}
                         />
                     </Route>
                     <Route path="/profile">
