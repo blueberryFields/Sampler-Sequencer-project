@@ -415,8 +415,9 @@ td {
 
 .transport-bar {
     background-color: #282c34;
-    display: flex;
     height: 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .transport {
@@ -520,6 +521,29 @@ td {
 .stopped:active {
     background: #538cc6;
     box-shadow: inset #006 0 -1px 9px, rgba(63, 140, 255, 0.2) 0 2px 14px;
+}
+
+.transport-buttons {
+    /*margin: auto;*/
+    display: flex;
+    /*margin-left: 5px;*/
+}
+
+.transport-button {
+    margin: auto 0 auto 15px;
+    color: dimgray;
+    background: #373c49;
+    font-size: 1.2rem;
+    padding: 3px 8px;
+    border-radius: 3px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.transport-button:active {
+    background: #21242c;
+    color: #4d4d4d;
+    box-shadow: none;
 }
 
 /* UPLOAD SAMPLE MODAL */

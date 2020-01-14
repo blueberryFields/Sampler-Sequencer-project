@@ -5,7 +5,6 @@ import Instrument from "./Instrument";
 import SampleBrowser from "./SampleBrowser";
 import {faPlus} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {uuid} from 'uuidv4';
 
 const Workstation = props => {
 
@@ -21,7 +20,8 @@ const Workstation = props => {
         setEditSampleModeValue,
         toggleStepOn,
         changeNoteValue,
-        noteValues
+        noteValues,
+        reset
     } = props
 
     // Transport-related stuff
@@ -115,6 +115,7 @@ const Workstation = props => {
                 updateSwing={updateSwing}
                 getSwing={swing}
                 position={position}
+                reset={reset}
             />
             <div className="split-pane">
                 <div className="sample-browser-section">

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import './Workstation.css'
 import Step from "./Step";
 import {faFileAudio, faTimes} from "@fortawesome/free-solid-svg-icons";

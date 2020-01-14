@@ -60,6 +60,7 @@ const toolbar = props => {
                             noteValues={props.noteValues}
                             changeNoteValue={props.changeNoteValue}
                             toggleStepOn={props.toggleStepOn}
+                            reset={props.reset}
                         />
                     </Route>
                     <Route path="/profile">

@@ -137,21 +137,23 @@ const SequencerState = props => {
 
     // Methods for editing instruments and parts
 
+    const reset = () => {
+        instruments.forEach((instrument, index) => deleteInstrument(index))
+        setInstruments([])
+    }
+
     const toggleStepOn = (instrumentIndex, stepIndex, note) => {
         let newArray = [...instruments]
         newArray[instrumentIndex].steps[stepIndex].on = !instruments[instrumentIndex].steps[stepIndex].on
         setInstruments(newArray)
         if (instruments[instrumentIndex].steps[stepIndex].on) {
-            console.log('Add note: ' + instrumentIndex, stepIndex, note)
             addNote(instrumentIndex, stepIndex, noteValues[note])
         } else {
-            console.log('Remove note: ' + instrumentIndex, stepIndex, note)
             removeNote(instrumentIndex, stepIndex, noteValues[note])
         }
     }
 
     const changeNoteValue = (instrumentIndex, stepIndex, note) => {
-        // console.log('change note: index: ' + index +', note: ' + note)
         let newArray = [...instruments]
         newArray[instrumentIndex].steps[stepIndex].note = note
         setInstruments(newArray)
@@ -207,6 +209,7 @@ const SequencerState = props => {
             toggleStepOn={toggleStepOn}
             changeNoteValue={changeNoteValue}
             noteValues={noteValues}
+            reset={reset}
         />
     )
 }
