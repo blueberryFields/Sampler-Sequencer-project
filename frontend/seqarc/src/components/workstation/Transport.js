@@ -39,6 +39,14 @@ const Transport = props => {
 
     return (
         <div className="transport-bar">
+            <div className="transport-buttons">
+                {/*<div className="transport-button">Save</div>*/}
+                {/*<div className="transport-button">Save As</div>*/}
+                <div className="transport-button"
+                     onClick={() => props.reset()}>
+                    Reset
+                </div>
+            </div>
             <div className="transport">
                 <div className="display">
                     <div className="display-part">
@@ -80,7 +88,8 @@ const Transport = props => {
                         </div>
                     </div>
                 </div>
-                <button className={props.playing ? 'toggle-play playing' : 'toggle-play stopped' }  type="button" onClick={() => onPlay()}>
+                <button className={props.playing ? 'toggle-play playing' : 'toggle-play stopped'} type="button"
+                        onClick={() => onPlay()}>
                     <FontAwesomeIcon icon={props.playing ? faStop : faPlay}/>
                 </button>
             </div>

@@ -1,10 +1,10 @@
 import React from 'react';
-import Toolbar from "./components/toolbar/Toolbar";
+import SequencerState from "./components/sequencerstate/SequencerState"
 
 
 function App() {
   return (
-    <Toolbar></Toolbar>
+      <SequencerState/>
   );
 }
 

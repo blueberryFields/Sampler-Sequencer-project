@@ -34,7 +34,7 @@ const Toolbar = (props) => {
                                 icon={faInfinity}/>
                         </Link>
                     </div>
-                    <div className="spacer"></div>
+                    <div className="spacer"/>
                     <div className="toolbar_navigation_items">
                         <ul className="navbar">
                             <li>
@@ -73,9 +73,23 @@ const Toolbar = (props) => {
                 <Switch>
                     <Route path="/about">
                         <About/>
+                        <div>{props.editSampleModeValue}</div>
                     </Route>
                     <Route path="/workstation">
-                        <Workstation/>
+                        <Workstation
+                            instruments={props.instruments}
+                            addNewInstrument={props.addNewInstrument}
+                            deleteInstrument={props.deleteInstrument}
+                            addNote={props.addNote}
+                            removeNote={props.removeNote}
+                            selectInstrumentSample={props.selectInstrumentSample}
+                            editSampleModeValue={props.editSampleModeValue}
+                            setEditSampleModeValue={props.setEditSampleModeValue}
+                            noteValues={props.noteValues}
+                            changeNoteValue={props.changeNoteValue}
+                            toggleStepOn={props.toggleStepOn}
+                            reset={props.reset}
+                        />
                     </Route>
                     <Route path="/profile">
                         <Profile/>

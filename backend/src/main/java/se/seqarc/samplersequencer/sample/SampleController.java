@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import se.seqarc.samplersequencer.category.CategoryNotFoundException;
 import se.seqarc.samplersequencer.storage.StorageService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,8 +40,9 @@ public class SampleController {
     @GetMapping("/filteredsearch")
     public ResponseEntity<List<SampleDTO>> filteredSearch(@RequestParam String searchphrase, @RequestParam String category) {
         if (searchphrase.isEmpty() && category.isEmpty()) {
-            LOGGER.error("You must supply at least on off these params: searchprase or category");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You must supply at least on off these params: searchprase or category");
+//            LOGGER.error("You must supply at least on off these params: searchprase or category");
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You must supply at least on off these params: searchprase or category");
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
         } else if (!searchphrase.isEmpty() && category.isEmpty()) {
             return searchSample(searchphrase);
         } else if (searchphrase.isEmpty()) {
