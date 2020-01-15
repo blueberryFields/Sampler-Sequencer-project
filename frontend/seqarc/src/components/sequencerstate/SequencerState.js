@@ -41,10 +41,14 @@ const SequencerState = props => {
 
         setEditSampleModeValue(-1)
 
+        // create pan/vol-node
+        let panVol = new Tone.PanVol(0, 0)
+
+        // create instrument and chain to pan/vol-node
         let instrument = new Tone.Sampler({
                 'C3': 'samples/kick.wav'
             }
-        ).toMaster()
+        ).chain(panVol, Tone.Master)
 
         // pass in an array of events
         let part = new Tone.Part(function (time, event) {
@@ -61,6 +65,7 @@ const SequencerState = props => {
             ...instruments,
             {
                 name: 'Instr ' + (instruments.length + 1),
+                panVol,
                 instrument,
                 part,
                 key: uuid(),
@@ -153,6 +158,14 @@ const SequencerState = props => {
         }
     }
 
+    const changeVol = (instrumentIndex, val) => {
+        instruments[instrumentIndex].panVol.volume.value = val
+    }
+
+    const changePan = (instrumentIndex, val) => {
+        instruments[instrumentIndex].panVol.pan.value = val/100
+    }
+
     const changeNoteValue = (instrumentIndex, stepIndex, note) => {
         let newArray = [...instruments]
         newArray[instrumentIndex].steps[stepIndex].note = note
@@ -210,6 +223,8 @@ const SequencerState = props => {
             changeNoteValue={changeNoteValue}
             noteValues={noteValues}
             reset={reset}
+            changeVol={changeVol}
+            changePan={changePan}
         />
     )
 }

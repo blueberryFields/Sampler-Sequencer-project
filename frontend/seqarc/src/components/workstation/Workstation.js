@@ -6,6 +6,7 @@ import SampleBrowser from "./SampleBrowser";
 import MixerStrip from "./MixerStrip"
 import {faPlus} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Toolbar from "../toolbar/Toolbar";
 
 const Workstation = props => {
 
@@ -22,7 +23,9 @@ const Workstation = props => {
         toggleStepOn,
         changeNoteValue,
         noteValues,
-        reset
+        reset,
+        changeVol,
+        changePan,
     } = props
 
     // Transport-related stuff
@@ -163,7 +166,8 @@ const Workstation = props => {
                                 return <MixerStrip
                                     key={instrument.key}
                                     index={index}
-                                    name={instrument.name}
+                                    changeVol={changeVol}
+                                    changePan={changePan}
                                 />
                             })
                         }

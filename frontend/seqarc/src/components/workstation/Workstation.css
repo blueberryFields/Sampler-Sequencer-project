@@ -7,11 +7,14 @@
 .container {
     background-color: black;
     height: 96vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .split-pane-vertical {
     display: flex;
     flex-direction: row;
+    height: 100%;
 }
 
 .split-pane-horizontal {
@@ -22,11 +25,33 @@
 
 .sample-browser-section {
     width: 20%;
-    height: 90vh;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
 }
 
 .instrument-section {
+    overflow-y: auto;
+    overflow-x: hidden;
     margin: 0 5px;
+}
+
+.mixer-section {
+    display: flex;
+    flex-direction: row;
+    /*margin-bottom: 0;*/
+    position: fixed;
+    margin-bottom: 0;
+    margin-left: 5px;
+    width: 79.3%;
+    bottom: 0;
+    height: 20rem;
+    padding: 0px 0px 15px 0px;
+    color: dimgrey;
+    background: black;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
 }
 
 
@@ -232,12 +257,13 @@
 .browser-footer {
     margin-bottom: 0;
     background: #16181d;
-    height: 2.5rem;
+    /*height: 2.5rem;*/
     display: flex;
 }
 
 .browser-footer-buttons {
     display: flex;
+    padding: 0.5rem;
 }
 
 .browser-footer-button {
@@ -704,19 +730,6 @@ td {
 
 /* CSS for mixer section */
 
-.mixer-section {
-    display: flex;
-    flex-direction: row;
-    /*margin-bottom: 0;*/
-    position: fixed;
-    margin-bottom: 0;
-    bottom: 0;
-    height: 18rem;
-    padding: 5px 5px 10px 5px;
-    color: dimgrey;
-
-}
-
 .mixer-strip-container {
     display: flex;
     flex-direction: column;
@@ -730,14 +743,47 @@ td {
 }
 
 .slider-container {
-    width: 2rem;
+    /*width: 2rem;*/
 }
 
 .vol-slider {
     position: relative;
     /*bottom: -8rem;*/
     left: -45px;
+    top: 4rem;
     transform: rotate(270deg);
+
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    background: dimgray;
+    height: 0.5rem;
+}
+
+.vol-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 10px; /* Set a specific slider handle width */
+    height: 20px; /* Slider handle height */
+    background:  #66ff66; /* Green background */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 5px, rgba(102, 255, 102, 0.2) 0 2px 8px;
+    cursor: pointer; /* Cursor on hover */
+}
+
+.vol-slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background:  #66ff66; /* Green background */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 5px, rgba(102, 255, 102, 0.2) 0 2px 8px;
+    cursor: pointer; /* Cursor on hover */
+}
+
+.volume {
+    margin: 7.8rem auto 0 auto;
+}
+
+.pan-container {
+    display: flex;
+    flex-direction: column;
 }
 
 .pan-knob {
@@ -745,12 +791,32 @@ td {
     transform: rotate(180deg);
 }
 
-/*.pan {
-    margin-top: 0;
-}*/
+.pan {
+    margin: 0.5rem auto 0;
+    position: relative;
+    top: 0;
+}
 
-.volume {
-    margin: auto auto 5px auto;
+.mix-strip-pad {
+    display: flex;
+    width: 3rem;
+    height: 3rem;
+    margin: auto auto 0.4rem auto;
+    border-radius: 5px;
+    background: #8cb3d9;
+    box-shadow: inset #006 0 -1px 9px, rgba(63, 140, 255, 0.2) 0 2px 14px;
+    cursor: pointer;
+}
+
+.mix-strip-pad:active {
+    background: #538cc6;
+}
+
+
+.mix-strip-number {
+    margin: auto;
+    font-size: 2rem;
+    color: black;
 }
 
 
