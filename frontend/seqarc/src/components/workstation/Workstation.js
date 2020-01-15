@@ -163,6 +163,7 @@ const Workstation = props => {
                         {
                             instruments.map((instrument, index) => {
                                 return <MixerStrip
+                                    instrument={instrument.instrument}
                                     key={instrument.key}
                                     index={index}
                                     changeVol={changeVol}

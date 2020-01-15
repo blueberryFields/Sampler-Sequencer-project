@@ -1,12 +1,16 @@
 import React, {useState, useEffect} from "react";
 import * as skins from "react-rotary-knob-skin-pack";
-import LimitedKnob from "./LimitedKnob";
+import LimitedKnobHooks from "./LimitedKnobHooks";
+import Tone from "tone";
 
 
 const MixerStrip = props => {
 
     const [volume, setVolume] = useState(0)
     const [pan, setPan] = useState(0)
+
+    const meter = new Tone.Meter()
+    props.instrument.connect(meter)
 
     useEffect(() => {
         props.changePan(props.index, pan)
@@ -29,17 +33,14 @@ const MixerStrip = props => {
     return (
         <div className="mixer-strip-container">
             <div className="pan-container">
-                <LimitedKnob
-                    className="pan-knob"
+                <LimitedKnobHooks
                     style={{display: "inline-block"}}
                     min={-100}
                     max={100}
                     unlockDistance={0}
                     preciseMode={false}
-                    // value={pan}
-                    setPan={setPan}
-                    // onChange={(e) => setPan(e)}
                     skin={skins.s13}
+                    setPan={setPan}
                 />
                 <div className="pan">{lorR(pan)} {pan}</div>
             </div>
@@ -51,6 +52,7 @@ const MixerStrip = props => {
                     max="12"
                     value={volume}
                     onChange={(e) => setVolume(e.target.value)}/>
+                <div className="meter"/>
             </div>
             <div className="volume">{volume + ' db'}</div>
             <div className="mix-strip-pad">
