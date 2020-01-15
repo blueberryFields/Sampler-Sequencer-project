@@ -22,7 +22,7 @@
 
 .sample-browser-section {
     width: 20%;
-    height: 91vh;
+    height: 90vh;
 }
 
 .instrument-section {
@@ -711,7 +711,7 @@ td {
     position: fixed;
     margin-bottom: 0;
     bottom: 0;
-    height: 15rem;
+    height: 18rem;
     padding: 5px 5px 10px 5px;
     color: dimgrey;
 
@@ -740,9 +740,14 @@ td {
     transform: rotate(270deg);
 }
 
-.knob {
-    margin: 0 auto auto auto;
+.pan-knob {
+    margin: 0.5rem auto auto auto;
+    transform: rotate(180deg);
 }
+
+/*.pan {
+    margin-top: 0;
+}*/
 
 .volume {
     margin: auto auto 5px auto;

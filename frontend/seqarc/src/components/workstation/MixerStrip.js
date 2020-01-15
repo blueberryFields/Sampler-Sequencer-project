@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { Knob } from "react-rotary-knob";
 import * as skins from "react-rotary-knob-skin-pack";
+import LimitedKnob from "./LimitedKnob";
 
 
 const MixerStrip = props => {
@@ -10,17 +11,28 @@ const MixerStrip = props => {
 
     return (
         <div className="mixer-strip-container">
-            <Knob
+            {/*<Knob
                 className="knob"
                 skin={skins.s12}
                 unlockDistance={0}
                 min={-50}
                 max={50}
                 value={pan}
-                precision={"off"}
                 onChange={(e) => setPan(e)}
+            />*/}
+            <LimitedKnob
+                className="pan-knob"
+                style={{ display: "inline-block" }}
+                min={-50}
+                max={50}
+                unlockDistance={0}
+                preciseMode={false}
+                // value={pan}
+                setPan={setPan}
+                // onChange={(e) => setPan(e)}
+                skin={skins.s13}
             />
-            {/*<div className="pan">{pan}</div>*/}
+            <div className="pan">{pan}</div>
             <div className="slider-container">
                 <input
                     className="vol-slider"
