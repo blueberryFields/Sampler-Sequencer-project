@@ -1,12 +1,5 @@
 import React from "react";
-import { render } from "react-dom";
 import { Knob } from "react-rotary-knob";
-
-// const styles = {
-//     fontFamily: "sans-serif",
-//     textAlign: "center",
-//     marginTop: "6rem"
-// };
 
 class LimitedKnob extends React.Component {
     constructor() {

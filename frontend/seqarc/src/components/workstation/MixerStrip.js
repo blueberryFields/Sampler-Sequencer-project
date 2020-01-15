@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import {Knob} from "react-rotary-knob";
 import * as skins from "react-rotary-knob-skin-pack";
 import LimitedKnob from "./LimitedKnob";
 
@@ -11,6 +10,10 @@ const MixerStrip = props => {
 
     useEffect(() => {
         props.changePan(props.index, pan)
+    })
+
+    useEffect(() => {
+        props.changeVol(props.index, volume)
     })
 
     const lorR = (panVal) => {
@@ -44,8 +47,8 @@ const MixerStrip = props => {
                 <input
                     className="vol-slider"
                     type="range"
-                    min="-127"
-                    max="36"
+                    min="-36"
+                    max="12"
                     value={volume}
                     onChange={(e) => setVolume(e.target.value)}/>
             </div>

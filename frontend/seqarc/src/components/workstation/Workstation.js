@@ -6,7 +6,6 @@ import SampleBrowser from "./SampleBrowser";
 import MixerStrip from "./MixerStrip"
 import {faPlus} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import Toolbar from "../toolbar/Toolbar";
 
 const Workstation = props => {
 
