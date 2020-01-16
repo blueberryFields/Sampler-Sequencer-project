@@ -9,18 +9,23 @@
     height: 96vh;
 }
 
-.split-pane {
+.split-pane-vertical {
     display: flex;
     flex-direction: row;
 }
 
+.split-pane-horizontal {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
 .sample-browser-section {
-    width: 25%;
-    height: 67vh;
+    width: 20%;
+    height: 91vh;
 }
 
 .instrument-section {
-    width: 75%;
     margin: 0 5px;
 }
 
@@ -415,8 +420,9 @@ td {
 
 .transport-bar {
     background-color: #282c34;
-    display: flex;
     height: 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .transport {
@@ -520,6 +526,29 @@ td {
 .stopped:active {
     background: #538cc6;
     box-shadow: inset #006 0 -1px 9px, rgba(63, 140, 255, 0.2) 0 2px 14px;
+}
+
+.transport-buttons {
+    /*margin: auto;*/
+    display: flex;
+    /*margin-left: 5px;*/
+}
+
+.transport-button {
+    margin: auto 0 auto 15px;
+    color: dimgray;
+    background: #373c49;
+    font-size: 1.2rem;
+    padding: 3px 8px;
+    border-radius: 3px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.transport-button:active {
+    background: #21242c;
+    color: #4d4d4d;
+    box-shadow: none;
 }
 
 /* UPLOAD SAMPLE MODAL */
@@ -672,3 +701,52 @@ td {
     height: 2rem;
     margin-top: 10px;
 }
+
+/* CSS for mixer section */
+
+.mixer-section {
+    display: flex;
+    flex-direction: row;
+    /*margin-bottom: 0;*/
+    position: fixed;
+    margin-bottom: 0;
+    bottom: 0;
+    height: 15rem;
+    padding: 5px 5px 10px 5px;
+    color: dimgrey;
+
+}
+
+.mixer-strip-container {
+    display: flex;
+    flex-direction: column;
+    color: dimgrey;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
+    height: 100%;
+    width: 4rem;
+    margin: 5px 5px 10px 5px;
+}
+
+.slider-container {
+    width: 2rem;
+}
+
+.vol-slider {
+    position: relative;
+    /*bottom: -8rem;*/
+    left: -45px;
+    transform: rotate(270deg);
+}
+
+.knob {
+    margin: 0 auto auto auto;
+}
+
+.volume {
+    margin: auto auto 5px auto;
+}
+
+
+

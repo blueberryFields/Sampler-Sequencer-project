@@ -188,7 +188,7 @@ const SampleBrowser = (props) => {
                         getFilteredSamples={getFilteredSamples}
                         testMessage={'hej'} //TODO: wtf?
                     />
-                    <div className="browser-footer-button">Record Sample</div>
+                    {/*<div className="browser-footer-button">Record Sample</div>*/}
                 </div>
                 <FontAwesomeIcon
                     className={`audition-icon ${audition ? 'audition-on': 'audition-off'}`}
