@@ -5,12 +5,12 @@ import Home from "../home/Home";
 import About from "../about/About";
 import Profile from "../profile/Profile";
 import Login from "../login/Login"
+import Register from "../register/Register"
 import './Toolbar.css'
 import jwtDecode from 'jwt-decode'
 import {faInfinity} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { useLocalStorage, deleteFromStorage } from '@rehooks/local-storage';
-
 
 
 const Toolbar = (props) => {
@@ -47,18 +47,18 @@ const Toolbar = (props) => {
                                 <Link to="/workstation">Workstation</Link>
                             </li>
                             {token ?
-                            <span>
+                            <ul>
                                 <li>
                                     <Link to="/profile">Profile</Link>
                                 </li> 
                                 <li onClick={() => deleteFromStorage('jwt')}>
                                     <Link to="/logout">Logout</Link>
-                                </li> 
-                                </span>: <div>
-                                    <li>
-                                        <Link to="/login">Login</Link>
-                                    </li>
-                                </div>
+                                </li>
+                            </ul>
+                            :
+                                <li>
+                                    <Link to="/login">Login</Link>
+                                </li>
                             }
                             {/* {!token ? 
                             <li>
@@ -96,6 +96,9 @@ const Toolbar = (props) => {
                     </Route>
                     <Route path="/login">
                         <Login/>
+                    </Route>
+                    <Route path="/register">
+                        <Register/>
                     </Route>
                     <Route path="/">
                         <Home/>
