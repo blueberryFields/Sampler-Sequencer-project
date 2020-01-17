@@ -142,7 +142,7 @@ const SequencerState = props => {
 
     // Methods for editing instruments and parts
 
-    const reset = () => {
+    const initialize = () => {
         instruments.forEach((instrument, index) => deleteInstrument(index))
         setInstruments([])
     }
@@ -180,6 +180,7 @@ const SequencerState = props => {
         setEditSampleModeValue(-1)
         instruments[index].instrument.dispose()
         instruments[index].part.dispose()
+        instruments[index].panVol.dispose()
         let newInstrumentArr = [...instruments]
         newInstrumentArr.splice(index, 1)
         setInstruments(newInstrumentArr)
@@ -222,7 +223,7 @@ const SequencerState = props => {
             toggleStepOn={toggleStepOn}
             changeNoteValue={changeNoteValue}
             noteValues={noteValues}
-            reset={reset}
+            initialize={initialize}
             changeVol={changeVol}
             changePan={changePan}
         />

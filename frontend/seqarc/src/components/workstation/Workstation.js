@@ -22,7 +22,7 @@ const Workstation = props => {
         toggleStepOn,
         changeNoteValue,
         noteValues,
-        reset,
+        initialize,
         changeVol,
         changePan,
     } = props
@@ -118,7 +118,7 @@ const Workstation = props => {
                 updateSwing={updateSwing}
                 getSwing={swing}
                 position={position}
-                reset={reset}
+                initialize={initialize}
             />
             <div className="split-pane-vertical">
                 <div className="sample-browser-section">
@@ -164,6 +164,7 @@ const Workstation = props => {
                             instruments.map((instrument, index) => {
                                 return <MixerStrip
                                     instrument={instrument.instrument}
+                                    panVol={instrument.panVol}
                                     key={instrument.key}
                                     index={index}
                                     changeVol={changeVol}

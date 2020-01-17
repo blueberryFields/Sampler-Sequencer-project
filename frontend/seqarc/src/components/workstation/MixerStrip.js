@@ -2,15 +2,22 @@ import React, {useState, useEffect} from "react";
 import * as skins from "react-rotary-knob-skin-pack";
 import LimitedKnobHooks from "./LimitedKnobHooks";
 import Tone from "tone";
+import useInterval from "../hooks/useInterval";
 
 
 const MixerStrip = props => {
 
     const [volume, setVolume] = useState(0)
     const [pan, setPan] = useState(0)
+    const [level, setLevel] = useState(-Infinity)
 
     const meter = new Tone.Meter()
-    props.instrument.connect(meter)
+    props.panVol.connect(meter)
+
+    useInterval(() => {
+        setLevel(meter.getLevel())
+        console.log(meter.getLevel())
+    }, 10)
 
     useEffect(() => {
         props.changePan(props.index, pan)
@@ -52,7 +59,10 @@ const MixerStrip = props => {
                     max="12"
                     value={volume}
                     onChange={(e) => setVolume(e.target.value)}/>
-                <div className="meter"/>
+            </div>
+            <div className="meter-container">
+                <div className="meter"
+                     style={{height: level + 100}}/>
             </div>
             <div className="volume">{volume + ' db'}</div>
             <div className="mix-strip-pad">

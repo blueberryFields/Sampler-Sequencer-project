@@ -31,7 +31,6 @@
 }
 
 .instrument-section {
-    /*height: calc(100%-20rem);*/
     flex-grow: 1;
     overflow-y: auto;
     margin: 0 5px 0 0;
@@ -86,6 +85,7 @@
     margin: 6px auto auto auto;
     height: 5rem;
     display: flex;
+
 }
 
 .instr-header {
@@ -780,15 +780,23 @@ td {
     height: 0.5rem;
 }
 
-.meter {
+.meter-container {
     position: relative;
-    /*bottom: 0;*/
-    top: 6rem;
+    bottom: 0;
+    height: 8rem;
     left: 2.3rem;
-    background: #00cc00;
     width: 0.5rem;
-    height: 2rem;
-    /*margin: auto auto 0 2.3rem;*/
+    display: flex;
+    background: #21232c;
+}
+
+.meter {
+    /*position: relative;
+    bottom: 0;*/
+    margin: auto auto 0 auto;
+    width: 100%;
+    background: #66ff66;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 5px, rgba(102, 255, 102, 0.2) 0 2px 15px;
 }
 
 .vol-slider::-webkit-slider-thumb {
@@ -796,23 +804,17 @@ td {
     appearance: none;
     width: 10px; /* Set a specific slider handle width */
     height: 20px; /* Slider handle height */
-    background: #66ff66; /* Green background */
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 5px, rgba(102, 255, 102, 0.2) 0 2px 8px;
+    background: #4080bf; /* Green background */
+    /*box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 5px, rgba(102, 255, 102, 0.2) 0 2px 8px;*/
     cursor: pointer; /* Cursor on hover */
 }
 
 .vol-slider::-moz-range-thumb {
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
-    background: #66ff66; /* Green background */
+    background: #4080bf; /* Green background */
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 5px, rgba(102, 255, 102, 0.2) 0 2px 8px;
     cursor: pointer; /* Cursor on hover */
-}
-
-.volume {
-    position: relative;
-    top: 6.2rem;
-    margin: 0 auto;
 }
 
 .pan-container {
@@ -831,12 +833,18 @@ td {
     top: 0;
 }
 
+.volume {
+    position: relative;
+    bottom: -0.5rem;
+    margin: 0 auto;
+}
+
 .mix-strip-pad {
     display: flex;
     width: 3rem;
     height: 3rem;
     position: relative;
-    top: 7rem;
+    bottom: -1rem;
     margin: 0 auto 0 auto;
     border-radius: 5px;
     background: #8cb3d9;
