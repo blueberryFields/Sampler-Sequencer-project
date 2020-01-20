@@ -43,7 +43,7 @@ public class SampleServiceImpl implements SampleService {
     }
 
     @Override
-    public SampleDTO uploadSample(MultipartFile multipartFile, String name, String category, String username) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException, SampleProcessingException, UserNotFoundException {
+    public SampleDTO uploadSample(MultipartFile multipartFile, String name, String category, Long id) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException, SampleProcessingException, UserNotFoundException {
         // Store file temporarily
         String filename = storageService.store(multipartFile, UploadLocation.TEMPSAMPLE);
         // Check fileExtension to see if format is supported
@@ -69,7 +69,7 @@ public class SampleServiceImpl implements SampleService {
             duration = Precision.round(calculateWaveDurationInSeconds(processedFile), 2);
             storageService.moveAndRenameSample(processedFile, checksum);
         }
-        return create(name, category, checksum, duration, username);
+        return create(name, category, checksum, duration, id);
     }
 
     public File processSample(File file) throws SampleProcessingException {
@@ -77,7 +77,7 @@ public class SampleServiceImpl implements SampleService {
         try {
             // create the ffmpeg process command to run.
             Process ffmpeg = new ProcessBuilder(
-                    "/opt/local/bin/ffmpeg", // imac: "/opt/local/bin/ffmpeg" linux: "/usr/bin/ffmpeg"
+                    "/usr/bin/ffmpeg", // imac: "/opt/local/bin/ffmpeg" linux: "/usr/bin/ffmpeg"
                     "-i", file.getAbsolutePath(),
                     "-acodec", "pcm_s16le",
                     "-ar", "22050",
@@ -140,7 +140,7 @@ public class SampleServiceImpl implements SampleService {
     }
 
     @Override
-    public SampleDTO create(String name, String category, String checksum, double duration, String username) throws CategoryNotFoundException, UserNotFoundException {
+    public SampleDTO create(String name, String category, String checksum, double duration, Long id) throws CategoryNotFoundException, UserNotFoundException {
         Sample sample = new Sample();
         sample.setName(name);
         // Check if category exists, else throw exception
@@ -148,8 +148,8 @@ public class SampleServiceImpl implements SampleService {
         sample.setCategory(result.orElseThrow(() -> new CategoryNotFoundException(category)));
         sample.setDuration(duration);
         sample.setChecksum(checksum);
-        Optional<User> userResult = userRepository.findOneByUsername(username);
-        sample.setUser(userResult.orElseThrow(() -> new UserNotFoundException(username)));
+        Optional<User> userResult = userRepository.findById(id);
+        sample.setUser(userResult.orElseThrow(UserNotFoundException::new));
         return new SampleDTO(sampleRepository.save(sample));
     }
 

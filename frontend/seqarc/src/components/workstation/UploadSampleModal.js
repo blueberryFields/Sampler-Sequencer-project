@@ -2,8 +2,16 @@ import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import './Workstation.css'
 import Axios from "axios-observable";
+import {useLocalStorage} from "@rehooks/local-storage";
+import jwtDecode from "jwt-decode";
 
 const Modal = ({isShowing, hide, getFilteredSamples}) => {
+
+    const [token] = useLocalStorage('jwt');
+
+    const decodeJWT = () => {
+        return jwtDecode(token)
+    }
 
     const [categories, setCategories] = useState([])
 
@@ -23,13 +31,17 @@ const Modal = ({isShowing, hide, getFilteredSamples}) => {
             const bodyFormData = new FormData();
             bodyFormData.set('name', sampleName);
             bodyFormData.set('category', selectedCategory);
+            bodyFormData.set('id', decodeJWT().id)
             bodyFormData.append('file', selectedFile);
 
             Axios.request({
                 method: 'post',
                 url: 'http://localhost:8080/sample/upload',
                 data: bodyFormData,
-                headers: {'Content-Type': 'multipart/form-data'}
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Bearer ' + token
+                }
             })
                 .subscribe(
                     response => {
