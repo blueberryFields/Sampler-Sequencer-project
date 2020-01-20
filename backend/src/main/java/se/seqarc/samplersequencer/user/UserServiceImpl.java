@@ -55,10 +55,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserById(Long id) throws Exception {
+    public ReducedUserDTO getUserById(Long id) throws Exception {
         Optional<User> result = userRepository.findById(id);
         User user = result.orElseThrow(UserNotFoundException::new);
-        return null;
+        return new ReducedUserDTO(user);
     }
 
     @Override

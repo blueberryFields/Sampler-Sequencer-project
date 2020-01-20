@@ -1,6 +1,8 @@
 import React, {useState, useCallback} from 'react'
 import './Register.css'
 import Axios from 'axios-observable'
+import {useHistory} from "react-router-dom";
+
 
 function Register() {
 
@@ -8,6 +10,8 @@ function Register() {
     const [password, setPassword] = useState('')
     const [profileDescription, setProfileDescription] = useState('')
     const [roles, setRoles] = useState(['ROLE_USER'])
+    let history = useHistory();
+
 
     const register = useCallback(() => {
 
@@ -25,7 +29,9 @@ function Register() {
                     console.log(response)
                     setUsername('')
                     setPassword('')
-                    setProfileDescription('')},
+                    setProfileDescription('')
+                    history.push('/login')
+                    },
                 error => {
                     console.log(error.response)
                     if(error.response.status === 409) {

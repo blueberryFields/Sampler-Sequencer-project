@@ -28,6 +28,10 @@ public class SamplersequencerApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**");
+
+                //        CORS-ERROR fix?
+//                .allowedHeaders("GET", "POST", "PUT", "DELETE").allowedOrigins("*")
+//                .allowedHeaders("*");
             }
         };
     }

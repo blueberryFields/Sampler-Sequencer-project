@@ -10,7 +10,7 @@ public interface UserService {
 
     public ReducedUserDTO uploadProfileDescription (String string, Long id) throws UserNotFoundException;
 
-    public UserDTO getUserById(Long id) throws Exception;
+    public ReducedUserDTO getUserById(Long id) throws Exception;
 
     public void createUser(UserDTO userDTO) throws UsernameTakenException;
 

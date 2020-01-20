@@ -1,34 +1,33 @@
-import React, {useState} from "react";
-import UserForm from './UserForm.js'
-// import Fragment from 'react-bootstrap/Fragment';
+// import React, {useState} from "react";
+// // import Fragment from 'react-bootstrap/Fragment';
 
-// https://www.youtube.com/watch?v=b6Oe2puTdMQ
+// // https://www.youtube.com/watch?v=b6Oe2puTdMQ
 
-const UploadImage = () => {
-    const [file, setFile] = useState('');
-    const [filename, setFilename] = useState('');
+// const UploadImage = () => {
+//     const [file, setFile] = useState('');
+//     const [filename, setFilename] = useState('');
 
-    // Method that targets the first file in an array (since we only need one file)
-    const onChange = e => {
-        setFile(e.target.files[0]);
-    }
+//     // Method that targets the first file in an array (since we only need one file)
+//     const onChange = e => {
+//         setFile(e.target.files[0]);
+//     }
 
     // const []
 
-    return (
+    // return (
         
-            <form>
-                <div className="custom-file">
-                    <input type="file" className="custom-file-input" id="customFile" onChange=
-                    {onChange}/>
-                    <label className="custom-file-label" for="customFile">
-                        {filename}
-                    </label>
-                    {/* <img src={'http://localhost:8080/download/' + userName}></img> */}
-                </div>
-                <input type="submit" value="Upload" className="btn btn-primary btn-block"></input>
-            </form>
-    )
+    //         <form>
+    //             <div className="custom-file">
+    //                 <input type="file" className="custom-file-input" id="customFile" onChange=
+    //                 {onChange}/>
+    //                 <label className="custom-file-label" for="customFile">
+    //                     {filename}
+    //                 </label>
+    //                 {/* <img src={'http://localhost:8080/download/' + userName}></img> */}
+    //             </div>
+    //             <input type="submit" value="Upload" className="btn btn-primary btn-block"></input>
+    //         </form>
+    // )
 
     // const defaultImage = require('../images/Doom_Guy.jpg');
     // const uploadImage = 
@@ -49,7 +48,7 @@ const UploadImage = () => {
     //         <img src={defaultImage}></img>
     //         {/* <button onClick={() => setImage}></button> */}
     //     </div>
-    // )
-}
+//     // )
+// }
 
-export default UploadImage
+// export default UploadImage

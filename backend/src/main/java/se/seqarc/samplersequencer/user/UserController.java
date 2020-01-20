@@ -33,6 +33,20 @@ public class UserController {
         }
     }
 
+    //    CORS-ERROR fix?
+//    @CrossOrigin
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<ReducedUserDTO> handleProfile(@PathVariable Long id) {
+        try {
+            LOGGER.info("Profile found");
+            return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            LOGGER.error("Profile not found");
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error finding profile");
+        }
+    }
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginFormDTO loginFormDTO) {
         return new ResponseEntity<>(userService.login(loginFormDTO), HttpStatus.OK);
