@@ -165,6 +165,7 @@ const Workstation = props => {
                                 return <MixerStrip
                                     instrument={instrument.instrument}
                                     panVol={instrument.panVol}
+                                    meter={instrument.meter}
                                     key={instrument.key}
                                     index={index}
                                     changeVol={changeVol}

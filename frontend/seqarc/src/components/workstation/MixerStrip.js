@@ -7,25 +7,28 @@ import useInterval from "../hooks/useInterval";
 
 const MixerStrip = props => {
 
+    // destructure props
+    const {changePan, changeVol, index} = props
+
     const [volume, setVolume] = useState(0)
     const [pan, setPan] = useState(0)
     const [level, setLevel] = useState(-Infinity)
 
-    const meter = new Tone.Meter()
-    props.panVol.connect(meter)
+    // const meter = new Tone.Meter()
+    // props.instrument.connect(meter)
 
     useInterval(() => {
-        setLevel(meter.getLevel())
-        console.log(meter.getLevel())
+        setLevel(props.meter.getLevel())
+        console.log(props.meter.getLevel())
     }, 10)
 
     useEffect(() => {
-        props.changePan(props.index, pan)
-    })
+        changePan(index, pan)
+    }, [pan, changePan, index])
 
     useEffect(() => {
-        props.changeVol(props.index, volume)
-    })
+        changeVol(index, volume)
+    }, [volume, changeVol, index])
 
     const lorR = (panVal) => {
         if (panVal < 0) {

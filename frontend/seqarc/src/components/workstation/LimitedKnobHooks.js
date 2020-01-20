@@ -1,8 +1,5 @@
 import {Knob} from "react-rotary-knob";
 import React, {useState} from "react";
-import * as skins from "react-rotary-knob-skin-pack";
-import LimitedKnob from "./LimitedKnob";
-
 
 const LimitedKnobHooks = props => {
 

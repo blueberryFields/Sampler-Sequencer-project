@@ -44,11 +44,14 @@ const SequencerState = props => {
         // create pan/vol-node
         let panVol = new Tone.PanVol(0, 0)
 
+        // Create meter
+        let meter = new Tone.Meter()
+
         // create instrument and chain to pan/vol-node
         let instrument = new Tone.Sampler({
                 'C3': 'samples/kick.wav'
             }
-        ).chain(panVol, Tone.Master)
+        ).chain(panVol, meter, Tone.Master)
 
         // pass in an array of events
         let part = new Tone.Part(function (time, event) {
@@ -65,6 +68,7 @@ const SequencerState = props => {
             ...instruments,
             {
                 name: 'Instr ' + (instruments.length + 1),
+                meter,
                 panVol,
                 instrument,
                 part,
