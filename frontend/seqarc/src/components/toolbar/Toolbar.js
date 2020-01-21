@@ -38,12 +38,6 @@ const Toolbar = (props) => {
                     <div className="toolbar_navigation_items">
                         <ul className="navbar">
                             <li>
-                                <Link to="/">Home</Link>
-                            </li>
-                            <li>
-                                <Link to="/about">About</Link>
-                            </li>
-                            <li>
                                 <Link to="/workstation">Workstation</Link>
                             </li>
                             {token ?
@@ -71,10 +65,6 @@ const Toolbar = (props) => {
             </header>
             <main className="main">
                 <Switch>
-                    <Route path="/about">
-                        <About/>
-                        <div>{props.editSampleModeValue}</div>
-                    </Route>
                     <Route path="/workstation">
                         <Workstation
                             instruments={props.instruments}
