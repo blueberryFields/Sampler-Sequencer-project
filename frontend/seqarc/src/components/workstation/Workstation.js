@@ -22,7 +22,9 @@ const Workstation = props => {
         toggleStepOn,
         changeNoteValue,
         noteValues,
-        reset
+        initialize,
+        changeVol,
+        changePan,
     } = props
 
     // Transport-related stuff
@@ -103,7 +105,7 @@ const Workstation = props => {
 
     // Instrument auditioning
     const triggerInstrument = (index) => {
-        instruments[index].instrument.triggerAttack('C3')
+        if (instruments[index].instrument.loaded) instruments[index].instrument.triggerAttack('C3')
     }
 
     return (
@@ -116,7 +118,7 @@ const Workstation = props => {
                 updateSwing={updateSwing}
                 getSwing={swing}
                 position={position}
-                reset={reset}
+                initialize={initialize}
             />
             <div className="split-pane-vertical">
                 <div className="sample-browser-section">
@@ -161,9 +163,15 @@ const Workstation = props => {
                         {
                             instruments.map((instrument, index) => {
                                 return <MixerStrip
+                                    instrument={instrument.instrument}
+                                    panVol={instrument.panVol}
+                                    meter={instrument.meter}
                                     key={instrument.key}
                                     index={index}
-                                    name={instrument.name}
+                                    changeVol={changeVol}
+                                    changePan={changePan}
+                                    activeStep={activeStep}
+                                    triggerInstrument={triggerInstrument}
                                 />
                             })
                         }

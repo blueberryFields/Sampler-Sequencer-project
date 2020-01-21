@@ -8,33 +8,42 @@ import Axios from 'axios-observable';
 
 function Profile() {
 
-    const [token, setToken] = useLocalStorage('jwt');
+    const [token] = useLocalStorage('jwt');
     const [profile, setProfile] = useState('')
 
     const decodeJWT = () => {
         return jwtDecode(token)
     }
 
+<<<<<<< HEAD
     // console.log(decodeJWT())
+=======
+
+>>>>>>> f779752c13f1eac048e594d4906bfd7f8dfdf822
 
     useEffect(() => {
-            let config = {
-              headers: {
+        let config = {
+            headers: {
                 'Authorization': 'Bearer ' + token
-              }
             }
-            // let subscription = 
+        }
+        //const subscription =
         Axios.get('http://localhost:8080/user/profile/' + decodeJWT().id, config)
             .subscribe(
                 (response) => {
                     setProfile(response.data)
+<<<<<<< HEAD
+=======
+                    // console.log(profile)
+>>>>>>> f779752c13f1eac048e594d4906bfd7f8dfdf822
                 },
                 error => console.log(error)
             );
-            // return function cleanup() {
-            //     subscription.unsubscribe();
-            // }
-        }, [])
+
+        // return function cleanup() {
+        //     subscription.unsubscribe();
+        // }
+    }, [])
 
         // Profilepicture
         const [file, setFile] = useState('');
@@ -82,9 +91,9 @@ function Profile() {
                 and will represent them on the forums. */}
 
                 <h1>Hello {profile.username}</h1>
-                <img 
+                <img
                 className="profile-picture"
-                src={profile.profilePicture ? "/profilepictures/" + profile.profilePicture : "./profilepictures/doom-guy.jpg"} 
+                src={profile.profilePicture ? "/profilepictures/" + profile.profilePicture : "./profilepictures/doom-guy.jpg"}
                 alt="THEMOTHAFUCKINGDOOMGUY"/>
 
                 <input type="file" onChange={onChange}/>
@@ -92,7 +101,7 @@ function Profile() {
 
 
                 {/* <UploadImage></UploadImage> */}
-                
+
                 {/* <Grid className="profile-grid">
                     <Cell col={6}>
                         <img src="../images/Doom_Guy.jpg"></img>

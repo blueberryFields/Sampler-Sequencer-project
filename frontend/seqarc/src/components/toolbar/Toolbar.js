@@ -78,7 +78,9 @@ const Toolbar = (props) => {
                             noteValues={props.noteValues}
                             changeNoteValue={props.changeNoteValue}
                             toggleStepOn={props.toggleStepOn}
-                            reset={props.reset}
+                            initialize={props.initialize}
+                            changeVol={props.changeVol}
+                            changePan={props.changePan}
                         />
                     </Route>
                     <Route path="/profile">

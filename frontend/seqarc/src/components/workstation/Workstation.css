@@ -7,11 +7,14 @@
 .container {
     background-color: black;
     height: 96vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .split-pane-vertical {
     display: flex;
     flex-direction: row;
+    height: 100%;
 }
 
 .split-pane-horizontal {
@@ -22,11 +25,52 @@
 
 .sample-browser-section {
     width: 20%;
-    height: 91vh;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
 }
 
 .instrument-section {
-    margin: 0 5px;
+    flex-grow: 1;
+    overflow-y: auto;
+    margin: 0 5px 0 0;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.instrument-section::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.instrument-section {
+    -ms-overflow-style: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.mixer-section::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.mixer-section {
+    -ms-overflow-style: none;
+}
+
+.mixer-section {
+    display: flex;
+    flex-grow: 1;
+    overflow-x: auto;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 24rem;
+    max-height: 24rem;
+    /*padding: 0px 0px 10px 0px;*/
+    color: dimgrey;
+    background: black;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
 }
 
 
@@ -41,6 +85,7 @@
     margin: 6px auto auto auto;
     height: 5rem;
     display: flex;
+
 }
 
 .instr-header {
@@ -146,7 +191,7 @@
     margin: auto;
     width: 80%;
     min-width: 4rem;
-    padding: 0 2px  2px 2px;
+    padding: 0 2px 2px 2px;
     background: black;
     border-radius: 5px;
     /*color: #4e5565;*/
@@ -232,12 +277,13 @@
 .browser-footer {
     margin-bottom: 0;
     background: #16181d;
-    height: 2.5rem;
+    /*height: 2.5rem;*/
     display: flex;
 }
 
 .browser-footer-buttons {
     display: flex;
+    padding: 0.5rem;
 }
 
 .browser-footer-button {
@@ -339,7 +385,7 @@
     border-radius: 25px;
     color: dimgray;
     background: #cccccc;
-    background: linear-gradient(to bottom, #0b0c0f 25%,black 100%);
+    background: linear-gradient(to bottom, #0b0c0f 25%, black 100%);
     display: flex;
 }
 
@@ -668,7 +714,7 @@ td {
     padding: 5px;
     background-color: #0b0c0f;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
-    linear-gradient(to bottom, #0b0c0f 25%,black 100%);
+    linear-gradient(to bottom, #0b0c0f 25%, black 100%);
     background-repeat: no-repeat, repeat;
     background-position: right .7em top 50%, 0 0;
     background-size: .65em auto, 100%;
@@ -692,7 +738,7 @@ td {
     font-size: 1.2rem;
     margin: 10px 0;
     border: none;
-    background: linear-gradient(to bottom, #0b0c0f 25%,black 100%);
+    background: linear-gradient(to bottom, #0b0c0f 25%, black 100%);
     color: dimgray;
 }
 
@@ -704,49 +750,120 @@ td {
 
 /* CSS for mixer section */
 
-.mixer-section {
-    display: flex;
-    flex-direction: row;
-    /*margin-bottom: 0;*/
-    position: fixed;
-    margin-bottom: 0;
-    bottom: 0;
-    height: 15rem;
-    padding: 5px 5px 10px 5px;
-    color: dimgrey;
-
-}
-
 .mixer-strip-container {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     color: dimgrey;
     border-style: solid;
     border-width: 3px;
     border-radius: 10px;
-    height: 100%;
+    height: 96%;
     width: 4rem;
-    margin: 5px 5px 10px 5px;
+    /*margin: 5px 5px 10px 5px;*/
+    margin: auto 5px;
 }
 
 .slider-container {
-    width: 2rem;
+
 }
 
 .vol-slider {
     position: relative;
     /*bottom: -8rem;*/
-    left: -45px;
+    left: -4rem;
+    top: 5.45rem;
     transform: rotate(270deg);
+    -webkit-appearance: none; /* Override default CSS styles */
+    appearance: none;
+    background: dimgray;
+    height: 0.5rem;
+    width: 9.95rem;
 }
 
-.knob {
-    margin: 0 auto auto auto;
+.meter-container {
+    position: relative;
+    bottom: 0;
+    height: 10rem;
+    left: 2.3rem;
+    width: 0.5rem;
+    display: flex;
+    background: #21232c;
+}
+
+.meter {
+    /*position: relative;
+    bottom: 0;*/
+    margin: auto auto 0 auto;
+    width: 100%;
+    /*background: #66ff66;*/
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 5px, rgba(102, 255, 102, 0.2) 0 2px 15px;
+}
+
+.vol-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 10px; /* Set a specific slider handle width */
+    height: 20px; /* Slider handle height */
+    background: #4080bf; /* Green background */
+    /*box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 5px, rgba(102, 255, 102, 0.2) 0 2px 8px;*/
+    cursor: pointer; /* Cursor on hover */
+}
+
+.vol-slider::-moz-range-thumb {
+    width: 10px; /* Set a specific slider handle width */
+    height: 20px; /* Slider handle height */
+    background: #4080bf; /* Green background */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 5px, rgba(102, 255, 102, 0.2) 0 2px 8px;
+    cursor: pointer; /* Cursor on hover */
+}
+
+.pan-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.pan-knob {
+    margin: 0.5rem auto auto auto;
+    transform: rotate(180deg);
+}
+
+.pan {
+    margin: 0.5rem auto 0;
+    position: relative;
+    top: 0;
 }
 
 .volume {
-    margin: auto auto 5px auto;
+    position: relative;
+    bottom: -0.5rem;
+    margin: 0 auto;
 }
+
+.mix-strip-pad {
+    display: flex;
+    width: 3rem;
+    height: 3rem;
+    position: relative;
+    bottom: -1rem;
+    margin: 0 auto 0 auto;
+    border-radius: 5px;
+    background: #8cb3d9;
+    box-shadow: inset #006 0 -1px 9px, rgba(63, 140, 255, 0.2) 0 2px 14px;
+    cursor: pointer;
+}
+
+.mix-strip-pad:active {
+    background: #538cc6;
+}
+
+.mix-strip-number {
+    margin: auto;
+    font-size: 2rem;
+    color: black;
+}
+
+
 
 
 

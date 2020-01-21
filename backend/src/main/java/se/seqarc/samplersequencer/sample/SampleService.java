@@ -12,9 +12,9 @@ import java.util.List;
 
 public interface SampleService {
 
-    SampleDTO uploadSample(MultipartFile file, String name, String category, String username) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException, SampleProcessingException, UserNotFoundException;
+    SampleDTO uploadSample(MultipartFile file, String name, String category, Long id) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException, SampleProcessingException, UserNotFoundException;
 
-    SampleDTO create(String name, String category, String checksum, double duration, String username) throws CategoryNotFoundException, UserNotFoundException;
+    SampleDTO create(String name, String category, String checksum, double duration, Long id) throws CategoryNotFoundException, UserNotFoundException;
 
     SampleDTO getSampleById(Long id) throws Exception;
 

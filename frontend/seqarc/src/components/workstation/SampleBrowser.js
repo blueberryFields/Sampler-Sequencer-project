@@ -5,15 +5,19 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import useModal from "../hooks/useModal";
 import UploadSampleModal from "./UploadSampleModal";
 import Axios from 'axios-observable';
+import {useLocalStorage} from "@rehooks/local-storage";
 
 const SampleBrowser = (props) => {
+
+    const [token] = useLocalStorage('jwt');
 
     const [categories, setCategories] = useState([])
 
     const [categoriesIsLoading, setCategoriesIsLoading] = useState(true)
 
     useEffect(() => {
-        Axios.get('http://localhost:8080/category/findall')
+        // const subscription =
+            Axios.get('http://localhost:8080/category/findall')
             .subscribe(
                 (response) => {
                     setCategories(response.data)
@@ -21,6 +25,7 @@ const SampleBrowser = (props) => {
                 },
                 error => console.log(error)
             );
+            // subscription.unsubscribe()
     }, [])
 
     const [selectedCategory, setSelectedCategory] = useState('')
@@ -177,11 +182,12 @@ const SampleBrowser = (props) => {
             </table>
             <div className="browser-footer">
                 <div className="browser-footer-buttons">
-                    <div
+                    {token ? <div
                         className="browser-footer-button"
                         onClick={uploadModalToggle}>
                         Upload Sample
-                    </div>
+                    </div> : <div/>}
+
                     <UploadSampleModal
                         isShowing={uploadModalIsShowing}
                         hide={uploadModalToggle}
