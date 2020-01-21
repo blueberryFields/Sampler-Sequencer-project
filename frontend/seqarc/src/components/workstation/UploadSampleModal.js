@@ -55,7 +55,7 @@ const Modal = ({isShowing, hide, getFilteredSamples}) => {
                         console.log(error)
                         setMessage("Sample upload failed!")
                     }
-                );
+                )
 
             if (message) setMessage('')
         } else {

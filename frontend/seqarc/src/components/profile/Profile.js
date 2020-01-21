@@ -89,8 +89,8 @@ function Profile() {
                 alt="THEMOTHAFUCKINGDOOMGUY"/>
 
                 <input type="file" onChange={onChange}/>
-                <input type="submit" value="Upload" onSubmit={uploadPicture()}/>
-
+                {/*<input type="submit" value="Upload" onSubmit={uploadPicture()}/>*/}
+                <button onClick={() => uploadPicture()}>Upload</button>
 
                 {/* <UploadImage></UploadImage> */}
 
