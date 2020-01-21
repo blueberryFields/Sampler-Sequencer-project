@@ -105,7 +105,7 @@ const Workstation = props => {
 
     // Instrument auditioning
     const triggerInstrument = (index) => {
-        instruments[index].instrument.triggerAttack('C3')
+        if (instruments[index].instrument.loaded) instruments[index].instrument.triggerAttack('C3')
     }
 
     return (
@@ -170,6 +170,8 @@ const Workstation = props => {
                                     index={index}
                                     changeVol={changeVol}
                                     changePan={changePan}
+                                    activeStep={activeStep}
+                                    triggerInstrument={triggerInstrument}
                                 />
                             })
                         }

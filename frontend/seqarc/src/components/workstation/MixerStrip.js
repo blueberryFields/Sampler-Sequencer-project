@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import * as skins from "react-rotary-knob-skin-pack";
 import LimitedKnobHooks from "./LimitedKnobHooks";
-import Tone from "tone";
 import useInterval from "../hooks/useInterval";
 
 
@@ -13,10 +12,19 @@ const MixerStrip = props => {
     const [volume, setVolume] = useState(0)
     const [pan, setPan] = useState(0)
     const [meter, setMeter] = useState(0)
+    const [timerDelay, setTimerDelay] = useState(null)
+
+    useEffect(() => {
+        if (props.activeStep > -1) {
+            setTimerDelay(10)
+        } else {
+            setTimeout(() => setTimerDelay(null), 1000)
+        }
+    }, [props.activeStep, setTimerDelay])
 
     useInterval(() => {
         setMeter(calcMeterHeight(props.meter.getLevel()))
-    }, 20)
+    }, timerDelay)
 
     const calcMeterHeight = (level) => {
         if (level >= -32 && level < 0) {
@@ -50,9 +58,6 @@ const MixerStrip = props => {
 
     return (
         <div className="mixer-strip-container">
-            {/*<button onClick={() => {*/}
-            {/*    console.log(calcMeterHeight(2))*/}
-            {/*}}/>*/}
             <div className="pan-container">
                 <LimitedKnobHooks
                     style={{display: "inline-block"}}
@@ -61,8 +66,7 @@ const MixerStrip = props => {
                     unlockDistance={0}
                     preciseMode={false}
                     skin={skins.s13}
-                    setPan={setPan}
-                />
+                    setPan={setPan}/>
                 <div className="pan">{lorR(pan)} {pan}</div>
             </div>
             <div className="slider-container">
@@ -78,11 +82,13 @@ const MixerStrip = props => {
                 <div className="meter"
                      style={{
                          height: meter + 'rem',
-                         background: meter > 8 ? 'red': '#66ff66'
+                         background: meter > 8 ? 'red' : '#66ff66'
                      }}/>
             </div>
             <div className="volume">{volume + ' db'}</div>
-            <div className="mix-strip-pad">
+            <div
+                className="mix-strip-pad"
+                onClick={() => props.triggerInstrument(props.index)}>
                 <div className="mix-strip-number">
                     {props.index + 1}
                 </div>
