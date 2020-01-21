@@ -15,11 +15,7 @@ function Profile() {
         return jwtDecode(token)
     }
 
-<<<<<<< HEAD
     // console.log(decodeJWT())
-=======
-
->>>>>>> f779752c13f1eac048e594d4906bfd7f8dfdf822
 
     useEffect(() => {
         let config = {
@@ -32,10 +28,6 @@ function Profile() {
             .subscribe(
                 (response) => {
                     setProfile(response.data)
-<<<<<<< HEAD
-=======
-                    // console.log(profile)
->>>>>>> f779752c13f1eac048e594d4906bfd7f8dfdf822
                 },
                 error => console.log(error)
             );
