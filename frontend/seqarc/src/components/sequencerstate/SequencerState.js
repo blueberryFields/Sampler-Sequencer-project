@@ -41,10 +41,17 @@ const SequencerState = props => {
 
         setEditSampleModeValue(-1)
 
+        // create pan/vol-node
+        let panVol = new Tone.PanVol(0, 0)
+
+        // Create meter
+        let meter = new Tone.Meter()
+
+        // create instrument and chain to pan/vol-node
         let instrument = new Tone.Sampler({
                 'C3': 'samples/kick.wav'
             }
-        ).toMaster()
+        ).chain(panVol, meter, Tone.Master)
 
         // pass in an array of events
         let part = new Tone.Part(function (time, event) {
@@ -61,6 +68,8 @@ const SequencerState = props => {
             ...instruments,
             {
                 name: 'Instr ' + (instruments.length + 1),
+                meter,
+                panVol,
                 instrument,
                 part,
                 key: uuid(),
@@ -137,7 +146,7 @@ const SequencerState = props => {
 
     // Methods for editing instruments and parts
 
-    const reset = () => {
+    const initialize = () => {
         instruments.forEach((instrument, index) => deleteInstrument(index))
         setInstruments([])
     }
@@ -151,6 +160,14 @@ const SequencerState = props => {
         } else {
             removeNote(instrumentIndex, stepIndex, noteValues[note])
         }
+    }
+
+    const changeVol = (instrumentIndex, val) => {
+        instruments[instrumentIndex].panVol.volume.value = val
+    }
+
+    const changePan = (instrumentIndex, val) => {
+        instruments[instrumentIndex].panVol.pan.value = val/100
     }
 
     const changeNoteValue = (instrumentIndex, stepIndex, note) => {
@@ -167,6 +184,8 @@ const SequencerState = props => {
         setEditSampleModeValue(-1)
         instruments[index].instrument.dispose()
         instruments[index].part.dispose()
+        instruments[index].panVol.dispose()
+        instruments[index].meter.dispose()
         let newInstrumentArr = [...instruments]
         newInstrumentArr.splice(index, 1)
         setInstruments(newInstrumentArr)
@@ -209,7 +228,9 @@ const SequencerState = props => {
             toggleStepOn={toggleStepOn}
             changeNoteValue={changeNoteValue}
             noteValues={noteValues}
-            reset={reset}
+            initialize={initialize}
+            changeVol={changeVol}
+            changePan={changePan}
         />
     )
 }

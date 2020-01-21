@@ -43,8 +43,8 @@ const Transport = props => {
                 {/*<div className="transport-button">Save</div>*/}
                 {/*<div className="transport-button">Save As</div>*/}
                 <div className="transport-button"
-                     onClick={() => props.reset()}>
-                    Reset
+                     onClick={() => props.initialize()}>
+                    Initialize
                 </div>
             </div>
             <div className="transport">
