@@ -63,8 +63,8 @@
     flex-direction: row;
     width: 100%;
     box-sizing: border-box;
-    min-height: 22rem;
-    max-height: 22rem;
+    min-height: 24rem;
+    max-height: 24rem;
     /*padding: 0px 0px 10px 0px;*/
     color: dimgrey;
     background: black;
@@ -771,19 +771,20 @@ td {
 .vol-slider {
     position: relative;
     /*bottom: -8rem;*/
-    left: -3.1rem;
-    top: 4.5rem;
+    left: -4rem;
+    top: 5.45rem;
     transform: rotate(270deg);
     -webkit-appearance: none; /* Override default CSS styles */
     appearance: none;
     background: dimgray;
     height: 0.5rem;
+    width: 9.95rem;
 }
 
 .meter-container {
     position: relative;
     bottom: 0;
-    height: 8rem;
+    height: 10rem;
     left: 2.3rem;
     width: 0.5rem;
     display: flex;
@@ -795,7 +796,7 @@ td {
     bottom: 0;*/
     margin: auto auto 0 auto;
     width: 100%;
-    background: #66ff66;
+    /*background: #66ff66;*/
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 5px, rgba(102, 255, 102, 0.2) 0 2px 15px;
 }
 
@@ -810,8 +811,8 @@ td {
 }
 
 .vol-slider::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
+    width: 10px; /* Set a specific slider handle width */
+    height: 20px; /* Slider handle height */
     background: #4080bf; /* Green background */
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 5px, rgba(102, 255, 102, 0.2) 0 2px 8px;
     cursor: pointer; /* Cursor on hover */

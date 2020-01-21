@@ -12,15 +12,23 @@ const MixerStrip = props => {
 
     const [volume, setVolume] = useState(0)
     const [pan, setPan] = useState(0)
-    const [level, setLevel] = useState(-Infinity)
-
-    // const meter = new Tone.Meter()
-    // props.instrument.connect(meter)
+    const [meter, setMeter] = useState(0)
 
     useInterval(() => {
-        setLevel(props.meter.getLevel())
-        console.log(props.meter.getLevel())
-    }, 10)
+        setMeter(calcMeterHeight(props.meter.getLevel()))
+    }, 20)
+
+    const calcMeterHeight = (level) => {
+        if (level >= -32 && level < 0) {
+            return 8 + (level / 4)
+        } else if (level === 0) {
+            return 8
+        } else if (level > 0) {
+            return 8 + Math.abs((level / 4))
+        } else {
+            return 0
+        }
+    }
 
     useEffect(() => {
         changePan(index, pan)
@@ -42,6 +50,9 @@ const MixerStrip = props => {
 
     return (
         <div className="mixer-strip-container">
+            {/*<button onClick={() => {*/}
+            {/*    console.log(calcMeterHeight(2))*/}
+            {/*}}/>*/}
             <div className="pan-container">
                 <LimitedKnobHooks
                     style={{display: "inline-block"}}
@@ -65,7 +76,10 @@ const MixerStrip = props => {
             </div>
             <div className="meter-container">
                 <div className="meter"
-                     style={{height: level + 100}}/>
+                     style={{
+                         height: meter + 'rem',
+                         background: meter > 8 ? 'red': '#66ff66'
+                     }}/>
             </div>
             <div className="volume">{volume + ' db'}</div>
             <div className="mix-strip-pad">

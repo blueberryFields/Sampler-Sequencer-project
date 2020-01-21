@@ -185,6 +185,7 @@ const SequencerState = props => {
         instruments[index].instrument.dispose()
         instruments[index].part.dispose()
         instruments[index].panVol.dispose()
+        instruments[index].meter.dispose()
         let newInstrumentArr = [...instruments]
         newInstrumentArr.splice(index, 1)
         setInstruments(newInstrumentArr)
