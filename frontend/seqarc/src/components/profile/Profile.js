@@ -15,7 +15,7 @@ function Profile() {
         return jwtDecode(token)
     }
 
-    console.log(decodeJWT())
+    // console.log(decodeJWT())
 
     useEffect(() => {
             let config = {
@@ -28,7 +28,6 @@ function Profile() {
             .subscribe(
                 (response) => {
                     setProfile(response.data)
-                    console.log(profile)
                 },
                 error => console.log(error)
             );
@@ -43,6 +42,33 @@ function Profile() {
 
         const onChange = e => {
             setFile(e.target.files[0]);
+        }
+
+        const uploadPicture = () => {
+            console.log("Hej")
+            if (file) {
+                const bodyFormData = new FormData();
+                bodyFormData.append('file', file);
+
+                Axios.request({
+                    method: 'post',
+                    url: 'http://localhost:8080/user/upload/' + decodeJWT().id,
+                    data: bodyFormData,
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': 'Bearer ' + token}
+
+                })
+                    .subscribe(
+                        response => {
+                            setFile(null)
+                            setProfile(response.data)
+                        },
+                        error => {
+                            console.log(error)
+                        }
+                    );
+            }
         }
 
     return (
@@ -60,7 +86,10 @@ function Profile() {
                 className="profile-picture"
                 src={profile.profilePicture ? "/profilepictures/" + profile.profilePicture : "./profilepictures/doom-guy.jpg"} 
                 alt="THEMOTHAFUCKINGDOOMGUY"/>
-                <input type="file" className="custom-file-input" id="customFile" onChange={onChange}/>
+
+                <input type="file" onChange={onChange}/>
+                <input type="submit" value="Upload" onSubmit={uploadPicture()}/>
+
 
                 {/* <UploadImage></UploadImage> */}
                 
