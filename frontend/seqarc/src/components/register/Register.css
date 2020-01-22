@@ -1,0 +1,9 @@
+.main {
+    display: flexbox
+
+}
+
+.reg-div {
+    margin-left: 2rem;
+    margin-top: 3rem;
+}

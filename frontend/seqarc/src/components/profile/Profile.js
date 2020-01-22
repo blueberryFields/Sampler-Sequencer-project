@@ -40,13 +40,13 @@ function Profile() {
         // Profilepicture
         const [file, setFile] = useState('');
         const [filename, setFilename] = useState('');
+        const [description, setDescription] = useState('');
 
         const onChange = e => {
             setFile(e.target.files[0]);
         }
 
         const uploadPicture = () => {
-            console.log("Hej")
             if (file) {
                 const bodyFormData = new FormData();
                 bodyFormData.append('file', file);
@@ -72,6 +72,32 @@ function Profile() {
             }
         }
 
+        const saveDescription = () => {
+            
+            Axios.request({
+                method: 'put',
+                url: 'http://localhost:8080/user/' + decodeJWT().id,
+                data: {
+                    "profileDescription": description
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token}
+                })
+                .subscribe(
+                    response => {
+                        setProfile(response.data)
+                    },
+                    error => {
+                        console.log(error)
+                    }
+                );
+        }
+
+        const [editMode, setEditMode] = useState(false)
+
+
+
     return (
         <main className="profile-container">
             <div className="profile-body">
@@ -91,6 +117,32 @@ function Profile() {
                 <input type="file" onChange={onChange}/>
                 {/*<input type="submit" value="Upload" onSubmit={uploadPicture()}/>*/}
                 <button onClick={() => uploadPicture()}>Upload</button>
+
+                <h1>Description</h1>
+
+
+               {editMode ? 
+                <div>
+                        <textarea value={description} className="description" rows="6" cols="60" onChange={(e) => setDescription(e.target.value)}></textarea>
+                        <button onClick={() => {
+                            saveDescription()
+                            setEditMode(false)
+                        }}>Save</button>
+                        <button onClick={() =>
+                            setEditMode(false)
+                        }>Cancel</button>
+                    </div>
+                :
+                    <div>
+                        <div>
+                            {profile.profileDescription}
+                        </div>
+                        <button onClick={() => {
+                            setEditMode(true)
+                            setDescription(profile.profileDescription)
+                            }}>Edit</button>
+                    </div>
+               }
 
                 {/* <UploadImage></UploadImage> */}
 

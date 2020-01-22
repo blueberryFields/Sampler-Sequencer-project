@@ -73,6 +73,7 @@ public class UserController {
         }
     }
 
+    @CrossOrigin
     @PutMapping("/{id}")
     public ResponseEntity<ReducedUserDTO> handleProfileDescriptionUpdate(@RequestBody ReducedUserDTO reducedUserDTO, @PathVariable Long id) {
         try {
