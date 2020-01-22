@@ -1,7 +1,6 @@
 package se.seqarc.samplersequencer.sample;
 
 import org.apache.commons.math3.util.Precision;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import se.seqarc.samplersequencer.category.Category;
@@ -45,35 +44,35 @@ public class SampleServiceImpl implements SampleService {
     @Override
     public SampleDTO uploadSample(MultipartFile multipartFile, String name, String category, Long id) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException, SampleProcessingException, UserNotFoundException {
         // Store file temporarily
-        String filename = storageService.store(multipartFile, UploadLocation.TEMPSAMPLE);
+        String filename = storageService.store(multipartFile, UploadLocation.TEMPFILE);
         // Check fileExtension to see if format is supported
-        String fileExtension = storageService.getFileExtension(filename, UploadLocation.TEMPSAMPLE);
+        String fileExtension = storageService.getFileExtension(filename, UploadLocation.TEMPFILE);
         // Load file
-        File file = storageService.load(filename, UploadLocation.TEMPSAMPLE);
+        File file = storageService.load(filename, UploadLocation.TEMPFILE);
         if (!fileExtension.equals("wav") && !fileExtension.equals("mp3")) {
-            storageService.delete(file, UploadLocation.TEMPSAMPLE);
+            storageService.delete(file, UploadLocation.TEMPFILE);
             throw new FileNotSupportedException(fileExtension);
         }
         // Process sample, convert to mono Wave with low bitrate, and delete the old file
         File processedFile = processSample(file);
-        storageService.delete(file, UploadLocation.TEMPSAMPLE);
+        storageService.delete(file, UploadLocation.TEMPFILE);
         //  generate checksum
         String checksum = getFileChecksum(MessageDigest.getInstance("MD5"), processedFile);
         // Check if file already exists, and if not add it and rename to checksum, also get duration of sample
         Optional<Sample> result = sampleRepository.findFirstByChecksum(checksum);
         double duration = 0;
         if (result.isPresent()) {
-            storageService.delete(processedFile, UploadLocation.TEMPSAMPLE);
+            storageService.delete(processedFile, UploadLocation.TEMPFILE);
             duration = result.get().getDuration();
         } else {
             duration = Precision.round(calculateWaveDurationInSeconds(processedFile), 2);
-            storageService.moveAndRenameSample(processedFile, checksum);
+            storageService.moveAndRenameFile(processedFile, checksum, UploadLocation.SAMPLE);
         }
         return create(name, category, checksum, duration, id);
     }
 
     public File processSample(File file) throws SampleProcessingException {
-        File outputFile = Paths.get(String.valueOf(storageService.getRootLocation(UploadLocation.TEMPSAMPLE).resolve("temp.wav"))).toFile();
+        File outputFile = Paths.get(String.valueOf(storageService.getRootLocation(UploadLocation.TEMPFILE).resolve("temp.wav"))).toFile();
         try {
             // create the ffmpeg process command to run.
             Process ffmpeg = new ProcessBuilder(

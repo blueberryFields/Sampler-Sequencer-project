@@ -6,9 +6,12 @@ import { useLocalStorage} from '@rehooks/local-storage';
 import Axios from 'axios-observable';
 
 
-function Profile() {
+function Profile(props) {
 
-    const [token] = useLocalStorage('jwt');
+    // Destructure props
+    const {token} = props
+
+    // const [token] = useLocalStorage('jwt');
     const [profile, setProfile] = useState('')
 
     const decodeJWT = () => {

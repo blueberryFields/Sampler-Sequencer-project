@@ -20,7 +20,6 @@ function Login() {
         }})
         .subscribe(
             response => {
-                console.log(response)
                 writeStorage('jwt', response.data)
                 setUsername('')
                 setPassword('')

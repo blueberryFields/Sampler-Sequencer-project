@@ -5,9 +5,9 @@ import Axios from "axios-observable";
 import {useLocalStorage} from "@rehooks/local-storage";
 import jwtDecode from "jwt-decode";
 
-const Modal = ({isShowing, hide, getFilteredSamples}) => {
+const Modal = ({isShowing, hide, getFilteredSamples, token}) => {
 
-    const [token] = useLocalStorage('jwt');
+    // const [token] = useLocalStorage('jwt');
 
     const decodeJWT = () => {
         return jwtDecode(token)

@@ -16,7 +16,7 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class StorageServiceImpl implements StorageService {
 
-    private final Path tempSampleRootLoc = Paths.get("src/main/resources/temp-samples");
+    private final Path tempFileRootLoc = Paths.get("src/main/resources/temp-files");
     private final Path sampleRootLoc = Paths.get("../frontend/seqarc/public/samples");
     private final Path profilePicRootLoc = Paths.get("../frontend/seqarc/public/profilepictures");
 
@@ -28,10 +28,11 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public void moveAndRenameSample(File file, String checksum) {
+    public void moveAndRenameFile(File file, String name, UploadLocation uploadLocation) {
+        Path rootLocation = getRootLocation(uploadLocation);
         String filename = getFileNameFromFile(file);
         try {
-            Files.move(tempSampleRootLoc.resolve(filename), sampleRootLoc.resolve(checksum), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(tempFileRootLoc.resolve(filename), rootLocation.resolve(name), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new StorageException("Failed to move sample: " + filename, e);
         }
@@ -79,8 +80,6 @@ public class StorageServiceImpl implements StorageService {
                                 + filename);
             }
             try (InputStream inputStream = file.getInputStream()) {
-                System.out.println(filename);
-                System.out.println(rootLocation.resolve(filename));
                 Files.copy(inputStream, rootLocation.resolve(filename),
                         StandardCopyOption.REPLACE_EXISTING);
                 return filename;
@@ -94,8 +93,8 @@ public class StorageServiceImpl implements StorageService {
     public Path getRootLocation(UploadLocation uploadLocation) {
         Path rootLocation;
         switch (uploadLocation) {
-            case TEMPSAMPLE:
-                rootLocation = tempSampleRootLoc;
+            case TEMPFILE:
+                rootLocation = tempFileRootLoc;
                 break;
             case PROFILEPIC:
                 rootLocation = profilePicRootLoc;

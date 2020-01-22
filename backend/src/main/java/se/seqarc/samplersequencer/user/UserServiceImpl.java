@@ -6,11 +6,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import se.seqarc.samplersequencer.security.SecurityException;
 import se.seqarc.samplersequencer.security.JwtTokenProvider;
+import se.seqarc.samplersequencer.security.SecurityException;
 import se.seqarc.samplersequencer.storage.StorageService;
 import se.seqarc.samplersequencer.storage.UploadLocation;
 
+import java.io.File;
 import java.util.Optional;
 
 @Service
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
-    private final  AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
     public UserServiceImpl(StorageService storageService, UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, AuthenticationManager authenticationManager) {
         this.storageService = storageService;
@@ -32,7 +33,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ReducedUserDTO uploadProfilePicture(MultipartFile multipartFile, Long id) throws UserNotFoundException {
-        String filename = storageService.store(multipartFile, UploadLocation.PROFILEPIC);
+        String filename = storageService.store(multipartFile, UploadLocation.TEMPFILE);
+
+        File file = storageService.load(filename, UploadLocation.TEMPFILE);
+        storageService.moveAndRenameFile(file, "profilepix-" + id, UploadLocation.PROFILEPIC);
+
         Optional<User> result = userRepository.findById(id);
         User user = result.orElseThrow(UserNotFoundException::new);
         user.setProfilePicture(filename);
@@ -63,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserDTO userDTO) throws UsernameTakenException {
-        if(userRepository.existsUserByUsername(userDTO.getUsername())) {
+        if (userRepository.existsUserByUsername(userDTO.getUsername())) {
             throw new UsernameTakenException(userDTO.getUsername());
         } else {
             User user = new User();
