@@ -1,7 +1,7 @@
 package se.seqarc.samplersequencer.storage;
 
 public enum UploadLocation {
-    TEMPSAMPLE,
+    TEMPFILE,
     SAMPLE,
     PROFILEPIC
 }

@@ -7,7 +7,7 @@ import java.nio.file.Path;
 
 public interface StorageService {
 
-    void moveAndRenameSample(File file, String checksum);
+    void moveAndRenameFile(File file, String name, UploadLocation uploadLocation);
 
     void delete(File file, UploadLocation uploadLocation);
 

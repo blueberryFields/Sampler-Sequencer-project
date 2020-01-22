@@ -9,7 +9,7 @@ import {useLocalStorage} from "@rehooks/local-storage";
 
 const SampleBrowser = (props) => {
 
-    const [token] = useLocalStorage('jwt');
+    // const [token] = useLocalStorage('jwt');
 
     const [categories, setCategories] = useState([])
 
@@ -182,13 +182,14 @@ const SampleBrowser = (props) => {
             </table>
             <div className="browser-footer">
                 <div className="browser-footer-buttons">
-                    {token ? <div
+                    {props.token ? <div
                         className="browser-footer-button"
                         onClick={uploadModalToggle}>
                         Upload Sample
                     </div> : <div/>}
 
                     <UploadSampleModal
+                        token={props.token}
                         isShowing={uploadModalIsShowing}
                         hide={uploadModalToggle}
                         getFilteredSamples={getFilteredSamples}

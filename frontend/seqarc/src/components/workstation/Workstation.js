@@ -25,6 +25,7 @@ const Workstation = props => {
         initialize,
         changeVol,
         changePan,
+        token,
     } = props
 
     // Transport-related stuff
@@ -127,6 +128,7 @@ const Workstation = props => {
                         setAuditionVol={setAuditionVol}
                         selectInstrumentSample={selectInstrumentSample}
                         editSampleModeValue={editSampleModeValue}
+                        token={token}
                     />
                 </div>
                 <div className="split-pane-horizontal">

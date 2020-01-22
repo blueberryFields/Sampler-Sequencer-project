@@ -10,12 +10,12 @@ import './Toolbar.css'
 import jwtDecode from 'jwt-decode'
 import {faInfinity} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { useLocalStorage, deleteFromStorage } from '@rehooks/local-storage';
+import {useLocalStorage, deleteFromStorage} from '@rehooks/local-storage';
 
 
 const Toolbar = (props) => {
 
-    const [token, setToken] = useLocalStorage('jwt');
+    const [token] = useLocalStorage('jwt');
 
     const decodeJWT = () => {
         return jwtDecode(token)
@@ -41,15 +41,15 @@ const Toolbar = (props) => {
                                 <Link to="/workstation">Workstation</Link>
                             </li>
                             {token ?
-                            <ul>
-                                <li>
-                                    <Link to="/profile">Profile</Link>
-                                </li> 
-                                <li onClick={() => deleteFromStorage('jwt')}>
-                                    <Link to="/logout">Logout</Link>
-                                </li>
-                            </ul>
-                            :
+                                <ul>
+                                    <li>
+                                        <Link to="/profile">Profile</Link>
+                                    </li>
+                                    <li onClick={() => deleteFromStorage('jwt')}>
+                                        <Link to="/logout">Logout</Link>
+                                    </li>
+                                </ul>
+                                :
                                 <li>
                                     <Link to="/login">Login</Link>
                                 </li>
@@ -81,10 +81,11 @@ const Toolbar = (props) => {
                             initialize={props.initialize}
                             changeVol={props.changeVol}
                             changePan={props.changePan}
+                            token={token}
                         />
                     </Route>
                     <Route path="/profile">
-                        <Profile/>
+                        <Profile token={token}/>
                     </Route>
                     <Route path="/login">
                         <Login/>
