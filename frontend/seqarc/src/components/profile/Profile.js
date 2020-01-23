@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import "./Profile.css"
 import "../images/Doom_Guy.jpg"
 import jwtDecode from 'jwt-decode'
-import { useLocalStorage} from '@rehooks/local-storage';
+import {useLocalStorage} from '@rehooks/local-storage';
 import Axios from 'axios-observable';
 
 
@@ -40,46 +40,47 @@ function Profile(props) {
         // }
     }, [])
 
-        // Profilepicture
-        const [file, setFile] = useState('');
-        const [filename, setFilename] = useState('');
+    // Profilepicture
+    const [file, setFile] = useState('');
+    const [filename, setFilename] = useState('');
 
-        const onChange = e => {
-            setFile(e.target.files[0]);
+    const onChange = e => {
+        setFile(e.target.files[0]);
+    }
+
+    const uploadPicture = () => {
+        console.log("Hej")
+        if (file) {
+            const bodyFormData = new FormData();
+            bodyFormData.append('file', file);
+
+            Axios.request({
+                method: 'post',
+                url: 'http://localhost:8080/user/upload/' + decodeJWT().id,
+                data: bodyFormData,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Bearer ' + token
+                }
+
+            })
+                .subscribe(
+                    response => {
+                        setFile(null)
+                        setProfile(response.data)
+                    },
+                    error => {
+                        console.log(error)
+                    }
+                );
         }
-
-        const uploadPicture = () => {
-            console.log("Hej")
-            if (file) {
-                const bodyFormData = new FormData();
-                bodyFormData.append('file', file);
-
-                Axios.request({
-                    method: 'post',
-                    url: 'http://localhost:8080/user/upload/' + decodeJWT().id,
-                    data: bodyFormData,
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': 'Bearer ' + token}
-
-                })
-                    .subscribe(
-                        response => {
-                            setFile(null)
-                            setProfile(response.data)
-                        },
-                        error => {
-                            console.log(error)
-                        }
-                    );
-            }
-        }
+    }
 
     return (
         <main className="profile-container">
             <div className="profile-body">
 
-                
+
                 {/* This page will be accessed by logging in.
                 The user will be able to setup and change their profile here.
                 Their profile will be displayed as the "creator" of music they have created
@@ -87,9 +88,9 @@ function Profile(props) {
 
                 <h1>Hello {profile.username}</h1>
                 <img
-                className="profile-picture"
-                src={profile.profilePicture ? "/profilepictures/" + profile.profilePicture : "./profilepictures/doom-guy.jpg"}
-                alt="THEMOTHAFUCKINGDOOMGUY"/>
+                    className="profile-picture"
+                    src={profile.profilePicture ? "/profilepictures/" + profile.profilePicture : "./profilepictures/doom-guy.jpg"}
+                    alt="THEMOTHAFUCKINGDOOMGUY"/>
 
                 <input type="file" onChange={onChange}/>
                 {/*<input type="submit" value="Upload" onSubmit={uploadPicture()}/>*/}

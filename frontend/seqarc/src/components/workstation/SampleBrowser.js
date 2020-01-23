@@ -185,7 +185,7 @@ const SampleBrowser = (props) => {
                     {props.token ? <div
                         className="browser-footer-button"
                         onClick={uploadModalToggle}>
-                        Upload Sample
+                        Upload
                     </div> : <div/>}
 
                     <UploadSampleModal

@@ -28,6 +28,8 @@ const Modal = ({isShowing, hide, getFilteredSamples, token}) => {
     const upLoadSample = () => {
         if (selectedFile && selectedCategory && sampleName) {
 
+            console.log('Trying to upload')
+
             const bodyFormData = new FormData();
             bodyFormData.set('name', sampleName);
             bodyFormData.set('category', selectedCategory);
