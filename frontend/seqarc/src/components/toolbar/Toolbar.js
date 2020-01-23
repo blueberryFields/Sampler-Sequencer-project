@@ -74,8 +74,8 @@ const Toolbar = (props) => {
                         />
                     </Route>
                     <Route path="/profile">
-                        <Profile 
-                        token={token}
+                        <Profile
+                            token={token}
                         />
                     </Route>
                     <Route path="/login">

@@ -36,11 +36,12 @@ public class UserServiceImpl implements UserService {
         String filename = storageService.store(multipartFile, UploadLocation.TEMPFILE);
 
         File file = storageService.load(filename, UploadLocation.TEMPFILE);
-        storageService.moveAndRenameFile(file, "profilepix-" + id, UploadLocation.PROFILEPIC);
+        String name = "profilepix-" + id;
+        storageService.moveAndRenameFile(file, name, UploadLocation.PROFILEPIC);
 
         Optional<User> result = userRepository.findById(id);
         User user = result.orElseThrow(UserNotFoundException::new);
-        user.setProfilePicture(filename);
+        user.setProfilePicture(name);
         userRepository.save(user);
         return new ReducedUserDTO(user);
     }

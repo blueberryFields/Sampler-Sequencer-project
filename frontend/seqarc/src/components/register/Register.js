@@ -22,33 +22,36 @@ function Register() {
                 password,
                 profileDescription,
                 roles
-            }})
+            }
+        })
             .subscribe(
                 response => {
                     setUsername('')
                     setPassword('')
                     setProfileDescription('')
                     history.push('/login')
-                    },
+                },
                 error => {
                     console.log(error.response)
-                    if(error.response.status === 409) {
+                    if (error.response.status === 409) {
                         alert("Username is already taken.\nPlease select a new one.")
                     }
                 },
-                    )
-                }, [username, password, profileDescription, roles, history])
+            )
+    }, [username, password, profileDescription, roles, history])
 
-                return (
-                    <main className="main">
-                        <div className="reg-div">
-                            <h1>Register</h1>
-                            <input type="text" value={username} placeholder="Desired username" onChange={(e) => setUsername(e.target.value)}></input>
-                            <input type="text" value={password} placeholder="Desired password" onChange={(e) => setPassword(e.target.value)}></input> <br></br>
-                            <button onClick={() => register()}>Register</button>
-                        </div>
-                    </main>
-                )
-            }
+    return (
+        <main className="main">
+            <div className="reg-div">
+                <h1>Register</h1>
+                <input type="text" value={username} placeholder="Desired username"
+                       onChange={(e) => setUsername(e.target.value)}/>
+                <input type="text" value={password} placeholder="Desired password"
+                       onChange={(e) => setPassword(e.target.value)}/> <br></br>
+                <button onClick={() => register()}>Register</button>
+            </div>
+        </main>
+    )
+}
 
 export default Register

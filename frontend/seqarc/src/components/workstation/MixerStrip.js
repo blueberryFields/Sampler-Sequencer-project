@@ -64,7 +64,7 @@ const MixerStrip = props => {
                     min={-100}
                     max={100}
                     unlockDistance={0}
-                    preciseMode={false}
+                    preciseMode={true}
                     skin={skins.s13}
                     setPan={setPan}/>
                 <div className="pan">{lorR(pan)} {pan}</div>

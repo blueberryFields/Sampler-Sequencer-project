@@ -34,54 +34,32 @@ function Profile(props) {
             );
     }, [token, decodeJWT])
 
-        // Profilepicture
-        const [file, setFile] = useState('');
-        const [description, setDescription] = useState('');
+    // Profilepicture
+    const [file, setFile] = useState('');
+    const [description, setDescription] = useState('');
 
-        const onChange = e => {
-            setFile(e.target.files[0]);
-        }
+    const onChange = e => {
+        setFile(e.target.files[0]);
+    }
 
-        const uploadPicture = () => {
-            if (file) {
-                const bodyFormData = new FormData();
-                bodyFormData.append('file', file);
+    const uploadPicture = () => {
+        if (file) {
+            const bodyFormData = new FormData();
+            bodyFormData.append('file', file);
 
-                Axios.request({
-                    method: 'post',
-                    url: 'http://localhost:8080/user/upload/' + decodeJWT().id,
-                    data: bodyFormData,
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': 'Bearer ' + token}
-
-                })
-                    .subscribe(
-                        response => {
-                            setFile(null)
-                            setProfile(response.data)
-                        },
-                        error => {
-                            console.log(error)
-                        }
-                    );
-            }
-        }
-
-        const saveDescription = () => {
-            
             Axios.request({
-                method: 'put',
-                url: 'http://localhost:8080/user/' + decodeJWT().id,
-                data: {
-                    "profileDescription": description
-                },
+                method: 'post',
+                url: 'http://localhost:8080/user/upload/' + decodeJWT().id,
+                data: bodyFormData,
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token}
-                })
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Bearer ' + token
+                }
+
+            })
                 .subscribe(
                     response => {
+                        setFile(null)
                         setProfile(response.data)
                     },
                     error => {
@@ -89,9 +67,32 @@ function Profile(props) {
                     }
                 );
         }
+    }
 
-        const [editMode, setEditMode] = useState(false)
+    const saveDescription = () => {
 
+        Axios.request({
+            method: 'put',
+            url: 'http://localhost:8080/user/' + decodeJWT().id,
+            data: {
+                "profileDescription": description
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .subscribe(
+                response => {
+                    setProfile(response.data)
+                },
+                error => {
+                    console.log(error)
+                }
+            );
+    }
+
+    const [editMode, setEditMode] = useState(false)
 
 
     return (
@@ -100,27 +101,29 @@ function Profile(props) {
 
                 <h1>Hello {profile.username}</h1>
                 <img
-                className="profile-picture"
-                src={profile.profilePicture ? "/profilepictures/" + profile.profilePicture : "./profilepictures/doom-guy.jpg"}
-                alt="THEMOTHAFUCKINGDOOMGUY"/>
+                    className="profile-picture"
+                    src={profile.profilePicture ? "/profilepictures/" + profile.profilePicture : "./profilepictures/doom-guy.jpg"}
+                    alt="THEMOTHAFUCKINGDOOMGUY"/>
 
                 <input type="file" onChange={onChange}/>
                 <button onClick={() => uploadPicture()}>Upload</button>
 
                 <h1>Description</h1>
-
-               {editMode ? 
-                <div>
-                        <textarea value={description} className="description" rows="6" cols="60" onChange={(e) => setDescription(e.target.value)}></textarea>
+                {editMode ?
+                    <div>
+                        <textarea value={description} className="description" rows="6" cols="60"
+                                  onChange={(e) => setDescription(e.target.value)}/>
                         <button onClick={() => {
                             saveDescription()
                             setEditMode(false)
-                        }}>Save</button>
+                        }}>Save
+                        </button>
                         <button onClick={() =>
                             setEditMode(false)
-                        }>Cancel</button>
+                        }>Cancel
+                        </button>
                     </div>
-                :
+                    :
                     <div>
                         <div>
                             {profile.profileDescription}
@@ -128,9 +131,10 @@ function Profile(props) {
                         <button onClick={() => {
                             setEditMode(true)
                             setDescription(profile.profileDescription)
-                            }}>Edit</button>
+                        }}>Edit
+                        </button>
                     </div>
-               }
+                }
             </div>
         </main>
     )
