@@ -9,9 +9,8 @@ function Register() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [profileDescription, setProfileDescription] = useState('')
-    const [roles, setRoles] = useState(['ROLE_USER'])
+    const [roles] = useState(['ROLE_USER'])
     let history = useHistory();
-
 
     const register = useCallback(() => {
 
@@ -26,7 +25,6 @@ function Register() {
             }})
             .subscribe(
                 response => {
-                    console.log(response)
                     setUsername('')
                     setPassword('')
                     setProfileDescription('')
@@ -39,7 +37,7 @@ function Register() {
                     }
                 },
                     )
-                }, [username, password, profileDescription, roles])
+                }, [username, password, profileDescription, roles, history])
 
                 return (
                     <main className="main">

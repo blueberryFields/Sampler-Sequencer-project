@@ -1,5 +1,5 @@
 import React, {useState, useCallback} from 'react';
-import {Redirect, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import "./Login.css"
 import Axios from 'axios-observable';
 import { writeStorage } from '@rehooks/local-storage';

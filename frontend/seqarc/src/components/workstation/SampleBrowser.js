@@ -5,18 +5,14 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import useModal from "../hooks/useModal";
 import UploadSampleModal from "./UploadSampleModal";
 import Axios from 'axios-observable';
-import {useLocalStorage} from "@rehooks/local-storage";
 
 const SampleBrowser = (props) => {
-
-    // const [token] = useLocalStorage('jwt');
 
     const [categories, setCategories] = useState([])
 
     const [categoriesIsLoading, setCategoriesIsLoading] = useState(true)
 
     useEffect(() => {
-        // const subscription =
             Axios.get('http://localhost:8080/category/findall')
             .subscribe(
                 (response) => {
@@ -25,7 +21,6 @@ const SampleBrowser = (props) => {
                 },
                 error => console.log(error)
             );
-            // subscription.unsubscribe()
     }, [])
 
     const [selectedCategory, setSelectedCategory] = useState('')
@@ -193,9 +188,7 @@ const SampleBrowser = (props) => {
                         isShowing={uploadModalIsShowing}
                         hide={uploadModalToggle}
                         getFilteredSamples={getFilteredSamples}
-                        testMessage={'hej'} //TODO: wtf?
                     />
-                    {/*<div className="browser-footer-button">Record Sample</div>*/}
                 </div>
                 <FontAwesomeIcon
                     className={`audition-icon ${audition ? 'audition-on': 'audition-off'}`}

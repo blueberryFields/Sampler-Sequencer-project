@@ -2,12 +2,9 @@ import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import './Workstation.css'
 import Axios from "axios-observable";
-import {useLocalStorage} from "@rehooks/local-storage";
 import jwtDecode from "jwt-decode";
 
 const Modal = ({isShowing, hide, getFilteredSamples, token}) => {
-
-    // const [token] = useLocalStorage('jwt');
 
     const decodeJWT = () => {
         return jwtDecode(token)
@@ -113,7 +110,6 @@ const Modal = ({isShowing, hide, getFilteredSamples, token}) => {
                                 className="category-chooser"
                                 value={selectedCategory}
                                 onChange={(e) => setSelectedCategory(e.target.value)}>
-                                {/*<FontAwesomeIcon icon={faCaretDown} />*/}
                                 <option value="">Choose Category</option>
                                 {
                                     categories.map((category, index) => {

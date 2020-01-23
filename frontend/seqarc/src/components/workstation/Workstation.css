@@ -1,9 +1,3 @@
-.sequencer {
-
-}
-
-/* CSS for Workstation.js*/
-
 .container {
     background-color: black;
     height: 96vh;
@@ -65,7 +59,6 @@
     box-sizing: border-box;
     min-height: 24rem;
     max-height: 24rem;
-    /*padding: 0px 0px 10px 0px;*/
     color: dimgrey;
     background: black;
     border-style: solid;
@@ -78,7 +71,6 @@
 
 .instrument-container {
     color: dimgrey;
-    /*background-color: #282c34;*/
     border-style: solid;
     border-width: 3px;
     border-radius: 10px;
@@ -194,7 +186,6 @@
     padding: 0 2px 2px 2px;
     background: black;
     border-radius: 5px;
-    /*color: #4e5565;*/
 }
 
 .note-value {
@@ -277,7 +268,6 @@
 .browser-footer {
     margin-bottom: 0;
     background: #16181d;
-    /*height: 2.5rem;*/
     display: flex;
 }
 
@@ -551,7 +541,6 @@ td {
     display: inline-block;
     font-size: 16px;
     cursor: pointer;
-    /*box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);*/
 }
 
 .playing {

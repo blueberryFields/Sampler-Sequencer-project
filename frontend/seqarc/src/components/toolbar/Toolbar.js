@@ -2,12 +2,10 @@ import React from 'react';
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import Workstation from "../workstation/Workstation";
 import Home from "../home/Home";
-import About from "../about/About";
 import Profile from "../profile/Profile";
 import Login from "../login/Login"
 import Register from "../register/Register"
 import './Toolbar.css'
-import jwtDecode from 'jwt-decode'
 import {faInfinity} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useLocalStorage, deleteFromStorage} from '@rehooks/local-storage';
@@ -16,10 +14,6 @@ import {useLocalStorage, deleteFromStorage} from '@rehooks/local-storage';
 const Toolbar = (props) => {
 
     const [token] = useLocalStorage('jwt');
-
-    const decodeJWT = () => {
-        return jwtDecode(token)
-    }
 
     return (
         <Router>
@@ -54,11 +48,6 @@ const Toolbar = (props) => {
                                     <Link to="/login">Login</Link>
                                 </li>
                             }
-                            {/* {!token ? 
-                            <li>
-                                <Link to="/login">Login</Link>
-                            </li>: <Link to="/logout">Logout</Link>
-                            } */}
                         </ul>
                     </div>
                 </nav>
@@ -85,7 +74,9 @@ const Toolbar = (props) => {
                         />
                     </Route>
                     <Route path="/profile">
-                        <Profile token={token}/>
+                        <Profile 
+                        token={token}
+                        />
                     </Route>
                     <Route path="/login">
                         <Login/>

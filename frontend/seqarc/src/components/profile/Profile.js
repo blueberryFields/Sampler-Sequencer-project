@@ -1,24 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import "./Profile.css"
 import "../images/Doom_Guy.jpg"
 import jwtDecode from 'jwt-decode'
 import { useLocalStorage} from '@rehooks/local-storage';
 import Axios from 'axios-observable';
 
+/* This page will be accessed by logging in.
+The user will be able to setup and change their profile here.
+Their profile will be displayed as the "creator" of music they have created
+and will represent them on the forums. */
 
 function Profile(props) {
 
     // Destructure props
     const {token} = props
 
-    // const [token] = useLocalStorage('jwt');
     const [profile, setProfile] = useState('')
 
-    const decodeJWT = () => {
+    const decodeJWT = useCallback(() => {
         return jwtDecode(token)
-    }
-
-    // console.log(decodeJWT())
+    }, [token])
 
     useEffect(() => {
         let config = {
@@ -26,7 +27,6 @@ function Profile(props) {
                 'Authorization': 'Bearer ' + token
             }
         }
-        //const subscription =
         Axios.get('http://localhost:8080/user/profile/' + decodeJWT().id, config)
             .subscribe(
                 (response) => {
@@ -34,15 +34,10 @@ function Profile(props) {
                 },
                 error => console.log(error)
             );
-
-        // return function cleanup() {
-        //     subscription.unsubscribe();
-        // }
-    }, [])
+    }, [token, decodeJWT])
 
         // Profilepicture
         const [file, setFile] = useState('');
-        const [filename, setFilename] = useState('');
         const [description, setDescription] = useState('');
 
         const onChange = e => {
@@ -105,12 +100,6 @@ function Profile(props) {
         <main className="profile-container">
             <div className="profile-body">
 
-                
-                {/* This page will be accessed by logging in.
-                The user will be able to setup and change their profile here.
-                Their profile will be displayed as the "creator" of music they have created
-                and will represent them on the forums. */}
-
                 <h1>Hello {profile.username}</h1>
                 <img
                 className="profile-picture"
@@ -118,11 +107,9 @@ function Profile(props) {
                 alt="THEMOTHAFUCKINGDOOMGUY"/>
 
                 <input type="file" onChange={onChange}/>
-                {/*<input type="submit" value="Upload" onSubmit={uploadPicture()}/>*/}
                 <button onClick={() => uploadPicture()}>Upload</button>
 
                 <h1>Description</h1>
-
 
                {editMode ? 
                 <div>
@@ -146,15 +133,6 @@ function Profile(props) {
                             }}>Edit</button>
                     </div>
                }
-
-                {/* <UploadImage></UploadImage> */}
-
-                {/* <Grid className="profile-grid">
-                    <Cell col={6}>
-                        <img src="../images/Doom_Guy.jpg"></img>
-                    </Cell>
-                    <Cell col={6}>half page</Cell>
-                </Grid> */}
             </div>
         </main>
     )
