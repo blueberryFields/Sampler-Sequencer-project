@@ -43,6 +43,7 @@ public class SampleServiceImpl implements SampleService {
 
     @Override
     public SampleDTO uploadSample(MultipartFile multipartFile, String name, String category, Long id) throws NoSuchAlgorithmException, IOException, CategoryNotFoundException, UnsupportedAudioFileException, FileNotSupportedException, SampleProcessingException, UserNotFoundException {
+
         // Store file temporarily
         String filename = storageService.store(multipartFile, UploadLocation.TEMPFILE);
         // Check fileExtension to see if format is supported
@@ -58,6 +59,7 @@ public class SampleServiceImpl implements SampleService {
         storageService.delete(file, UploadLocation.TEMPFILE);
         //  generate checksum
         String checksum = getFileChecksum(MessageDigest.getInstance("MD5"), processedFile);
+        System.out.println("Im here 8");
         // Check if file already exists, and if not add it and rename to checksum, also get duration of sample
         Optional<Sample> result = sampleRepository.findFirstByChecksum(checksum);
         double duration = 0;

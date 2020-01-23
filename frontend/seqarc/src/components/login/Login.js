@@ -39,8 +39,8 @@ function Login() {
         <main className="main">
             <div className="login-div"> 
                 <h1>Login</h1>
-                <input type="text" value={username} placeholder="Username" onChange={(e) => setUsername(e.target.value)}></input>
-                <input type="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)}></input><br></br>
+                <input type="text" value={username} placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
+                <input type="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)}/><br/>
                 <button onClick={() => login()}>Login</button>
                 <h3>Don't have an account? Please register <a href="/register">here</a>.</h3>
             </div>
