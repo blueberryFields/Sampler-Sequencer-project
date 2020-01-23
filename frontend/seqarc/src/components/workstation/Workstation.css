@@ -269,6 +269,7 @@
     margin-bottom: 0;
     background: #16181d;
     display: flex;
+    min-height: 2rem;
 }
 
 .browser-footer-buttons {
