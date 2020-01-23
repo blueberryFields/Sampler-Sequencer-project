@@ -42,8 +42,8 @@ function Register() {
                 }, [username, password, profileDescription, roles])
 
                 return (
-                    <main>
-                        <div>
+                    <main className="main">
+                        <div className="reg-div">
                             <h1>Register</h1>
                             <input type="text" value={username} placeholder="Desired username" onChange={(e) => setUsername(e.target.value)}></input>
                             <input type="text" value={password} placeholder="Desired password" onChange={(e) => setPassword(e.target.value)}></input> <br></br>

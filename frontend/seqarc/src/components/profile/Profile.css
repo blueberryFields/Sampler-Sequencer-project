@@ -25,6 +25,9 @@
     object-fit: cover;
 }
 
+.description {
+    resize: none;
+}
 
 
 /* .home-container {

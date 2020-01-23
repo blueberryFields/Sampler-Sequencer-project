@@ -36,8 +36,8 @@ function Login() {
 
 
     return ( 
-        <main>
-            <div>
+        <main className="main">
+            <div className="login-div"> 
                 <h1>Login</h1>
                 <input type="text" value={username} placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
                 <input type="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)}/><br/>
