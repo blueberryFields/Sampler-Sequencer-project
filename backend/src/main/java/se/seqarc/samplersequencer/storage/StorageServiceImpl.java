@@ -99,6 +99,9 @@ public class StorageServiceImpl implements StorageService {
             case PROFILEPIC:
                 rootLocation = profilePicRootLoc;
                 break;
+            case SAMPLE:
+                rootLocation = sampleRootLoc;
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + uploadLocation);
         }
