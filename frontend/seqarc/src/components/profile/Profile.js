@@ -1,8 +1,6 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import "./Profile.css"
-import "../images/Doom_Guy.jpg"
 import jwtDecode from 'jwt-decode'
-import { useLocalStorage} from '@rehooks/local-storage';
 import Axios from 'axios-observable';
 
 /* This page will be accessed by logging in.
