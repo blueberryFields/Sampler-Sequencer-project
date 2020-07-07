@@ -1,237 +1,238 @@
-import Toolbar from "../toolbar/Toolbar";
-import React, {useCallback, useState} from "react";
+import Workstation from "../workstation/Workstation.js";
+import React, { useCallback, useState } from "react";
 import Tone from "tone";
-import {uuid} from "uuidv4";
+import { uuid } from "uuidv4";
 
-const SequencerState = props => {
+const SequencerState = (props) => {
+  // This contains all the instruments
+  const [instruments, setInstruments] = useState([]);
 
-    // This contains all the instruments
-    const [instruments, setInstruments] = useState([])
+  // This is the available note values. C# + - 1 octave
+  const noteValues = [
+    "C2",
+    "Db2",
+    "D2",
+    "Eb2",
+    "E2",
+    "F2",
+    "Gb2",
+    "G2",
+    "Ab2",
+    "A2",
+    "Bb2",
+    "B2",
+    "C3",
+    "C#3",
+    "D3",
+    "D#3",
+    "E3",
+    "F3",
+    "F#3",
+    "G3",
+    "G#3",
+    "A3",
+    "A#3",
+    "B3",
+    "C4",
+  ];
 
-    // This is the available note values. C# + - 1 octave
-    const noteValues = [
-        'C2',
-        'Db2',
-        'D2',
-        'Eb2',
-        'E2',
-        'F2',
-        'Gb2',
-        'G2',
-        'Ab2',
-        'A2',
-        'Bb2',
-        'B2',
-        'C3',
-        'C#3',
-        'D3',
-        'D#3',
-        'E3',
-        'F3',
-        'F#3',
-        'G3',
-        'G#3',
-        'A3',
-        'A#3',
-        'B3',
-        'C4',
-    ]
+  const addNewInstrument = useCallback(() => {
+    setEditSampleModeValue(-1);
 
-    const addNewInstrument = useCallback(() => {
+    // create pan/vol-node
+    let panVol = new Tone.PanVol(0, 0);
 
-        setEditSampleModeValue(-1)
+    // Create meter
+    let meter = new Tone.Meter();
 
-        // create pan/vol-node
-        let panVol = new Tone.PanVol(0, 0)
+    // create instrument and chain to pan/vol-node
+    let instrument = new Tone.Sampler({
+      C3: "samples/kick.wav",
+    }).chain(panVol, meter, Tone.Master);
 
-        // Create meter
-        let meter = new Tone.Meter()
+    // pass in an array of events
+    let part = new Tone.Part(function (time, event) {
+      //the events will be given to the callback with the time they occur
+      if (instrument.loaded) instrument.triggerAttack(event.note, time);
+    }, []);
 
-        // create instrument and chain to pan/vol-node
-        let instrument = new Tone.Sampler({
-                'C3': 'samples/kick.wav'
-            }
-        ).chain(panVol, meter, Tone.Master)
+    //start the part at the beginning of the Transport's timeline
+    part.start(0);
+    part.loop = true;
+    part.loopEnd = "1n";
 
-        // pass in an array of events
-        let part = new Tone.Part(function (time, event) {
-            //the events will be given to the callback with the time they occur
-            if (instrument.loaded) instrument.triggerAttack(event.note, time)
-        }, [])
+    setInstruments([
+      ...instruments,
+      {
+        name: "Instr " + (instruments.length + 1),
+        meter,
+        panVol,
+        instrument,
+        part,
+        key: uuid(),
+        steps: [
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+          {
+            on: false,
+            note: 12,
+          },
+        ],
+      },
+    ]);
+  }, [instruments]);
 
-        //start the part at the beginning of the Transport's timeline
-        part.start(0)
-        part.loop = true
-        part.loopEnd = '1n'
+  // Methods for editing instruments and parts
 
-        setInstruments([
-            ...instruments,
-            {
-                name: 'Instr ' + (instruments.length + 1),
-                meter,
-                panVol,
-                instrument,
-                part,
-                key: uuid(),
-                steps:
-                    [
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                        {
-                            on: false,
-                            note: 12
-                        },
-                    ],
-            }
-        ])
-    }, [instruments])
+  const initialize = () => {
+    instruments.forEach((instrument, index) => deleteInstrument(index));
+    setInstruments([]);
+  };
 
-    // Methods for editing instruments and parts
-
-    const initialize = () => {
-        instruments.forEach((instrument, index) => deleteInstrument(index))
-        setInstruments([])
+  const toggleStepOn = (instrumentIndex, stepIndex, note) => {
+    let newArray = [...instruments];
+    newArray[instrumentIndex].steps[stepIndex].on = !instruments[
+      instrumentIndex
+    ].steps[stepIndex].on;
+    setInstruments(newArray);
+    if (instruments[instrumentIndex].steps[stepIndex].on) {
+      addNote(instrumentIndex, stepIndex, noteValues[note]);
+    } else {
+      removeNote(instrumentIndex, stepIndex, noteValues[note]);
     }
+  };
 
-    const toggleStepOn = (instrumentIndex, stepIndex, note) => {
-        let newArray = [...instruments]
-        newArray[instrumentIndex].steps[stepIndex].on = !instruments[instrumentIndex].steps[stepIndex].on
-        setInstruments(newArray)
-        if (instruments[instrumentIndex].steps[stepIndex].on) {
-            addNote(instrumentIndex, stepIndex, noteValues[note])
-        } else {
-            removeNote(instrumentIndex, stepIndex, noteValues[note])
-        }
+  const changeVol = (instrumentIndex, val) => {
+    instruments[instrumentIndex].panVol.volume.value = val;
+  };
+
+  const changePan = (instrumentIndex, val) => {
+    instruments[instrumentIndex].panVol.pan.value = val / 100;
+  };
+
+  const changeNoteValue = (instrumentIndex, stepIndex, note) => {
+    let newArray = [...instruments];
+    newArray[instrumentIndex].steps[stepIndex].note = note;
+    setInstruments(newArray);
+    if (instruments[instrumentIndex].steps[stepIndex].on) {
+      removeNote(instrumentIndex, stepIndex);
+      addNote(instrumentIndex, stepIndex, noteValues[note]);
     }
+  };
 
-    const changeVol = (instrumentIndex, val) => {
-        instruments[instrumentIndex].panVol.volume.value = val
-    }
+  const deleteInstrument = (index) => {
+    setEditSampleModeValue(-1);
+    instruments[index].instrument.dispose();
+    instruments[index].part.dispose();
+    instruments[index].panVol.dispose();
+    instruments[index].meter.dispose();
+    let newInstrumentArr = [...instruments];
+    newInstrumentArr.splice(index, 1);
+    setInstruments(newInstrumentArr);
+  };
 
-    const changePan = (instrumentIndex, val) => {
-        instruments[instrumentIndex].panVol.pan.value = val/100
-    }
+  // If set to > -1 we are in editSampleMode and the value represents which instrument is being edited
+  const [editSampleModeValue, setEditSampleModeValue] = useState(-1);
 
-    const changeNoteValue = (instrumentIndex, stepIndex, note) => {
-        let newArray = [...instruments]
-        newArray[instrumentIndex].steps[stepIndex].note = note
-        setInstruments(newArray)
-        if (instruments[instrumentIndex].steps[stepIndex].on) {
-            removeNote(instrumentIndex, stepIndex)
-            addNote(instrumentIndex, stepIndex, noteValues[note])
-        }
-    }
+  const selectInstrumentSample = (checksum, name) => {
+    let newInstrArray = [...instruments];
+    newInstrArray[editSampleModeValue].loaded = false;
+    newInstrArray[editSampleModeValue].instrument.add(
+      "C3",
+      `samples/${checksum}`
+    );
+    newInstrArray[editSampleModeValue].name = name;
 
-    const deleteInstrument = (index) => {
-        setEditSampleModeValue(-1)
-        instruments[index].instrument.dispose()
-        instruments[index].part.dispose()
-        instruments[index].panVol.dispose()
-        instruments[index].meter.dispose()
-        let newInstrumentArr = [...instruments]
-        newInstrumentArr.splice(index, 1)
-        setInstruments(newInstrumentArr)
-    }
+    setInstruments(newInstrArray);
+  };
 
-    // If set to > -1 we are in editSampleMode and the value represents which instrument is being edited
-    const [editSampleModeValue, setEditSampleModeValue] = useState(-1)
+  const addNote = (instrIndex, notePosition, noteValue) => {
+    instruments[instrIndex].part.add({
+      time: { "16n": notePosition },
+      note: noteValue,
+    });
+  };
 
-    const selectInstrumentSample = (checksum, name) => {
-        let newInstrArray = [...instruments]
-        newInstrArray[editSampleModeValue].loaded = false
-        newInstrArray[editSampleModeValue].instrument.add('C3', `samples/${checksum}`)
-        newInstrArray[editSampleModeValue].name = name
+  const removeNote = (instrIndex, notePosition) => {
+    instruments[instrIndex].part.remove({ "16n": notePosition });
+  };
 
-        setInstruments(newInstrArray)
-    }
-
-    const addNote = (instrIndex, notePosition, noteValue) => {
-        instruments[instrIndex].part.add(
-            {time: {'16n': notePosition}, note: noteValue}
-        )
-    }
-
-    const removeNote = (instrIndex, notePosition) => {
-        instruments[instrIndex].part.remove(
-            {'16n': notePosition}
-        )
-    }
-
-    return (
-        <Toolbar
-            instruments={instruments}
-            addNewInstrument={addNewInstrument}
-            deleteInstrument={deleteInstrument}
-            addNote={addNote}
-            removeNote={removeNote}
-            selectInstrumentSample={selectInstrumentSample}
-            editSampleModeValue={editSampleModeValue}
-            setEditSampleModeValue={setEditSampleModeValue}
-            toggleStepOn={toggleStepOn}
-            changeNoteValue={changeNoteValue}
-            noteValues={noteValues}
-            initialize={initialize}
-            changeVol={changeVol}
-            changePan={changePan}
-        />
-    )
-}
-export default SequencerState
+  return (
+    <Workstation
+      instruments={instruments}
+      addNewInstrument={addNewInstrument}
+      deleteInstrument={deleteInstrument}
+      addNote={addNote}
+      removeNote={removeNote}
+      selectInstrumentSample={selectInstrumentSample}
+      editSampleModeValue={editSampleModeValue}
+      setEditSampleModeValue={setEditSampleModeValue}
+      noteValues={noteValues}
+      changeNoteValue={changeNoteValue}
+      toggleStepOn={toggleStepOn}
+      initialize={initialize}
+      changeVol={changeVol}
+      changePan={changePan}
+    //   token={token}
+    />
+  );
+};
+export default SequencerState;

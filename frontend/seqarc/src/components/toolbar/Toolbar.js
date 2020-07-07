@@ -19,15 +19,7 @@ const Toolbar = (props) => {
         <Router>
             <header className="toolbar">
                 <nav className="toolbar_navigation">
-                    <div className="toolbar_logo">
-                        <Link
-                            to="/">
-                            SeqArc
-                            <FontAwesomeIcon
-                                className="infinity"
-                                icon={faInfinity}/>
-                        </Link>
-                    </div>
+                    
                     <div className="spacer"/>
                     <div className="toolbar_navigation_items">
                         <ul className="navbar">

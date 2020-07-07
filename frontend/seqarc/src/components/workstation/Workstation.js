@@ -6,6 +6,7 @@ import SampleBrowser from "./SampleBrowser";
 import MixerStrip from "./MixerStrip"
 import {faPlus} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useLocalStorage} from '@rehooks/local-storage';
 
 const Workstation = props => {
 
@@ -25,8 +26,9 @@ const Workstation = props => {
         initialize,
         changeVol,
         changePan,
-        token,
     } = props
+
+    const [token] = useLocalStorage('jwt');
 
     // Transport-related stuff
 
@@ -120,6 +122,7 @@ const Workstation = props => {
                 getSwing={swing}
                 position={position}
                 initialize={initialize}
+                token={token}
             />
             <div className="split-pane-vertical">
                 <div className="sample-browser-section">

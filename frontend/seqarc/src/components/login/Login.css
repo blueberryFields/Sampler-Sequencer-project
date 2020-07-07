@@ -1,10 +1,39 @@
-.main {
-    display: flexbox
-
+.login-container {
+  /* display: none; */
+  position: absolute;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top: 3rem;
+  background-color: #282c34;
+  color: dimgray;
+  border-top: #373d49 1px solid;
+  border-bottom: #24282f 1px solid;
 }
 
-.login-div {
-    margin-left: 2rem;
-    margin-top: 3rem;
+.login-input {
+    display: block;
+    padding: 5px 9px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    letter-spacing: 0.1rem;
+    margin: 10px 0;
+    border: none;
+    background: linear-gradient(to bottom, #0b0c0f 25%, black 100%);
+    color: dimgray;
 }
 
+.login-button {
+  margin: 0.5rem 0;
+  width: 3rem;
+  color: dimgray;
+  background: #373c49;
+  font-size: 1rem;
+  padding: 3px 8px;
+  border-radius: 3px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  border-top: #464e5d 1px solid;
+  border-bottom: #191b20 1px solid;
+  cursor: pointer;
+}
