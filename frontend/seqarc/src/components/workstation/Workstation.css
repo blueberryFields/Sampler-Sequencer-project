@@ -491,6 +491,9 @@ td {
 .logo {
   margin: auto 1rem;
   color: white;
+  /* filter: drop-shadow(0 0 7px rgba(0, 0, 0, 0.5)); */
+
+ 
   text-decoration: none;
   font-size: 1.5rem;
   font-family: "Anton", sans-serif;
@@ -502,7 +505,7 @@ td {
 }
 
 .logged-in-as {
-  margin: auto;
+  margin: auto 0 auto auto;
   /* text-align: center; */
   color: dimgray;
 }
