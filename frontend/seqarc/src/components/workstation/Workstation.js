@@ -64,6 +64,9 @@ const Workstation = ({
       // Timeout required else sometimes the scheduled stepForward will fire after activeStep set to -1 which lead
       // to led lights remaining lit on step 0
       setTimeout(() => setActiveStep(-1), 50);
+      // setTimeout(() => setTimerDelay(null), 1000);
+    } else {
+      setTimerDelay(20);
     }
     setPlaying(!playing);
   };
@@ -112,16 +115,19 @@ const Workstation = ({
       instruments[index].instrument.triggerAttack("C3");
   };
 
+
+  // VU-meter related stuff
   const vuMeter = useRef([])
   const [timerDelay, setTimerDelay] = useState(null);
 
-  useEffect(() => {
-    if (activeStep > -1) {
-      setTimerDelay(10);
-    } else {
-      setTimeout(() => setTimerDelay(null), 1000);
-    }
-  }, [activeStep, setTimerDelay]);
+  // useEffect(() => {
+  //   if (activeStep > -1) {
+  //     console.log('setting timer delay...')
+  //     setTimerDelay(10);
+  //   } else {
+  //     setTimeout(() => setTimerDelay(null), 1000);
+  //   }
+  // }, [activeStep, setTimerDelay]);
 
   useInterval(() => {
       vuMeter.current = instruments.map((instrument, index) => {
