@@ -231,7 +231,6 @@ const SequencerState = (props) => {
       initialize={initialize}
       changeVol={changeVol}
       changePan={changePan}
-    //   token={token}
     />
   );
 };
