@@ -7,7 +7,6 @@ import MixerStrip from "./MixerStrip";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocalStorage } from "@rehooks/local-storage";
-import useInterval from "../hooks/useInterval";
 
 const Workstation = ({
   instruments,
@@ -61,12 +60,7 @@ const Workstation = ({
     Tone.Transport.toggle();
     if (playing) {
       setPosition(formatPosition(Tone.Transport.position));
-      // Timeout required else sometimes the scheduled stepForward will fire after activeStep set to -1 which lead
-      // to led lights remaining lit on step 0
       setTimeout(() => setActiveStep(-1), 50);
-      // setTimeout(() => setTimerDelay(null), 1000);
-    } else {
-      setTimerDelay(20);
     }
     setPlaying(!playing);
   };
@@ -113,38 +107,6 @@ const Workstation = ({
   const triggerInstrument = (index) => {
     if (instruments[index].instrument.loaded)
       instruments[index].instrument.triggerAttack("C3");
-  };
-
-
-  // VU-meter related stuff
-  const vuMeter = useRef([])
-  const [timerDelay, setTimerDelay] = useState(null);
-
-  // useEffect(() => {
-  //   if (activeStep > -1) {
-  //     console.log('setting timer delay...')
-  //     setTimerDelay(10);
-  //   } else {
-  //     setTimeout(() => setTimerDelay(null), 1000);
-  //   }
-  // }, [activeStep, setTimerDelay]);
-
-  useInterval(() => {
-      vuMeter.current = instruments.map((instrument, index) => {
-        return calcMeterHeight(instrument.meter.getLevel());
-    })
-  }, timerDelay);
-
-  const calcMeterHeight = (level) => {
-    if (level >= -32 && level < 0) {
-      return 8 + level / 4;
-    } else if (level === 0) {
-      return 8;
-    } else if (level > 0) {
-      return 8 + Math.abs(level / 4);
-    } else {
-      return 0;
-    }
   };
 
   return (
@@ -206,13 +168,14 @@ const Workstation = ({
                 <MixerStrip
                   instrument={instrument.instrument}
                   panVol={instrument.panVol}
-                  meter={vuMeter.current[index]}
+                  meter={instrument.meter}
                   key={instrument.key}
                   index={index}
                   changeVol={changeVol}
                   changePan={changePan}
                   activeStep={activeStep}
                   triggerInstrument={triggerInstrument}
+                  playing={playing}
                 />
               );
             })}

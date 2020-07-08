@@ -1,18 +1,47 @@
 import React, { useState, useEffect } from "react";
 import * as skins from "react-rotary-knob-skin-pack";
 import LimitedKnobHooks from "./LimitedKnobHooks";
-// import useInterval from "../hooks/useInterval";
+import useInterval from "../hooks/useInterval";
 
 const MixerStrip = ({
   changePan,
   changeVol,
   index,
-  activeStep,
-  meter,
   triggerInstrument,
+  playing,
+  meter,
 }) => {
   const [volume, setVolume] = useState(0);
   const [pan, setPan] = useState(0);
+  const [vuMeter, setVuMeter] = useState(0);
+  const [timerDelay, setTimerDelay] = useState(null);
+
+  useEffect(() => {
+    if (playing) {
+      setTimerDelay(50);
+    } else {
+      setTimeout(() => {
+        setTimerDelay(null);
+        setVuMeter(0);
+      }, 1000);
+    }
+  }, [playing, setTimerDelay]);
+
+  useInterval(() => {
+    setVuMeter(calcMeterHeight(meter.getLevel()));
+  }, timerDelay);
+
+  const calcMeterHeight = (level) => {
+    if (level >= -32 && level < 0) {
+      return 8 + level / 4;
+    } else if (level === 0) {
+      return 8;
+    } else if (level > 0) {
+      return 8 + Math.abs(level / 4);
+    } else {
+      return 0;
+    }
+  };
 
   useEffect(() => {
     changePan(index, pan);
@@ -62,8 +91,8 @@ const MixerStrip = ({
         <div
           className="meter"
           style={{
-            height: meter + "rem",
-            background: meter > 8 ? "red" : "#66ff66",
+            height: vuMeter + "rem",
+            background: vuMeter > 8 ? "red" : "#66ff66",
           }}
         />
       </div>
