@@ -177,6 +177,7 @@ const Workstation = props => {
                                     changePan={changePan}
                                     activeStep={activeStep}
                                     triggerInstrument={triggerInstrument}
+                                    playing={playing}
                                 />
                             })
                         }
