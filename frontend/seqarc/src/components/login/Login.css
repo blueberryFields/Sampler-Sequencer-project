@@ -36,4 +36,10 @@
   border-top: #464e5d 1px solid;
   border-bottom: #191b20 1px solid;
   cursor: pointer;
+  text-align: center;
+}
+
+.link {
+    text-decoration: underline;
+    color: #7123b9;
 }

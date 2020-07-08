@@ -296,6 +296,8 @@
   background: #0b0c0f;
   color: #4d4d4d;
   box-shadow: none;
+  border-top: #191b20 1px solid;
+  border-bottom: #323842 1px solid;
 }
 
 .audition-icon {
@@ -477,7 +479,7 @@ td {
 }
 
 .trans-right {
-  /* margin-left: 5rem; */
+  margin-right: 1rem;
   flex-direction: reverse;
 }
 
@@ -490,7 +492,8 @@ td {
 
 .logo {
   margin: auto 1rem;
-  color: white;
+  /* color: white; */
+  color: #c2c2a3;
   /* filter: drop-shadow(0 0 7px rgba(0, 0, 0, 0.5)); */
 
  
@@ -519,7 +522,7 @@ td {
   border-radius: 3px;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  border-top: #3a414e 1px solid;
+  border-top: #464e5d 1px solid;
   border-bottom: #191b20 1px solid;
 }
 
@@ -527,6 +530,8 @@ td {
   background: #21242c;
   color: #4d4d4d;
   box-shadow: none;
+  border-top: #191b20 1px solid;
+  border-bottom: #323842 1px solid;
 }
 
 .transport {
@@ -701,6 +706,8 @@ td {
 .modal-button:active {
   background: #0b0c0f;
   color: #4d4d4d;
+  border-top: #191b20 1px solid;
+  border-bottom: #323842 1px solid;
 }
 
 .upload-file {

@@ -3,9 +3,11 @@ import "./Login.css";
 import Axios from "axios-observable";
 import { writeStorage } from "@rehooks/local-storage";
 
-function Login(props) {
+function Login({ setShowLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const [loginMode, setLoginMode] = useState(true);
 
   const login = useCallback(() => {
     return Axios.request({
@@ -18,7 +20,7 @@ function Login(props) {
     }).subscribe(
       (response) => {
         writeStorage("jwt", response.data);
-        props.setShowLogin(false)
+        setShowLogin(false);
       },
       (error) => {
         console.log(error);
@@ -27,7 +29,32 @@ function Login(props) {
         }
       }
     );
-  }, [password, username]);
+  }, [password, username, setShowLogin]);
+
+  const register = useCallback(() => {
+    return Axios.request({
+      method: "post",
+      url: "http://localhost:8080/user/create",
+      data: {
+        username,
+        password,
+        profileDescription: "",
+        roles: ["ROLE_USER"],
+      },
+    }).subscribe(
+      (response) => {
+        setUsername("");
+        setPassword("");
+        setLoginMode(true);
+      },
+      (error) => {
+        console.log(error.response);
+        if (error.response.status === 409) {
+          alert("Username is already taken.\nPlease select a new one.");
+        }
+      }
+    );
+  }, [username, password]);
 
   return (
     <div className="login-container">
@@ -46,12 +73,33 @@ function Login(props) {
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <div className="login-button" onClick={() => login()}>
-          Login
-        </div>
-        <div>
-          Don't have an account? Please register <a href="/register">here</a>.
-        </div>
+        {loginMode ? (
+          <>
+            <div className="login-button" onClick={login}>
+              Login
+            </div>
+            <div>
+              Don't have an account? Please register{" "}
+              <span onClick={() => setLoginMode(false)} className="link">
+                here
+              </span>
+              .
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="login-button" onClick={register}>
+              Signup
+            </div>
+            <div>
+              Already have an account? Please sign in{" "}
+              <span onClick={() => setLoginMode(true)} className="link">
+                here
+              </span>
+              .
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
