@@ -281,7 +281,7 @@
 
 .browser-footer-button {
   margin: auto auto auto 10px;
-  color: dimgray;
+  color: rgb(136, 136, 136);
   background: #21242c;
   font-size: 1rem;
   padding: 3px 8px;
@@ -515,7 +515,7 @@ td {
 
 .transport-button {
   margin: auto 1rem auto;
-  color: dimgray;
+  color: rgb(136, 136, 136);
   background: #373c49;
   font-size: 1.2rem;
   padding: 3px 8px;
@@ -667,6 +667,8 @@ td {
   z-index: 100;
   color: dimgray;
   background-color: #16181d;
+  border-top: #262a33 1px solid;
+  border-bottom: #0d0e11 1px solid;
   position: relative;
   margin: 10rem auto;
   border-radius: 10px;
@@ -691,7 +693,7 @@ td {
 .modal-button {
   cursor: pointer;
   border: none;
-  color: dimgray;
+  color: rgb(136, 136, 136);
   background: #21242c;
   font-size: 1rem;
   padding: 3px 20px;
