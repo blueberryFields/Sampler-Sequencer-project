@@ -16,8 +16,8 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class StorageServiceImpl implements StorageService {
 
-    private final Path tempFileRootLoc = Paths.get("src/main/resources/temp-files");
-    private final Path sampleRootLoc = Paths.get("../frontend/seqarc/public/samples");
+    private final Path tempFileRootLoc = Paths.get("./temp-files");
+    private final Path sampleRootLoc = Paths.get("./samples");
     private final Path profilePicRootLoc = Paths.get("../frontend/seqarc/public/profilepictures");
 
 

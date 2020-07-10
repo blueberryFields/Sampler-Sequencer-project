@@ -36,7 +36,6 @@ public class SampleController {
         }
     }
 
-
     @GetMapping("/filteredsearch")
     public ResponseEntity<List<SampleDTO>> filteredSearch(@RequestParam String searchphrase, @RequestParam String category) {
         if (searchphrase.isEmpty() && category.isEmpty()) {
