@@ -13,7 +13,7 @@ const SampleBrowser = (props) => {
     const [categoriesIsLoading, setCategoriesIsLoading] = useState(true)
 
     useEffect(() => {
-            Axios.get('http://localhost:8080/category/findall')
+            Axios.get('api/category/findall')
             .subscribe(
                 (response) => {
                     setCategories(response.data)
@@ -30,7 +30,7 @@ const SampleBrowser = (props) => {
     const [searchphrase, setSearchWord] = useState('')
 
     const getFilteredSamples = useCallback(() => {
-        return Axios.get('http://localhost:8080/sample/filteredsearch',
+        return Axios.get('api/sample/filteredsearch',
             {
                 params: {
                     searchphrase,

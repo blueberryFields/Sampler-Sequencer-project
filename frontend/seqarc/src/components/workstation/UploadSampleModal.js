@@ -35,7 +35,7 @@ const Modal = ({isShowing, hide, getFilteredSamples, token}) => {
 
             Axios.request({
                 method: 'post',
-                url: 'http://localhost:8080/sample/upload',
+                url: 'api/sample/upload',
                 data: bodyFormData,
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -71,7 +71,7 @@ const Modal = ({isShowing, hide, getFilteredSamples, token}) => {
     }
 
     useEffect(() => {
-        Axios.get('http://localhost:8080/category/findall')
+        Axios.get('api/category/findall')
             .subscribe(
                 (response) => {
                     setCategories(response.data)

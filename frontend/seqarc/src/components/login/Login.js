@@ -13,7 +13,7 @@ function Login({ setShowLogin }) {
     if (username && password)
       return Axios.request({
         method: "post",
-        url: "http://localhost:8080/user/login",
+        url: "api/user/login",
         data: {
           username,
           password,
@@ -36,7 +36,7 @@ function Login({ setShowLogin }) {
     if (username && password)
       return Axios.request({
         method: "post",
-        url: "http://localhost:8080/user/create",
+        url: "api/user/create",
         data: {
           username,
           password,

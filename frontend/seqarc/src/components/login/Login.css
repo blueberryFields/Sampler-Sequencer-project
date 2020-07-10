@@ -27,7 +27,7 @@
 .login-button {
   margin: 0.5rem 0;
   width: 3rem;
-  color: dimgray;
+  color: rgb(136, 136, 136);
   background: #373c49;
   font-size: 1rem;
   padding: 3px 8px;
