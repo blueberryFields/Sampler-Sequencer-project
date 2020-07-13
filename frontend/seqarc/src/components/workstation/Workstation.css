@@ -61,23 +61,24 @@
   min-height: 24rem;
   max-height: 24rem;
   color: dimgrey;
-  background: black;
+  /* background: black;
   border-style: solid;
   border-width: 3px;
-  border-radius: 10px;
+  border-radius: 10px; */
 }
 
 /* CSS for Instrument.js */
 
 .instrument-container {
   color: dimgrey;
-  border-style: solid;
-  border-width: 3px;
-  border-radius: 10px;
-  margin: 6px auto auto auto;
+ /* border-style: solid;
+  border-width: 1px;*/
+  border-radius: 8px;
+  border-color: #2b2f3b;
+  background: linear-gradient(90deg, rgba(11, 12, 15, 1) 0%, rgba(22, 24, 29, 1) 10%, rgba(33, 36, 44, 1) 70%/*, rgba(11, 12, 15, 1) 100%*/);
+  margin: 0.5rem 0.5rem auto 0.5rem;
   height: 5rem;
-  display: flex;
-}
+  display: flex;}
 
 .instr-header {
   display: flex;
@@ -160,18 +161,18 @@
 .step {
   width: 6%;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   background-color: #16181d;
   border-radius: 10px;
   margin: 5px;
   display: flex;
   flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 -1px 7px 1px, inset rgba(0, 0, 0, 0.3) 0 0 4px;
 }
 
 .on-beat {
   background-color: #373c49;
 }
-
 .step:active {
   /*background: black;*/
 }
@@ -800,9 +801,12 @@ td {
   display: flex;
   flex-direction: column;
   color: dimgrey;
-  border-style: solid;
-  border-width: 3px;
+  /*border-style: solid;
+  border-width: 2px;*/
   border-radius: 10px;
+  /*border-color: #4e5565;*/
+  background: linear-gradient(0deg, rgba(11, 12, 15, 1) 0%, rgba(22, 24, 29, 1) 50%, rgba(11, 12, 15, 1) 100%);
+  /*background: black;*/
   height: 96%;
   width: 4rem;
   /*margin: 5px 5px 10px 5px;*/
