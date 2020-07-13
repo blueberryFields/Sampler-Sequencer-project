@@ -75,7 +75,7 @@
   border-width: 1px;*/
   border-radius: 8px;
   border-color: #2b2f3b;
-  background: linear-gradient(90deg, rgba(11, 12, 15, 1) 0%, rgba(22, 24, 29, 1) 10%, rgba(33, 36, 44, 1) 70%/*, rgba(11, 12, 15, 1) 100%*/);
+  background: linear-gradient(90deg, rgba(11, 12, 15, 1) 0%, rgba(22, 24, 29, 1) 10%, rgb(23, 25, 31) 70%/*, rgba(11, 12, 15, 1) 100%*/);
   margin: 0.5rem 0.5rem auto 0.5rem;
   height: 5rem;
   display: flex;}
@@ -162,7 +162,7 @@
   width: 6%;
   border-style: solid;
   border-width: 1px;
-  background-color: #16181d;
+  background-color: #23262e;
   border-radius: 10px;
   margin: 5px;
   display: flex;
@@ -494,7 +494,7 @@ td {
 .logo {
   margin: auto 1rem;
   /* color: white; */
-  color: #c2c2a3;
+  color: #c3c3c3;
   /* filter: drop-shadow(0 0 7px rgba(0, 0, 0, 0.5)); */
 
  
