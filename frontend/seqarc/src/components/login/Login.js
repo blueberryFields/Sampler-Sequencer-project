@@ -13,7 +13,7 @@ function Login({ setShowLogin }) {
     if (username && password)
       return Axios.request({
         method: "post",
-        url: "api/user/login",
+        url: "http://127.0.0.1:80/api/user/login",
         data: {
           username,
           password,

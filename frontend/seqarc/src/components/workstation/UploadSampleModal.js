@@ -24,9 +24,6 @@ const Modal = ({isShowing, hide, getFilteredSamples, token}) => {
 
     const upLoadSample = () => {
         if (selectedFile && selectedCategory && sampleName) {
-
-            console.log('Trying to upload')
-
             const bodyFormData = new FormData();
             bodyFormData.set('name', sampleName);
             bodyFormData.set('category', selectedCategory);
@@ -35,7 +32,7 @@ const Modal = ({isShowing, hide, getFilteredSamples, token}) => {
 
             Axios.request({
                 method: 'post',
-                url: 'api/sample/upload',
+                url: 'http://127.0.0.1:80/api/sample/upload',
                 data: bodyFormData,
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -71,7 +68,7 @@ const Modal = ({isShowing, hide, getFilteredSamples, token}) => {
     }
 
     useEffect(() => {
-        Axios.get('api/category/findall')
+        Axios.get('http://127.0.0.1:80/api/category/findall')
             .subscribe(
                 (response) => {
                     setCategories(response.data)
