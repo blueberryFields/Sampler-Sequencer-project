@@ -19,7 +19,6 @@ const MixerStrip = ({
   let animation = useRef();
 
   useEffect(() => {
-    console.log("Canvas context effect fired");
     ctx.current = canvas.current.getContext("2d");
   }, []);
 
@@ -60,11 +59,8 @@ const MixerStrip = ({
   };
 
   useEffect(() => {
-    console.log("Start effect fired");
     animation.current = requestAnimationFrame(meterAnimation);
-
     return function cleanup() {
-      console.log("cancel animation");
       cancelAnimationFrame(animation);
     };
   }, [meterAnimation]);
@@ -116,13 +112,6 @@ const MixerStrip = ({
         />
       </div>
       <div className="meter-container">
-        {/* <div
-          className="meter"
-          style={{
-            height: vuMeter + "rem",
-            background: vuMeter > 8 ? "red" : "#66ff66",
-          }}
-        /> */}
         <canvas ref={canvas} width="8" height="160" />
       </div>
       <div className="volume">{volume + " db"}</div>
