@@ -14,49 +14,25 @@ const MixerStrip = ({
   const [volume, setVolume] = useState(0);
   const [pan, setPan] = useState(0);
 
-  // const [vuMeter, setVuMeter] = useState(0);
-  // const [timerDelay, setTimerDelay] = useState(null);
-
-  // useEffect(() => {
-  //   if (playing) {
-  //     setTimerDelay(50);
-  //   } else {
-  //     setTimeout(() => {
-  //       setTimerDelay(null);
-  //       setVuMeter(0);
-  //     }, 1000);
-  //   }
-  // }, [playing, setTimerDelay]);
-
-  // useInterval(() => {
-  //   setVuMeter(calcMeterHeight(meter.getLevel()));
-  // }, timerDelay);
-
-  // const calcMeterHeight = (level) => {
-  //   if (level >= -32 && level < 0) {
-  //     return 8 + level / 4;
-  //   } else if (level === 0) {
-  //     return 8;
-  //   } else if (level > 0) {
-  //     return 8 + Math.abs(level / 4);
-  //   } else {
-  //     return 0;
-  //   }
-  // };
+  // VU-meter animation
 
   const canvas = useRef(null);
   let ctx = useRef(null);
+  let animation = useRef();
+
   useEffect(() => {
     console.log("Canvas context effect fired");
     ctx.current = canvas.current.getContext("2d");
   }, []);
 
   const meterAnimation = useCallback(() => {
-    clearCanvas();
-    const meterHeight = calcCanvasMeterHeight(meter.getLevel());
-    const meterColor = meterHeight > 128 ? "red" : "green";
-    drawMeter(meterHeight, meterColor);
-    requestAnimationFrame(meterAnimation)
+    if (canvas.current) {
+      clearCanvas();
+      const meterHeight = calcCanvasMeterHeight(meter.getLevel());
+      const meterColor = meterHeight > 128 ? "red" : "green";
+      drawMeter(meterHeight, meterColor);
+      requestAnimationFrame(meterAnimation);
+    }
   }, [meter]);
 
   const calcCanvasMeterHeight = (level) => {
@@ -87,7 +63,12 @@ const MixerStrip = ({
 
   useEffect(() => {
     console.log("Start effect fired");
-    requestAnimationFrame(meterAnimation);
+    animation.current = requestAnimationFrame(meterAnimation);
+
+    return function cleanup() {
+      console.log("cancel animation");
+      cancelAnimationFrame(animation);
+    };
   }, [meterAnimation]);
 
   useEffect(() => {
