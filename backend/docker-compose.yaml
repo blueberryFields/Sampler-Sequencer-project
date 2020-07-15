@@ -19,10 +19,11 @@ services:
       MYSQL_USER: 'seqarc'
       MYSQL_PASSWORD: 'secret'
       MYSQL_ROOT_PASSWORD: 'secret'
-#   ports:
+    ports:
 #     - '3306:3306'
     volumes:
       - ./database:/var/lib/mysql
+#    - "/etc/localtime:/etc/localtime:ro" 
   samplemanager:
     build: .
     ports:

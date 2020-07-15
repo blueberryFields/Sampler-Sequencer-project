@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import * as skins from "react-rotary-knob-skin-pack";
-import useInterval from "../hooks/useInterval";
 import LimitedKnobHooks from "./LimitedKnobHooks";
 
 const MixerStrip = ({
@@ -8,7 +7,6 @@ const MixerStrip = ({
   changeVol,
   index,
   triggerInstrument,
-  playing,
   meter,
 }) => {
   const [volume, setVolume] = useState(0);
@@ -70,6 +68,8 @@ const MixerStrip = ({
       cancelAnimationFrame(animation);
     };
   }, [meterAnimation]);
+
+  // Volume and panning
 
   useEffect(() => {
     changePan(index, pan);

@@ -22,7 +22,8 @@ FROM adoptopenjdk/openjdk11 as production
 
 COPY --from=build /samplemanager/target/*.jar .
 RUN apt-get update && apt-get upgrade -y && apt-get install ffmpeg -y
-#yCOPY wait-for-mysql.sh wait-for-mysql.sh
+COPY wait-for-mysql.sh wait-for-mysql.sh
+RUN chmod +x wait-for-mysql.sh
 RUN mkdir ./temp-files
-ENTRYPOINT ["java", "-jar", "samplemanager-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["./wait-for-mysql.sh", "mysql", "java", "-jar", "samplemanager-0.0.1-SNAPSHOT.jar"]
 

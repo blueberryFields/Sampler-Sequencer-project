@@ -64,7 +64,7 @@ function Login({ setShowLogin }) {
         className="login-content"
         onKeyPress={(event) => {
           if (event.key === "Enter") {
-            login();
+            loginMode ? login() : register();
           }
         }}
       >
