@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import Tone from "tone";
-import Transport from "./Transport";
-import Instrument from "./Instrument";
-import SampleBrowser from "./SampleBrowser";
-import MixerStrip from "./MixerStrip";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocalStorage } from "@rehooks/local-storage";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import Tone from "tone";
+import Instrument from "./Instrument";
+import MixerStrip from "./MixerStrip";
+import SampleBrowser from "./SampleBrowser";
+import Transport from "./Transport";
+import WarningBanner from "../warningbanner/WarningBanner";
 
 const Workstation = ({
   instruments,
@@ -56,14 +57,14 @@ const Workstation = ({
     setSwing(swing);
   };
 
-  const toggleTransport = () => {
+  const toggleTransport = useCallback(() => {
     Tone.Transport.toggle();
     if (playing) {
       setPosition(formatPosition(Tone.Transport.position));
       setTimeout(() => setActiveStep(-1), 50);
     }
     setPlaying(!playing);
-  };
+  }, [playing]);
 
   // ACTIVE STEPS
   // Keeps track of active steps which Instrument listens to and lights LEDs accordingly
@@ -109,8 +110,12 @@ const Workstation = ({
       instruments[index].instrument.triggerAttack("C3");
   };
 
+  const [showWarning, setShowWarning] = useState(true);
+
+
   return (
     <div className="container">
+      {showWarning && <WarningBanner hideWarning={() => setShowWarning(false)} />}
       <Transport
         playing={playing}
         toggleTransport={toggleTransport}

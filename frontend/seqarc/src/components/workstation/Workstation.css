@@ -26,11 +26,14 @@
   display: flex;
   flex-flow: column;
   height: 100%;
+  box-shadow: 10px 0px 5px -5px rgba(0, 0, 0, 0.5);
+  z-index: 1;
 }
 
 .instrument-section {
   overflow: auto;
   flex: 1;
+  /* box-shadow: inset 10px 10px 15px red; */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -68,6 +71,7 @@
   /* background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(22, 24, 29, 1) 100%); */
   border-top: ridge 3px rgba(22, 24, 29, 1);
   overflow: auto;
+  box-shadow: 0px -8px 10px -5px rgba(0, 0, 0, 0.5);
 }
 
 /* CSS for Instrument.js */
@@ -285,6 +289,7 @@
   background-color: #0b0c0f;
   display: flex;
   flex-direction: column;
+  max-height: calc(100vh - 4rem);
 }
 
 .browser-footer {
@@ -292,6 +297,7 @@
   background: #16181d;
   display: flex;
   min-height: 2rem;
+  box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .browser-footer-buttons {
@@ -396,7 +402,7 @@
     rgba(22, 24, 29, 1) 30%,
     rgba(33, 36, 44, 1) 100%
   );
-  /*background: #16181d;*/
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
 }
 
 .search {
@@ -454,6 +460,11 @@
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.sample-table-container {
+  flex: 1;
+  overflow-y: auto;
+}
+
 table {
   margin: 0 auto auto auto;
   padding: 5px;
@@ -492,6 +503,8 @@ td {
   height: 4rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
+  z-index: 1;
 }
 
 .transport-items {
