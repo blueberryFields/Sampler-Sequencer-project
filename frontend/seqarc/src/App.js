@@ -1,11 +1,8 @@
-import React from 'react';
-import SequencerState from "./components/sequencerstate/SequencerState"
-
+import React from "react";
+import SequencerState from "./components/sequencerstate/SequencerState";
 
 function App() {
-  return (
-      <SequencerState/>
-  );
+  return <SequencerState />;
 }
 
 export default App;

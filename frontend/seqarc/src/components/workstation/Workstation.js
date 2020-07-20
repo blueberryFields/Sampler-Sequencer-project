@@ -110,12 +110,22 @@ const Workstation = ({
       instruments[index].instrument.triggerAttack("C3");
   };
 
-  const [showWarning, setShowWarning] = useState(true);
-
+  // If user-screen width is < 1035, show warning that says site is not made for this small screen
+  const [warningIsShowing, setShowWarning] = useState(false);
+  useEffect(() => {
+    let width =
+      window.innerWidth ||
+      document.documentElement.clientWidth ||
+      document.body.clientWidth;
+    if (width < 1035) setShowWarning(true);
+  }, []);
 
   return (
     <div className="container">
-      {showWarning && <WarningBanner hideWarning={() => setShowWarning(false)} />}
+      <WarningBanner
+        warningIsShowing={warningIsShowing}
+        hideWarning={() => setShowWarning(false)}
+      />
       <Transport
         playing={playing}
         toggleTransport={toggleTransport}
