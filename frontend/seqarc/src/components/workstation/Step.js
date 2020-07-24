@@ -9,7 +9,7 @@ const Step = props => {
         <div
             className={props.stepIndex === 0 || props.stepIndex === 4 || props.stepIndex === 8 || props.stepIndex === 12 ? 'step on-beat' : 'step'}>
             <div className="led-container" onClick={() => props.toggleStepOn(props.instrumentIndex, props.stepIndex, props.note)}>
-                <div className={props.ledStatus}/>
+                <div className={"led " + props.ledStatus}/>
             </div>
             <div className="note-container">
                 <div className="note-value">{props.noteValues[props.note]}</div>

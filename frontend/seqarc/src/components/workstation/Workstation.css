@@ -28,7 +28,7 @@
 
 .sample-browser-section {
   max-width: 27rem;
-  width: 21rem;
+  min-width: 18rem;
   display: flex;
   flex: 1;
   flex-flow: column;
@@ -126,12 +126,15 @@
 }
 
 .instr-name {
-  width: 5rem;
+  width: 10rem;
   margin: auto auto auto 5px;
   background: none;
   border: none;
   font-size: 1rem;
   color: #4e5565;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .edit-sample-button {
@@ -195,10 +198,6 @@
   background-color: #373c49;
 }
 
-/* .step:active {
-  background: rgb(22, 24, 29);
-} */
-
 .note-container {
   display: flex;
   flex-direction: row;
@@ -224,76 +223,38 @@
   flex-direction: column;
 }
 
-@media screen and (max-width: 2160px) {
-  .note-value {
-    font-size: 1.3em;
-  }
-
-  .note-container {
-    min-width: 3.6rem;
-  }
-}
-
-@media screen and (max-width: 1860px) {
-  .instrument-container {
-    /* min-width: 85rem; */
-    height: 4.5rem;
-  }
-
-  .note-value {
-    font-size: 1em;
-  }
-
-  .step {
-    min-width: 3.5rem;
-  }
-
-  .note-container {
-    min-width: 3rem;
-  }
-}
-
 .led-container {
   width: 100%;
   display: flex;
   padding-top: 3px;
 }
 
-.led-on {
+.led {
   margin: auto;
   width: 15px;
   height: 15px;
-  background-color: #b3f5ff;
   border-radius: 50%;
+}
+
+.led-on {
+  background-color: #b3f5ff;
   box-shadow: rgba(0, 0, 0, 0.1) 0 -1px 7px 1px, inset #006 0 -1px 9px,
     rgba(63, 140, 255, 0.75) 0 2px 14px;
 }
 
 .led-off {
-  margin: auto;
-  width: 15px;
-  height: 15px;
   background-color: #999999 /*#009bb3*/;
-  border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.5) 0 -1px 7px 1px, inset #000000 0 -1px 9px;
 }
 
 .led-active {
-  margin: auto;
-  width: 15px;
-  height: 15px;
   background-color: #99ff99;
-  border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.5) 0 -1px 7px 1px, inset #001a00 0 -1px 9px,
     rgba(77, 255, 77, 0.5) 0 2px 12px;
 }
 
 .led-trigger {
-  margin: auto;
-  width: 15px;
-  height: 15px;
   background-color: #ff4d4d;
-  border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.5) 0 -1px 7px 1px, inset #000000 0 -1px 9px,
     rgba(255, 0, 4, 0.5) 0 2px 12px;
 }
@@ -313,7 +274,7 @@
 /* CSS for SampleBrowser.js */
 
 .sample-browser-container {
-  min-width: 18rem;
+  /* min-width: 18rem; */
   height: 100%;
   color: #21242c;
   background-color: #0b0c0f;
@@ -432,7 +393,8 @@
     rgba(22, 24, 29, 1) 30%,
     rgba(33, 36, 44, 1) 100%
   );
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3);
+  z-index: 1;
 }
 
 .search {
@@ -913,14 +875,14 @@ td {
   appearance: none;
   width: 10px; /* Set a specific slider handle width */
   height: 20px; /* Slider handle height */
-  background: #4080bf; 
+  background: #4080bf;
   cursor: pointer; /* Cursor on hover */
 }
 
 .vol-slider::-moz-range-thumb {
   width: 10px; /* Set a specific slider handle width */
   height: 20px; /* Slider handle height */
-  background: #4080bf; 
+  background: #4080bf;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset #001a00 0 -1px 5px,
     rgba(102, 255, 102, 0.2) 0 2px 8px;
   cursor: pointer; /* Cursor on hover */
@@ -969,4 +931,82 @@ td {
   margin: auto;
   font-size: 2rem;
   color: black;
+}
+
+@media screen and (max-width: 2160px) {
+  .instrument-container {
+    height: 4.5rem;
+  }
+
+  .note-value {
+    font-size: 1.3em;
+  }
+
+  .note-container {
+    min-width: 3.6rem;
+  }
+
+  .note-change-container {
+    font-size: 0.85rem;
+  }
+
+  .led {
+    margin: auto;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+  }
+
+  .instr-name {
+    width: 7rem;
+    font-size: .95rem;
+  }
+
+  .sample-browser-section {
+    max-width: 23.5rem;
+  }
+}
+
+@media screen and (max-width: 1920px) {
+  .instrument-container {
+    min-width: 85rem;
+    height: 4rem;
+  }
+
+  .trigger-button {
+    height: 2.8rem;
+    width: 2.8rem;
+  }
+
+  .note-value {
+    font-size: 1em;
+  }
+
+  .step {
+    min-width: 3.5rem;
+  }
+
+  .note-container {
+    min-width: 3rem;
+  }
+
+  .note-change-container {
+    font-size: 0.75rem;
+  }
+
+  .led {
+    margin: auto;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+  }
+
+  .instr-name {
+    width: 5rem;
+    font-size: .9rem;
+  }
+
+  .sample-browser-section {
+    max-width: 20rem;
+  }
 }
