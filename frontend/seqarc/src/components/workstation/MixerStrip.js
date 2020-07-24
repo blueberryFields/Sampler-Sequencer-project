@@ -25,7 +25,7 @@ const MixerStrip = ({
   const meterAnimation = useCallback(() => {
     if (canvas.current) {
       clearCanvas();
-      const meterHeight = calcCanvasMeterHeight(meter.getLevel());
+      const meterHeight = 128 + meter.getLevel() * 2 // calcCanvasMeterHeight(meter.getLevel());
       const meterColor = meterHeight > 128 ? "red" : "green";
       drawMeter(meterHeight, meterColor);
       requestAnimationFrame(meterAnimation);
@@ -33,12 +33,13 @@ const MixerStrip = ({
   }, [meter]);
 
   const calcCanvasMeterHeight = (level) => {
+    console.log(level * 2);
     if (level >= -128 && level < 0) {
-      return 128 + level;
+      return 128 + (level * 2);
     } else if (level === 0) {
       return 128;
     } else if (level > 0) {
-      return 128 + level;
+      return 128 + (level * 2);
     } else {
       return 0;
     }

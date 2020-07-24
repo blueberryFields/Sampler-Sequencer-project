@@ -29,19 +29,18 @@ const Workstation = ({
 
   // Transport-related stuff
 
-  const [position, setPosition] = useState(Tone.Transport.position);
-
-  const [playing, setPlaying] = useState(false);
-
   const formatPosition = (position) => {
     return (
-      position.split(":")[0] +
-      ":" +
       position.split(":")[1] +
       ":" +
       parseFloat(position.split(":")[2]).toFixed(0)
     );
   };
+  
+  const [position, setPosition] = useState(formatPosition(Tone.Transport.position));
+
+  const [playing, setPlaying] = useState(false);
+
 
   const [bpm, setBpm] = useState(Tone.Transport.bpm.value);
 
