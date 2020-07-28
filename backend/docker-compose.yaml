@@ -5,11 +5,11 @@ services:
     image: nginx:latest
     ports:
     - "80:80"
-#   - "443:443"
+    - "443:443"
     volumes:
-    - ../frontend/seqarc/public/:/usr/share/nginx/html/:ro
+    - ../frontend/seqarc/build/:/usr/share/nginx/html/:ro
     - ./nginx.conf:/etc/nginx/nginx.conf
-#    - ./ssl:/etc/nginx/ssl
+#   - ./ssl:/etc/nginx/ssl
 #    - "/etc/localtime:/etc/localtime:ro"
   mysql:
     image: mysql
@@ -23,15 +23,15 @@ services:
 #    - '3306:3306'
     volumes:
      - ./database:/var/lib/mysql
-#    - "/etc/localtime:/etc/localtime:ro" 
+#     - "/etc/localtime:/etc/localtime:ro" 
   samplemanager:
     build: .
-    ports:
-    - "8080:8080"
+#   ports:
+#   - "8080:8080"
     restart: on-failure
     volumes:
     - "./log:/log"
-    - "../frontend/seqarc/public/samples:/samples"
+    - "../frontend/seqarc/build/samples:/samples"
 #    - "/etc/localtime:/etc/localtime:ro"
 
 
