@@ -1,4 +1,5 @@
 scripts/
+ssl/
 
 backend/HELP.md
 backend/target/
