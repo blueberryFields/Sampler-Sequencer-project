@@ -9,8 +9,8 @@ services:
     volumes:
     - ../frontend/seqarc/build/:/usr/share/nginx/html/:ro
     - ./nginx.conf:/etc/nginx/nginx.conf
-#   - ./ssl:/etc/nginx/ssl
-#    - "/etc/localtime:/etc/localtime:ro"
+    - ./ssl:/etc/nginx/ssl
+    - "/etc/localtime:/etc/localtime:ro"
   mysql:
     image: mysql
     restart: always
@@ -23,7 +23,7 @@ services:
 #    - '3306:3306'
     volumes:
      - ./database:/var/lib/mysql
-#     - "/etc/localtime:/etc/localtime:ro" 
+     - "/etc/localtime:/etc/localtime:ro" 
   samplemanager:
     build: .
 #   ports:
@@ -32,6 +32,6 @@ services:
     volumes:
     - "./log:/log"
     - "../frontend/seqarc/build/samples:/samples"
-#    - "/etc/localtime:/etc/localtime:ro"
+    - "/etc/localtime:/etc/localtime:ro"
 
 
