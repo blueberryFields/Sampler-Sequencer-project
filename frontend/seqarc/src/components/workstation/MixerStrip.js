@@ -33,7 +33,6 @@ const MixerStrip = ({
   }, [meter]);
 
   const calcCanvasMeterHeight = (level) => {
-    console.log(level);
     if (level >= -128) {
       return 128 + level;
     } else {
