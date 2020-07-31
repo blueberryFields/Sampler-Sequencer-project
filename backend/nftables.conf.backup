@@ -1,0 +1,30 @@
+#!/usr/sbin/nft -f
+
+flush ruleset
+
+table inet filter {
+        chain input {
+                type filter hook input priority 0; policy drop;
+
+                iif lo accept comment "Accept any localhost traffic"
+                ct state invalid drop comment "Drop invalid connections"
+                ct state established,related accept comment "Accept traffic originated from us"
+
+                tcp dport 38765 accept comment "Accept SSH on port 38765"
+                tcp dport { http, https } accept comment "Accept HTTP (ports 80, 443)"
+
+                # Allow some icmp traffic for ipv6
+                ip6 nexthdr icmpv6 icmpv6 type {
+                        nd-neighbor-solicit, echo-request,
+                        nd-router-advert, nd-neighbor-advert
+                } accept
+        }
+        chain forward {
+                type filter hook forward priority 0; policy drop;
+                # Drop everything forwarded to us. We do not forward. That is routers job.
+        }
+        chain output {
+                type filter hook output priority 0; policy accept;
+                # Accept every outbound connection
+        }
+}
