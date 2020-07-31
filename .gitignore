@@ -1,5 +1,6 @@
 scripts/
 ssl/
+frontend/seqarc/samples.backup/
 
 backend/HELP.md
 backend/target/

@@ -8,7 +8,7 @@ sudo chmod -R 777 database/
 
 # Build frontend
 cd .. && cd frontend && cd seqarc && 
-npm run build
+sh build-fontend.sh
 cd .. && cd .. && cd backend
 
 # build backend
